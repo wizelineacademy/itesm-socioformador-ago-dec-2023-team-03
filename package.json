@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "itesm-socioformador-ago-dec-2023-team-03",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -14,6 +14,13 @@
     "next": "latest"
   },
   "devDependencies": {
+    "typescript": "latest",
+    "@types/react": "latest",
+    "@types/node": "latest",
+    "@types/react-dom": "latest",
+    "autoprefixer": "latest",
+    "postcss": "latest",
+    "tailwindcss": "latest",
     "eslint": "latest",
     "eslint-config-next": "latest"
   }
