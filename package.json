@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "antd": "^5.9.3",
     "kysely": "^0.26.3",
     "next": "latest",
     "pg": "^8.11.3",

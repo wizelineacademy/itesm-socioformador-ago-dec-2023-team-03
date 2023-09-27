@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 import Box from "./Box";
+import UserCard from "./UserCard";
 
 interface SidebarProps {
     children: React.ReactNode;
@@ -35,7 +36,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 gap-y-2
                 bg-black
                 h-full
-                w-[250px]
+                w-[300px]
                 p-2
             ">
                 <Box className="text-white">
@@ -45,9 +46,12 @@ const Sidebar: React.FC<SidebarProps> = ({
                     Chat History
                 </Box>
                 <Box className="text-white">
-                    User Card
+                    <UserCard />
                 </Box>
             </div>
+            <main>
+                {children}
+            </main>
         </div>
     );
 }
