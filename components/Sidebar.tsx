@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 import Box from "./Box";
 import UserCard from "./UserCard";
+import Link from "next/link";
 
 interface SidebarProps {
     children: React.ReactNode;
@@ -17,7 +18,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     const routes = useMemo(() => [
         {
             label: 'Home',
-            active: pathname === '/home',
+            active: pathname === '/',
             href: '/',
         },
         {
@@ -40,7 +41,11 @@ const Sidebar: React.FC<SidebarProps> = ({
                 p-2
             ">
                 <Box className="text-white">
-                    Wizeline logo
+                    <div className = "cursor-pointer py-3 text-3xl text-center">
+                        <Link href={'/'}>
+                            Wizeprompt
+                        </Link>
+                    </div>
                 </Box>
                 <Box className="overflow-y-auto h-full text-white ">
                     Chat History
@@ -49,7 +54,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                     <UserCard />
                 </Box>
             </div>
-            <main>
+            <main className="h-full flex-1 overflow-y-auto py-2">
                 {children}
             </main>
         </div>
