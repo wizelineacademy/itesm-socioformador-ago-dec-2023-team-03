@@ -1,7 +1,9 @@
+import Box from "@/components/Box";
+
 export default function Home() {
   return (
-    <div>
-      <h1 className ="text-white">Main Content</h1>
-    </div>
+    <Box className="h-full">
+        Main Content
+    </Box>
   )
 }

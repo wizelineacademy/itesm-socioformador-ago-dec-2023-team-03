@@ -34,27 +34,25 @@ const Sidebar: React.FC<SidebarProps> = ({
                 hidden
                 md:flex
                 flex-col
-                gap-y-2
+                gap-y-1
                 bg-black
                 h-full
                 w-[300px]
                 p-2
             ">
-                <Box className="text-white">
-                    <div className = "cursor-pointer py-3 text-3xl text-center">
-                        <Link href={'/'}>
-                            Wizeprompt
-                        </Link>
-                    </div>
+                <Box className = "cursor-pointer py-3 text-3xl text-center">
+                    <Link href={'/'}>
+                        Wizeprompt
+                    </Link>
                 </Box>
-                <Box className="overflow-y-auto h-full text-white ">
+                <Box className="h-full overflow-y-auto text-white ">
                     Chat History
                 </Box>
                 <Box className="text-white">
                     <UserCard />
                 </Box>
             </div>
-            <main className="h-full flex-1 overflow-y-auto py-2">
+            <main className="h-full w-full">
                 {children}
             </main>
         </div>
