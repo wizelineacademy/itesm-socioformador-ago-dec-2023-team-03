@@ -1,5 +1,7 @@
 import './globals.css'
+
 import type { Metadata } from 'next'
+import { UserProvider } from '@auth0/nextjs-auth0/client'
 
 export const metadata: Metadata = {
   title: 'Wizeprompt',
@@ -13,9 +15,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        {children}
-      </body>
+      <UserProvider>
+        <body>{children}</body>
+      </UserProvider>
     </html>
   )
 }

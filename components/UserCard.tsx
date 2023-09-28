@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Avatar, Button, ConfigProvider } from 'antd'
 import { DollarTwoTone } from '@ant-design/icons';
 import Link from "next/link";
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 interface UserCardProps {
     reference?: string;
@@ -12,6 +13,14 @@ interface UserCardProps {
 const UserCard: React.FC<UserCardProps> = ({
         reference,
     }) => {
+    
+    const { user, error, isLoading } = useUser();
+
+    console.log(user)
+
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>{error.message}</div>;
+
     // Hook for hover over the avatar
     const [hover, setHover] = useState(false);
     // TODO: Get username from database
@@ -22,12 +31,11 @@ const UserCard: React.FC<UserCardProps> = ({
         return (
             <div className='flex flex-row items-center gap-x-2 py-2'>
                 <div className='cursor-pointer' onMouseEnter={() => setHover(true)}>
-                    <Avatar size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}>
-                        UN
+                    <Avatar size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }} src={user?.picture || ""}>
                     </Avatar>
                 </div>
                 <div>
-                    <p className="truncate w-fill text-md">Username</p>
+                    <p className="truncate w-fill text-md"> {user?.given_name || "Username"} </p>
                     <div className='flex flex-row gap-x-1'>
                         <DollarTwoTone twoToneColor="#fcc203" />
                         <p className="truncate w-fill text-md">Tokens</p>
@@ -40,12 +48,11 @@ const UserCard: React.FC<UserCardProps> = ({
         return (
             <div className='flex flex-row items-center gap-x-2 py-2'>
             <div className='cursor-pointer' onMouseEnter={() => setHover(true)}>
-                <Avatar size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}>
-                    UN
+                <Avatar size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }} src={user?.picture || ""}>
                 </Avatar>
             </div>
             <div>
-                <p className="truncate w-fill text-md">Username</p>
+                <p className="truncate w-fill text-md"> {user?.given_name || "Username"} </p>
                 <div className='flex flex-row gap-x-1'>
                     <DollarTwoTone twoToneColor="#fcc203" />
                     <p className="truncate w-fill text-md">Tokens</p>
@@ -65,7 +72,7 @@ const UserCard: React.FC<UserCardProps> = ({
                                     Home
                                 </Link>
                             </button>
-                            <Link href='/login' className='flex flex-col items-center'>
+                            <Link href="/api/auth/logout" className='flex flex-col items-center'>
                                 <button className="pt-1 hover:text-gray-400">
                                     Logout
                                 </button>
@@ -74,12 +81,12 @@ const UserCard: React.FC<UserCardProps> = ({
                     </div>
                     <div className='flex flex-row items-center gap-x-2 py-2'>
                         <div className='cursor-pointer' onMouseEnter={() => setHover(true)}>
-                            <Avatar size={{ xs: 24, sm:32, md: 40, lg: 64, xl: 80, xxl: 100 }}>
-                                UN
+                            <Avatar size={{ xs: 24, sm:32, md: 40, lg: 64, xl: 80, xxl: 100 }} src={user?.picture || ""}>
+                            
                             </Avatar>
                         </div>
                         <div>
-                            <p className="truncate w-fill text-md">Username</p>
+                            <p className="truncate w-fill text-md"> {user?.given_name || "Username"} </p>
                             <div className='flex flex-row gap-x-1'>
                                 <DollarTwoTone twoToneColor="#fcc203" />
                                 <p className="truncate w-fill text-md">Tokens</p>
@@ -101,7 +108,7 @@ const UserCard: React.FC<UserCardProps> = ({
                                     Dashboard
                                 </Link>
                             </button>
-                            <Link href='/login' className='flex flex-col items-center'>
+                            <Link href="/api/auth/logout" className='flex flex-col items-center'>
                                 <button className="pt-1 hover:text-gray-400">
                                     Logout
                                 </button>
@@ -110,12 +117,11 @@ const UserCard: React.FC<UserCardProps> = ({
                     </div>
                     <div className='flex flex-row items-center gap-x-2 py-2'>
                         <div className='cursor-pointer' onMouseEnter={() => setHover(true)}>
-                            <Avatar size={{ xs: 24, sm:32, md: 40, lg: 64, xl: 80, xxl: 100 }}>
-                                UN
+                            <Avatar size={{ xs: 24, sm:32, md: 40, lg: 64, xl: 80, xxl: 100 }} src={user?.picture || ""}>
                             </Avatar>
                         </div>
                         <div>
-                            <p className="truncate w-fill text-md">Username</p>
+                            <p className="truncate w-fill text-md">{user?.given_name || "Username"}</p>
                             <div className='flex flex-row gap-x-1'>
                                 <DollarTwoTone twoToneColor="#fcc203" />
                                 <p className="truncate w-fill text-md">Tokens</p>
