@@ -24,12 +24,11 @@ For the `backend`:
 
 **Note**: *We take advantage of Next.js capabilities and we use it to built the frontend and backend as well.*
 
-## Project Initialization:
+## Deployment 🚀
 
-To get started with Wizeprompt, follow these steps:
+We plan to deploy this app to [AWS](https://aws.amazon.com/) using [Amplify](https://aws.amazon.com/amplify/) for the frontend and [Elastic Beanstalk](https://aws.amazon.com/) for the backend.
 
-### 1. **Clone the Repository**:
-## Project Initialization:
+## Getting Started:
 
 To get started with Wizeprompt, follow these steps:
 
@@ -38,7 +37,7 @@ To get started with Wizeprompt, follow these steps:
 ```bash
 git clone [repository-url]
 ```
-Replace `[repository-url]` with the actual URL of your repository.
+Replace `[repository-url]` with the actual URL of the this repository (https://github.com/wizelineacademy/itesm-socioformador-ago-dec-2023-team-03.git).
 
 ### 2. **Navigate to the Project Directory**:
 
