@@ -4,10 +4,14 @@ import Header from '@/components/Header'
 
 export default function Home() {
   return (
-    <div className="h-full pb-2">
+    <div className="h-full">
         <Sidebar>
           <Header>
-            Main Content
+            <div className="h-full pb-2">
+              <Box className="h-full">
+                Main Content
+              </Box>
+            </div>
           </Header>
         </Sidebar>
     </div>

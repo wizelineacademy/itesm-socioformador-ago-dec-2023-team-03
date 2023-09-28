@@ -1,38 +1,18 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { useMemo } from "react";
 import Box from "./Box";
 import UserCard from "./UserCard";
 import Link from "next/link";
 
 interface SidebarProps {
+    reference?: string;
     children: React.ReactNode;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
-    children,
+    reference,
+    children
 }) => {
-    const pathname = usePathname();
-
-    const routes = useMemo(() => [
-        {
-            label: 'Home',
-            active: pathname === '/',
-            href: '/',
-        },
-        {
-            label: 'Admin',
-            active: pathname === '/admin',
-            href: '/admin',
-        },
-        {
-            label: 'Login',
-            active: pathname !== '/login',
-            href: '/login',
-        }
-    ], [pathname]);  
-
     return (
         <div className="flex h-full">
             <div className="
@@ -54,7 +34,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                     Chat History
                 </Box>
                 <Box className="text-white">
-                    <UserCard />
+                    <UserCard reference={reference} />
                 </Box>
             </div>
             <main className="h-full w-full">
