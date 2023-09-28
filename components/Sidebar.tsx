@@ -25,6 +25,11 @@ const Sidebar: React.FC<SidebarProps> = ({
             label: 'Admin',
             active: pathname === '/admin',
             href: '/admin',
+        },
+        {
+            label: 'Login',
+            active: pathname !== '/login',
+            href: '/login',
         }
     ], [pathname]);  
 

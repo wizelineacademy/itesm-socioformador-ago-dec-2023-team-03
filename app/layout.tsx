@@ -16,12 +16,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-          <Sidebar>
-            <Header>
-              {children}
-            </Header>
-          </Sidebar>
-        </body>
+        <Sidebar>
+          <Header>
+            {children}
+          </Header>
+        </Sidebar>
+      </body>
     </html>
   )
 }

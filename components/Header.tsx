@@ -49,13 +49,13 @@ const Header: React.FC<HeaderProps> = ({
         <div className="h-full flex flex-col gap-y-1 w-full pr-2 pt-2">
                 <Box className = "py-2 text-right w-full text-3xl">
                     <Space direction='vertical'>
-                        <Space wrap>
+                        <div>
                             <Dropdown menu={{ items }} placement='bottomLeft'>
                                 <Button ghost size="large">
                                     Pick an LLM
                                 </Button>
                             </Dropdown>
-                        </Space>
+                        </div>
                     </Space>
                 </Box>
                 <main className="h-full">
