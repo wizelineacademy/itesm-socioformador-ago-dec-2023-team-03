@@ -57,7 +57,7 @@ npm install
 After installing the dependencies, start the local development server with:
 
 ```bash
-npm start
+npm run dev
 ```
 This command will start the server and open the application in your default browser. By default, it should run on `http://localhost:3000/`, unless you've configured it differently.
 
