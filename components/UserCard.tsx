@@ -23,8 +23,8 @@ const UserCard: React.FC<UserCardProps> = ({
 
     // Hook for hover over the avatar
     const [hover, setHover] = useState(false);
-    // TODO: Get username from database
-    const userName = 'User Name';
+    // Get the username from the user object given by Auth0
+    const userName = user?.given_name
 
     // If menu is not shown, show the avatar and username on Home page
     if (hover == false && reference == null) {
@@ -35,7 +35,7 @@ const UserCard: React.FC<UserCardProps> = ({
                     </Avatar>
                 </div>
                 <div>
-                    <p className="truncate w-fill text-md"> {user?.given_name || "Username"} </p>
+                    <p className="truncate w-fill text-md"> {userName || "Username"} </p>
                     <div className='flex flex-row gap-x-1'>
                         <DollarTwoTone twoToneColor="#fcc203" />
                         <p className="truncate w-fill text-md">Tokens</p>
@@ -52,7 +52,7 @@ const UserCard: React.FC<UserCardProps> = ({
                 </Avatar>
             </div>
             <div>
-                <p className="truncate w-fill text-md"> {user?.given_name || "Username"} </p>
+                <p className="truncate w-fill text-md"> {userName || "Username"} </p>
                 <div className='flex flex-row gap-x-1'>
                     <DollarTwoTone twoToneColor="#fcc203" />
                     <p className="truncate w-fill text-md">Tokens</p>
@@ -86,7 +86,7 @@ const UserCard: React.FC<UserCardProps> = ({
                             </Avatar>
                         </div>
                         <div>
-                            <p className="truncate w-fill text-md"> {user?.given_name || "Username"} </p>
+                            <p className="truncate w-fill text-md"> {userName || "Username"} </p>
                             <div className='flex flex-row gap-x-1'>
                                 <DollarTwoTone twoToneColor="#fcc203" />
                                 <p className="truncate w-fill text-md">Tokens</p>
@@ -121,7 +121,7 @@ const UserCard: React.FC<UserCardProps> = ({
                             </Avatar>
                         </div>
                         <div>
-                            <p className="truncate w-fill text-md">{user?.given_name || "Username"}</p>
+                            <p className="truncate w-fill text-md">{userName || "Username"}</p>
                             <div className='flex flex-row gap-x-1'>
                                 <DollarTwoTone twoToneColor="#fcc203" />
                                 <p className="truncate w-fill text-md">Tokens</p>
