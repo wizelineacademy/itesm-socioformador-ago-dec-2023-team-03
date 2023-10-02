@@ -5,13 +5,14 @@ import React, { useState } from "react";
 import type { MenuProps } from 'antd';
 import { Button, Dropdown, Space } from 'antd';
 
+var selectedLlm: string;
 
 // List of LLMs to be displyed in the dropdown menu
 const items: MenuProps['items'] = [
     {
       key: '1',
       label: (
-        <a target="_blank" rel="noopener noreferrer" href="/">
+        <a rel="noopener noreferrer" href="/">
           GPT-4
         </a>
       ),
@@ -19,7 +20,7 @@ const items: MenuProps['items'] = [
     {
       key: '2',
       label: (
-        <a target="_blank" rel="noopener noreferrer" href="/">
+        <a rel="noopener noreferrer" href="/gpt">
           GPT 3.5
         </a>
       ),
@@ -27,7 +28,7 @@ const items: MenuProps['items'] = [
     {
       key: '3',
       label: (
-        <a target="_blank" rel="noopener noreferrer" href="/">
+        <a rel="noopener noreferrer" href="/">
           BARD
         </a>
       ),
@@ -52,7 +53,7 @@ const Header: React.FC<HeaderProps> = ({
                         <div className="pr-20">
                             <Dropdown menu={{ items }} placement='bottomLeft'>
                                 <Button ghost size="large">
-                                    Pick an LLM
+                                    {selectedLlm ? selectedLlm  : 'Select LLM'}
                                 </Button>
                             </Dropdown>
                         </div>

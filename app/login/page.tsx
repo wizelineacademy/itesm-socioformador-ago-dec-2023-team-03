@@ -1,4 +1,4 @@
-import Box from "@/components/Box";
+import Box from "@/app/components/Box";
 import Link from "next/link";
 
 export default function Home() {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Avatar, Button, ConfigProvider } from 'antd'
+import { Avatar } from 'antd'
 import { DollarTwoTone } from '@ant-design/icons';
 import Link from "next/link";
 import { useUser } from '@auth0/nextjs-auth0/client';
@@ -35,7 +35,7 @@ const UserCard: React.FC<UserCardProps> = ({
                     </Avatar>
                 </div>
                 <div>
-                    <p className="truncate w-fill text-md"> {userName || "Username"} </p>
+                    <p className="truncate w-fill text-md"> { userName ? userName : 'Username' }  </p>
                     <div className='flex flex-row gap-x-1'>
                         <DollarTwoTone twoToneColor="#fcc203" />
                         <p className="truncate w-fill text-md">Tokens</p>
@@ -52,7 +52,7 @@ const UserCard: React.FC<UserCardProps> = ({
                 </Avatar>
             </div>
             <div>
-                <p className="truncate w-fill text-md"> {userName || "Username"} </p>
+                <p className="truncate w-fill text-md"> { userName ? userName : 'Username' }  </p>
                 <div className='flex flex-row gap-x-1'>
                     <DollarTwoTone twoToneColor="#fcc203" />
                     <p className="truncate w-fill text-md">Tokens</p>
@@ -86,7 +86,9 @@ const UserCard: React.FC<UserCardProps> = ({
                             </Avatar>
                         </div>
                         <div>
-                            <p className="truncate w-fill text-md"> {userName || "Username"} </p>
+                            <p className="truncate w-fill text-md"> 
+                                { userName ? userName : 'Username' } 
+                            </p>
                             <div className='flex flex-row gap-x-1'>
                                 <DollarTwoTone twoToneColor="#fcc203" />
                                 <p className="truncate w-fill text-md">Tokens</p>
@@ -121,7 +123,7 @@ const UserCard: React.FC<UserCardProps> = ({
                             </Avatar>
                         </div>
                         <div>
-                            <p className="truncate w-fill text-md">{userName || "Username"}</p>
+                            <p className="truncate w-fill text-md">{ userName ? userName : 'Username' } </p>
                             <div className='flex flex-row gap-x-1'>
                                 <DollarTwoTone twoToneColor="#fcc203" />
                                 <p className="truncate w-fill text-md">Tokens</p>

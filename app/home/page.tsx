@@ -1,8 +1,8 @@
 "use client";
 
-import Box from "@/components/Box";
-import Sidebar from '@/components/Sidebar'
-import Header from '@/components/Header'
+import Box from "@/app/components/Box";
+import Sidebar from '@/app/components/Sidebar'
+import Header from '@/app/components/Header'
 import { useUser } from "@auth0/nextjs-auth0/client";
 
 export default function Home() {
