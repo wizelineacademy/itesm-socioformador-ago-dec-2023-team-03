@@ -66,18 +66,18 @@ export default function ChatBox() {
   }
 
   return (
-    <div className="grid grid-rows-[1fr, auto] p-4 h-screen gap-4">
-      <div className="flex flex-col gap-4 h-full overflow-y-auto">
+    <div className="grid grid-rows-[1fr, auto] p-4 h-full gap-4">
+      <div className="flex flex-col gap-4 overflow-y-auto">
         {prompts.map(prompt => (
-          <>
+          <div className="flex flex-col h-full">
             <Prompt key={prompt.id} Prompt={prompt.input} />
             <Response key={prompt.id} Output={responses.find(response => response.id === prompt.id)?.output || ""} />
-          </>
+          </div>
         ))}
       </div>
 
       <form className="flex items-center justify-center gap-4 w-full">
-        <input className="w-full bg-gray-100 rounded-full px-4 py-2 outline-none" placeholder="Type your prompt here..." value={input} onChange={handleChangeInput} />
+        <input className="w-full bg-gray-100 rounded-full px-4 py-2 outline-none text-black" placeholder="Type your prompt here..." value={input} onChange={handleChangeInput} />
         <button style={{ backgroundColor: '#E93D44' }} className="rounded-full px-4 py-2 text-gray-100 font-medium" onClick={handleGenerate}>Generate</button>
       </form>
     </div>

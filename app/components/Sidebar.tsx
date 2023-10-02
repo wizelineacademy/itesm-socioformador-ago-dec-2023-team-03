@@ -3,6 +3,8 @@
 import Box from "./Box";
 import UserCard from "./UserCard";
 import Link from "next/link";
+import SidebarItem from "./SidebarItem";
+import chat_history from "../data/chat_history.json";
 
 interface SidebarProps {
     reference?: string;
@@ -13,8 +15,11 @@ const Sidebar: React.FC<SidebarProps> = ({
     reference,
     children
 }) => {
+    // Store chat history in local variable
+    const chatHistory = chat_history;
+
     return (
-        <div className="flex h-full">
+        <div className="flex h-full w-full">
             <div className="
                 hidden
                 md:flex
@@ -30,8 +35,10 @@ const Sidebar: React.FC<SidebarProps> = ({
                         Wizeprompt
                     </Link>
                 </Box>
-                <Box className="h-full overflow-y-auto text-white ">
-                    Chat History
+                <Box className="h-full overflow-y-auto text-white no-scrollbar">
+                        {chatHistory.map((chat) => (
+                            <SidebarItem key={chat.id} chat={chat} />
+                        ))}
                 </Box>
                 <Box className="text-white">
                     <UserCard reference={reference} />
