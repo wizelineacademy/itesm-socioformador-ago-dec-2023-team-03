@@ -3,12 +3,24 @@
 import Box from "@/components/Box";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
-import { usePathname } from "next/navigation";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { redirect, usePathname } from "next/navigation";
 
 
 export default function Home() {
     const pathname = usePathname();
+    const { user, error, isLoading } = useUser();
 
+    if(error) { console.log(error) }
+    if(isLoading) { return <div className="loader"></div> }
+
+    if(!user) {
+        return (
+            <>
+                {redirect("/login")}
+            </>
+        )
+    } else {
     return (
       <div className="h-full">
         <Sidebar reference={pathname}>
@@ -22,4 +34,5 @@ export default function Home() {
         </Sidebar>
       </div>
     )
+    }
   }
