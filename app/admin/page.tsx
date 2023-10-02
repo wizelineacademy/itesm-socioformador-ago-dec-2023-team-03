@@ -13,8 +13,8 @@ export default function Home() {
       <div className="h-full">
         <Sidebar reference={pathname}>
             <Header>
-                <div className="h-full pb-2">
-                    <Box className="h-full">
+                <div className="h-full">
+                    <Box className="h-full bg-black">
                         Admin Dashboard
                     </Box>
                 </div>

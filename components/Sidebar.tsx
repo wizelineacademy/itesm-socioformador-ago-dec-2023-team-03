@@ -19,11 +19,11 @@ const Sidebar: React.FC<SidebarProps> = ({
                 hidden
                 md:flex
                 flex-col
-                gap-y-1
-                bg-black
                 h-full
                 w-[300px]
-                p-2
+                pb-2
+                pt-2
+                pl-2
             ">
                 <Box className = "cursor-pointer py-3 text-3xl text-center">
                     <Link href={'/'}>

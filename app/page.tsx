@@ -38,20 +38,20 @@ export default function Home() {
       </div>
     )
   } else {
-    
+
     // If logged in, show main page
     return (
-      <div className="h-full">
+      <>
           <Sidebar>
             <Header>
-              <div className="h-full pb-2">
-                <Box className="h-full">
-                  Main Content
+              <div className="h-full w-full bg-black">
+                <Box className="h-full w-full bg-black">
+                  Chat Box
                 </Box>
               </div>
             </Header>
           </Sidebar>
-      </div>
+      </>
     )
   }
 }

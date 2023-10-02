@@ -8,7 +8,7 @@ body,
     height: 100%;
     width: 100%;
     color-scheme: dark;
-    background-color: black;
+    background-color: #111823;
 }
 
 .loader {
@@ -47,5 +47,3 @@ body,
       transform: rotate(1turn);
     }
   }
-  
-

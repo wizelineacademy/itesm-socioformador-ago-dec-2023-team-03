@@ -46,10 +46,10 @@ const Header: React.FC<HeaderProps> = ({
     const [loading, setLoading] = useState<boolean>(false);
 
     return (
-        <div className="h-full flex flex-col gap-y-1 w-full pr-2 pt-2">
+        <div className="h-full flex flex-col w-full pt-2">
                 <Box className = "py-2 text-right w-full text-3xl">
                     <Space direction='vertical'>
-                        <div>
+                        <div className="pr-20">
                             <Dropdown menu={{ items }} placement='bottomLeft'>
                                 <Button ghost size="large">
                                     Pick an LLM
