@@ -5,8 +5,10 @@
 ## Why Wizeprompt?
 
 Wizeprompt is **easy**, **fast** and **secure**. With Wizeprompt you can:
-- Ask to any AI generator any question you want.
-- Consult the history of your prompts.
+- Ask to any LLMs any question you want, all in one place.
+- Consult the history of your conversations and go back to them.
+- Keep the conversations to yourself
+- Manage the use and access of your teams to the LLMs
 
 ## Stack
 
@@ -24,19 +26,21 @@ For the `backend`:
 - [Express](https://expressjs.com/): Fast, unopinionated, minimalist web framework for Node.js
 - [Node.js](https://nodejs.org/en/): A JavaScript runtime built on Chrome's V8 JavaScript engine
 
-**Note**: *We are considering taking advantage of Next.js capabilities to use it to built the frontend and backend as well.*
+**Note**: *We are considering taking advantage of Next.js capabilities to build the frontend and backend as well.*
 
-## How it works? ⚙️
+## How will it work? ⚙️
 
-1. The app are going to be connected to the AI generator (like Chatgpt or Bard) through an API. 
+1. The app is going to be connected to the LLMs (like Chatgpt or Bard) through an API. 
 
-2. The API is going to be connected to a PostgreSQL database to store the prompts and the responses. 
+2. The app is going to be connected to a PostgreSQL database to store the prompts and the responses. 
 
-3. Then, the frontend is going to be connected to the API to send the prompts and receive the responses.
+3. Then, the frontend is going to be connected to the app to send the prompts and receive the responses.
+
+4. This while the access is being controled based on your needs, budget, and use; and the use is being monitored
 
 ## Deployment 🚀
 
-For the **frontend** 2e plan to deploy this app to [AWS](https://aws.amazon.com/) using [Amplify](https://aws.amazon.com/amplify/) or to [Vercel](https://vercel.com/) and [Elastic Beanstalk](https://aws.amazon.com/) for the backend.
+For the **frontend** we plan to deploy this app to [AWS](https://aws.amazon.com/) using [Amplify](https://aws.amazon.com/amplify/) or to [Vercel](https://vercel.com/) and [Elastic Beanstalk](https://aws.amazon.com/) for the backend.
 
 ## Getting Started:
 
@@ -45,9 +49,8 @@ To get started with Wizeprompt, follow these steps:
 ### 1. **Clone the Repository**:
 
 ```bash
-git clone [repository-url]
+git clone https://github.com/wizelineacademy/itesm-socioformador-ago-dec-2023-team-03.git
 ```
-Replace `[repository-url]` with the actual URL of the this repository (https://github.com/wizelineacademy/itesm-socioformador-ago-dec-2023-team-03.git).
 
 ### 2. **Navigate to the Project Directory**:
 
