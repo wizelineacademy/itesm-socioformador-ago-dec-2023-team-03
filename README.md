@@ -21,15 +21,24 @@ For the `frontend`:
 For the `backend`:
 - [PostgreSQL](https://www.postgresql.org/): A powerful, open source object-relational database system
 - [Kysely](https://kysely.dev/): A SQL query builder for TypeScript
+- [Express](https://expressjs.com/): Fast, unopinionated, minimalist web framework for Node.js
+- [Node.js](https://nodejs.org/en/): A JavaScript runtime built on Chrome's V8 JavaScript engine
 
-**Note**: *We take advantage of Next.js capabilities and we use it to built the frontend and backend as well.*
+**Note**: *We are considering taking advantage of Next.js capabilities to use it to built the frontend and backend as well.*
 
-## Project Initialization:
+## How it works? ⚙️
 
-To get started with Wizeprompt, follow these steps:
+1. The app are going to be connected to the AI generator (like Chatgpt or Bard) through an API. 
 
-### 1. **Clone the Repository**:
-## Project Initialization:
+2. The API is going to be connected to a PostgreSQL database to store the prompts and the responses. 
+
+3. Then, the frontend is going to be connected to the API to send the prompts and receive the responses.
+
+## Deployment 🚀
+
+For the **frontend** 2e plan to deploy this app to [AWS](https://aws.amazon.com/) using [Amplify](https://aws.amazon.com/amplify/) or to [Vercel](https://vercel.com/) and [Elastic Beanstalk](https://aws.amazon.com/) for the backend.
+
+## Getting Started:
 
 To get started with Wizeprompt, follow these steps:
 
@@ -38,7 +47,7 @@ To get started with Wizeprompt, follow these steps:
 ```bash
 git clone [repository-url]
 ```
-Replace `[repository-url]` with the actual URL of your repository.
+Replace `[repository-url]` with the actual URL of the this repository (https://github.com/wizelineacademy/itesm-socioformador-ago-dec-2023-team-03.git).
 
 ### 2. **Navigate to the Project Directory**:
 
