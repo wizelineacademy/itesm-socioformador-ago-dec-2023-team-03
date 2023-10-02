@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "output": "Wizeprompt is a simple and fast prompt for AI generators."
+  },
+  {
+    "id": 2,
+    "output": "Wizeprompt can generate text, code, and more."
+  },
+  {
+    "id": 3,
+    "output": "Just type your prompt and click generate."
+  },
+  {
+    "id": 4,
+    "output": "Wizeprompt was built with Next.js, Tailwind CSS, and OpenAI API."
+  },
+  {
+    "id": 5,
+    "output": "Wizeprompt is project building for Wizeline enterprise."
+  },
+  {
+    "id": 6,
+    "output": "Wizeprompt was built by itesm students."
+  },
+  {
+    "id": 7,
+    "output": "Wizeprompt is project building for Wizeline enterprise."
+  },
+  {
+    "id": 8,
+    "output": "Wizeprompt was built by itesm students."
+  }
+]
