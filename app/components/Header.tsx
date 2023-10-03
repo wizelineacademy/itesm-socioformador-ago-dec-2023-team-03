@@ -47,7 +47,7 @@ const Header: React.FC<HeaderProps> = ({
     const [loading, setLoading] = useState<boolean>(false);
 
     return (
-        <div className="h-full flex flex-col w-full pt-2">
+        <div className="h-full flex flex-col w-full">
                 <Box className = "py-2 text-right w-full text-3xl h-full">
                     <Space direction='vertical'>
                         <div className="pr-20">
@@ -59,7 +59,7 @@ const Header: React.FC<HeaderProps> = ({
                         </div>
                     </Space>
                 </Box>
-                <main className="h-full">
+                <main className="h-full" style={{ height: 'calc(100dvh - 60px)' }}>
                     {children}
                 </main>
         </div>
