@@ -27,7 +27,7 @@ const UserCard: React.FC<UserCardProps> = ({
     const userName = user?.given_name
 
     // If menu is not shown, show the avatar and username on Home page
-    if (hover == false && reference == null) {
+    if (hover == false && reference == "/home") {
         return (
             <div className='flex flex-row items-center gap-x-2 py-2'>
                 <div className='cursor-pointer' onMouseEnter={() => setHover(true)}>
