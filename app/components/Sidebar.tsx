@@ -35,7 +35,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                         Wizeprompt
                     </Link>
                 </Box>
-                <Box className="h-full overflow-y-auto text-white no-scrollbar">
+                <Box className="h-full overflow-y-auto text-white no-scrollbar pr-4">
                         {chatHistory.map((chat) => (
                             <SidebarItem key={chat.id} chat={chat} />
                         ))}

@@ -66,7 +66,7 @@ export default function ChatBox() {
   }
 
   return (
-    <div className="grid grid-rows-[1fr, auto] p-4 h-full gap-4">
+    <div className="grid grid-rows-[1fr, auto] p-4 h-full gap-4 bg-white">
       <div className="flex flex-col gap-4 overflow-y-auto">
         {prompts.map(prompt => (
           <div className="flex flex-col h-full">
