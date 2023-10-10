@@ -5,6 +5,7 @@ import UserCard from "./UserCard";
 import Link from "next/link";
 import SidebarItem from "./SidebarItem";
 import chat_history from "../data/chat_history.json";
+import Filter from "./Filter";
 
 interface SidebarProps {
     reference?: string;
@@ -69,6 +70,9 @@ const Sidebar: React.FC<SidebarProps> = ({
                         <Link href={'/'}>
                             Wizeprompt
                         </Link>
+                    </Box>
+                    <Box className="h-full">
+                        <Filter />
                     </Box>
                     <Box className="text-white">
                         <UserCard reference={reference} />
