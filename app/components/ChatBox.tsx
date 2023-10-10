@@ -69,9 +69,9 @@ export default function ChatBox() {
     <div className="grid grid-rows-[1fr, auto] p-4 h-full gap-4 bg-white">
       <div className="flex flex-col gap-4 overflow-y-auto">
         {prompts.map(prompt => (
-          <div className="flex flex-col h-full">
-            <Prompt key={prompt.id} Prompt={prompt.input} />
-            <Response key={prompt.id} Output={responses.find(response => response.id === prompt.id)?.output || ""} />
+          <div key={prompt.id} className="flex flex-col h-full">
+            <Prompt key={`prompt-${prompt.id}`} Prompt={prompt.input} />
+            <Response key={`response-${prompt.id}`} Output={responses.find(response => response.id === prompt.id)?.output || ""} />
           </div>
         ))}
       </div>
