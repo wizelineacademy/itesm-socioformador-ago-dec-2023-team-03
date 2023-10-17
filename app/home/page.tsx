@@ -22,11 +22,11 @@ export default function Home() {
         )
     } else {
     return (
-        <Sidebar>
-            <Header>
-                <ChatBox />
-            </Header>
-        </Sidebar>
+            <Sidebar reference={pathname}>
+                <Header>
+                        <ChatBox />
+                </Header>
+            </Sidebar>
     )
     }
 }
