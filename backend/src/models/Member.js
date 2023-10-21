@@ -1,9 +1,11 @@
 const { DataTypes, Model } = require('sequelize');
-const Role = require('./Role.js')
-const connection = require('../database/connection.js')
+const connection = require('../database/connection.js');
+
+const Role = require('./Role.js');
 
 class Member extends Model {}
 
+// Model
 Member.init({
   id: {
     type: DataTypes.UUID,
@@ -29,6 +31,7 @@ Member.init({
   sequelize: connection
 });
 
+// Relations
 Role.hasMany(Member, {
   foreignKey: {
     name: 'roleId',
@@ -38,6 +41,7 @@ Role.hasMany(Member, {
 });
 Member.belongsTo(Role);
 
+// Sync
 (async () => {
   try {
     await Member.sync({ logging: false });

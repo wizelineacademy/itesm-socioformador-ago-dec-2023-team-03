@@ -1,8 +1,9 @@
 const { DataTypes, Model } = require('sequelize');
-const sequelize = require('../database/connection.js')
+const sequelize = require('../database/connection.js');
 
 class LLM extends Model {}
 
+// Model
 LLM.init({
   id: {
     type: DataTypes.UUID,
@@ -19,4 +20,14 @@ LLM.init({
   sequelize
 });
 
-module.exports = LLM
+// Sync
+(async () => {
+  try {
+    await LLM.sync({ logging: false });
+    console.log('\'llm\' model synchronized successfully');
+  } catch (err) {
+    console.error('Error synchronizing the \'llm\' model:', err);
+  }
+})();
+
+module.exports = LLM;

@@ -1,8 +1,9 @@
 const { DataTypes, Model } = require('sequelize');
-const sequelize = require('../database/connection.js')
+const sequelize = require('../database/connection.js');
 
 class Role extends Model {}
 
+// Model
 Role.init({
   id: {
     type: DataTypes.UUID,
@@ -19,6 +20,7 @@ Role.init({
   sequelize
 });
 
+// Sync
 (async () => {
   try {
     await Role.sync({ logging: false });
@@ -28,4 +30,4 @@ Role.init({
   }
 })();
 
-module.exports = Role
+module.exports = Role;

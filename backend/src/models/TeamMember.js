@@ -1,11 +1,12 @@
 const { DataTypes, Model } = require('sequelize');
-const sequelize = require('../database/connection.js')
+const sequelize = require('../database/connection.js');
 
 const Team = require('../models/Team.js');
 const Member = require('../models/Member.js');
 
 class TeamMember extends Model {}
 
+// Model
 TeamMember.init({
   teamId: {
     type: DataTypes.UUID,
@@ -27,9 +28,11 @@ TeamMember.init({
   sequelize
 });
 
+// Relations
 Member.belongsToMany(Team, { through: TeamMember });
 Team.belongsToMany(Member, { through: TeamMember });
 
+// Sync
 (async () => {
   try {
     await TeamMember.sync({ logging: false });
@@ -39,4 +42,4 @@ Team.belongsToMany(Member, { through: TeamMember });
   }
 })();
 
-module.exports = TeamMember
+module.exports = TeamMember;
