@@ -38,4 +38,13 @@ Role.hasMany(Member, {
 });
 Member.belongsTo(Role);
 
+(async () => {
+  try {
+    await Member.sync({ logging: false });
+    console.log('\'member\' model synchronized successfully');
+  } catch (err) {
+    console.error('Error synchronizing the \'member\' model:', err);
+  }
+})();
+
 module.exports = Member

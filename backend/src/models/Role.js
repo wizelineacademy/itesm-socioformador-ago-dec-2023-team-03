@@ -19,4 +19,13 @@ Role.init({
   sequelize
 });
 
+(async () => {
+  try {
+    await Role.sync({ logging: false });
+    console.log('\'role\' model synchronized successfully');
+  } catch (err) {
+    console.error('Error synchronizing the \'role\' model:', err);
+  }
+})();
+
 module.exports = Role
