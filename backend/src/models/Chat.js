@@ -13,6 +13,11 @@ Chat.init({
     type: DataTypes.UUID,
     primaryKey: true,
     defaultValue: DataTypes.UUIDV4
+  },
+  title: {
+    type: DataTypes.STRING(50),
+    allowNull: false,
+    defaultValue: 'Nuevo chat'
   }
 }, {
   tableName: 'chat',
@@ -51,7 +56,7 @@ Chat.belongsTo(LLM);
 // Sync
 (async () => {
   try {
-    await Chat.sync({ logging: false });
+    await Chat.sync({ alter: true, logging: false });
     console.log('\'chat\' model synchronized successfully');
   } catch (err) {
     console.error('Error synchronizing the \'chat\' model:', err);

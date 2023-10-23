@@ -2,32 +2,36 @@
 const {
   Member,
   Team,
-  TeamMember
+  TeamMember,
+  Chat
 } = require('../models');
 
 // Errors
 const { ApiError } = require('../errors');
 
+// Utils
+const validateIdInModel = require('../utils/validateIdInModel.js')
+
 // ---------------------------------------------------------------------------------------------------------------------
 async function addMemberToTeam(req, res, next) {
   try {
-    // Find the team with the specified teamId, throw a 404 error if it doesn't exist
-    const teamId = req.body.teamId;
-    const team = await Team.findByPk(teamId);
-    if (!team) throw new ApiError(404, `Team with id ${teamId} not found`);
+    const { teamId, memberId } = req.body;
 
-    // Find the member with the specified memberId, throw a 404 error if it doesn't exist
-    const memberId = req.body.memberId;
-    const member = await Member.findByPk(memberId);
-    if (!member) throw new ApiError(404, `Member with id ${memberId} not found`);
+    const foundTeam = await validateIdInModel(teamId, Team);
+    const foundMember = await validateIdInModel(memberId, Member);
 
-    // Create a new entry in the TeamMember table linking the team and member
-    const teamMember = await TeamMember.create({ teamId, memberId });
+    // Check if a member already belongs to the team
+    let teamMember = await TeamMember.findOne({ where: { teamId, memberId } });
+    if (teamMember) {
+      const errorMessage = `Member with email "${foundMember.email}" already belongs to team "${foundTeam.name}"`;
+      throw new ApiError(400, errorMessage);
+    }
+
+    teamMember = await TeamMember.create({ teamId, memberId });
 
     res.status(201).json({
       success: true,
-      message: `Member ${member.firstName} has been added to team ${team.name}`,
-      data: { teamMember }
+      message: `Member with email "${foundMember.email}" has been added to the team "${foundTeam.name}"`
     });
   } catch(err) {
     next(err);
@@ -38,28 +42,24 @@ async function addMemberToTeam(req, res, next) {
 // ---------------------------------------------------------------------------------------------------------------------
 async function removeMemberFromTeam(req, res, next) {
   try {
-    const teamId = req.body.teamId;
-    const team = await Team.findByPk(teamId);
-    if (!team) {
-      throw new ApiError(404, `Team with id ${teamId} not found`);
-    }
+    const { teamId, memberId } = req.body;
 
-    const memberId = req.body.memberId;
-    const member = await Member.findByPk(memberId);
-    if (!member) {
-      throw new ApiError(404, `Member with id ${memberId} not found`);
-    }
+    const foundTeam = await validateIdInModel(teamId, Team);
+    const foundMember = await validateIdInModel(memberId, Member);
 
     const destroyedTeamMembers = await TeamMember.destroy({ where: { teamId, memberId } });
-
     if (destroyedTeamMembers === 0) {
-      throw new ApiError(404, `No member of the team was removed. There is no member with id ${teamId} ` + 
-                              `that belongs to team with id ${memberId}`);
+      const errorMessage = 'No member was removed. ' +
+        `Member with email "${foundMember.email}" doesn't belongs to team "${foundTeam.name}"`;
+      throw new ApiError(404, errorMessage);
     }
+
+    // Remove all the chats from the member associated with the team
+    await Chat.destroy({ where: { teamId, memberId } });
 
     res.status(200).json({
       success: true,
-      message: `Member with id ${memberId} has been removed from team with id ${teamId}`
+      message: `Member with email "${foundMember.email}" has been removed from team "${foundTeam.name}"`
     });
   } catch(err) {
     next(err);

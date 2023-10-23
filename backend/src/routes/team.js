@@ -3,8 +3,11 @@ const Joi = require('joi');
 
 const router = express.Router();
 
+// Models validators
+const teamValidators = require('../models/validators/team.js');
+
 // Middlewares
-const validateRequestInfo = require('../middlewares/validateRequestInfo.js');
+const validateRequestData = require('../middlewares/validateRequestData.js');
 
 // Controllers
 const {
@@ -12,11 +15,18 @@ const {
   getAll,
   update,
   remove,
-  getMembers
+  getMembers,
+  getLlms
 } = require('../controllers/team.js');
 
+// Routes
 router.route('/')
-  .post(create)
+  .post(
+    validateRequestData({
+      'body.name': teamValidators.name
+    }),
+    create
+  )
   .get(getAll);
 
 router.route('/:id')
@@ -25,10 +35,18 @@ router.route('/:id')
 
 router.route('/:id/members')
   .get(
-    validateRequestInfo('params', {
-      id: Joi.string().guid({ version: 'uuidv4' }),
+    validateRequestData({
+      'params.id': Joi.string().guid({ version: 'uuidv4' }).required().label('Team ID')
     }),
     getMembers
-  )
+  );
+
+router.route('/:id/llms')
+  .get(
+    validateRequestData({
+      'params.id': Joi.string().guid({ version: 'uuidv4' }).required().label('Team ID')
+    }),
+    getLlms
+  );
 
 module.exports = router;

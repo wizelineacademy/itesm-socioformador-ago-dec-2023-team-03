@@ -5,6 +5,8 @@ async function isAdmin(req, res, next) {
   try {
     const memberData = req.memberData;
 
+    console.log(memberData);
+
     if (!memberData) {
       throw new ApiError(401, 'Unauthorized: Authentication is required');
     }

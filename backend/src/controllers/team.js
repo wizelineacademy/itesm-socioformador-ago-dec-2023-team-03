@@ -1,9 +1,9 @@
-const Joi = require('joi');
-
 // Models
-const Team = require('../models/Team.js');
-const Member = require('../models/Member.js');
-const TeamMember = require('../models/TeamMember.js');
+const {
+  Team,
+  Member,
+  LLM
+} = require('../models');
 
 // Validators
 const TeamValidator = require('../validators/team.js');
@@ -11,43 +11,30 @@ const TeamValidator = require('../validators/team.js');
 // Errors
 const { ApiError } = require('../errors/index.js');
 
+// Utils
+const validateIdInModel = require('../utils/validateIdInModel.js');
+
 // ---------------------------------------------------------------------------------------------------------------------
 async function create(req, res, next) {
   try {
-    const body = req.body;
-    const name = body.name;
-
-    const teamValidator = new TeamValidator();
-
-    // Validate the name
-    const nameValidation = teamValidator.validateName(name);
-
-    // Check if there was a validation error for the name
-    if (nameValidation.error) {
-      throw new ApiError(400, nameValidation.error.message);
-    }
-
-    const validatedName = nameValidation.value;
+    const teamName = req.body.name;
 
     // Check if a team with the validated name already exists in the database
-    let team = await Team.findOne({ where: { name: validatedName } });
-
-    // If a team with the same name exists, throw an error with a 400 status code
-    if (team) {
-      throw new ApiError(400, `Team with name ${validatedName} already exists`);
+    let foundTeam = await Team.findOne({ where: { name: teamName } });
+    if (foundTeam) {
+      throw new ApiError(400, `Team "${teamName}" already exists`);
     }
 
     // Create a new team with the validated name
-    team = await Team.create({ name: validatedName });
-    const teamValues = team.dataValues;
+    const createdTeam = await Team.create({ name: teamName });
 
-    return res.status(201).json({
+    res.status(201).json({
       success: true,
-      message: 'Team created successfully',
-      data: { team: teamValues }
+      message: `Team "${createdTeam.name}" created successfully`,
+      data: { team: createdTeam.dataValues }
     });
-  } catch(err) {
-    return next(err);
+  } catch (err) {
+    next(err);
   }
 }
 // ---------------------------------------------------------------------------------------------------------------------
@@ -58,12 +45,12 @@ async function getAll(req, res, next) {
     // Retrieve all teams from the database (setting 'raw' to 'true' to get plain data)
     const teams = await Team.findAll({ raw: true });
 
-    return res.status(200).json({
+    res.status(200).json({
       success: true,
       data: { teams }
     });
-  } catch(err) {
-    return next(err);
+  } catch (err) {
+    next(err);
   }
 }
 // ---------------------------------------------------------------------------------------------------------------------
@@ -122,7 +109,7 @@ async function update(req, res, next) {
       message: 'Team updated successfully',
       data: { team: team.dataValues }
     });
-  } catch(err) {
+  } catch (err) {
     return next(err);
   }
 }
@@ -146,7 +133,7 @@ async function remove(req,res, next) {
       success: true,
       message: 'Team removed successfully'
     });
-  } catch(err) {
+  } catch (err) {
     return next(err);
   }
 }
@@ -164,13 +151,15 @@ async function getMembers(req, res, next) {
 
     team = await Team.findOne({
       where: { id: teamId },
-      include: Member
+      include: {
+        model: Member
+      }
     });
 
     const members = team.dataValues.members;
     const membersData = members.map((member) => member.dataValues);
 
-    return res.status(200).json({
+    res.status(200).json({
       success: true,
       data: {
         team: {
@@ -182,8 +171,38 @@ async function getMembers(req, res, next) {
         members: membersData
       }
     });
-  } catch(err) {
-    return next(err);
+  } catch (err) {
+    next(err);
+  }
+}
+// ---------------------------------------------------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------------------------------------------------
+async function getLlms(req, res, next) {
+  try {
+    const teamId = req.params.id;
+    
+    let team = await Team.findByPk(teamId);
+    if (!team) throw new ApiError(404, `Team with id ${teamId} doesn't exists`);
+
+    team = await Team.findOne({
+      where: { id: teamId },
+      include: {
+        model: LLM,
+        through: {
+          attributes: []
+        }
+      }
+    });
+
+    const llms = team.llms.map((llm) => llm.dataValues);
+
+    res.status(200).json({
+      success: true,
+      data: { llms }
+    });
+  } catch (err) {
+    next(err);
   }
 }
 // ---------------------------------------------------------------------------------------------------------------------
@@ -193,5 +212,6 @@ module.exports = {
   getAll,
   update,
   remove,
-  getMembers
+  getMembers,
+  getLlms
 };

@@ -2,6 +2,7 @@ const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../database/connection.js');
 
 const Chat = require('./Chat.js');
+const Prompt = require('./Prompt.js');
 
 class Response extends Model {}
 
@@ -18,10 +19,12 @@ Response.init({
   },
   usedTokens: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: false,
+    defaultValue: 0
   },
   isLiked: {
     type: DataTypes.BOOLEAN,
+    allowNull: false,
     defaultValue: false
   }
 }, {
@@ -40,10 +43,19 @@ Chat.hasMany(Response, {
 });
 Response.belongsTo(Chat);
 
+Prompt.hasMany(Response, {
+  foreignKey: {
+    name: 'promptId',
+    type: DataTypes.UUID,
+    allowNull: false
+  }
+});
+Response.belongsTo(Prompt);
+
 // Sync
 (async () => {
   try {
-    await Response.sync({ logging: false });
+    await Response.sync({ alter: true, logging: false });
     console.log('\'response\' model synchronized successfully');
   } catch (err) {
     console.error('Error synchronizing the \'response\' model:', err);

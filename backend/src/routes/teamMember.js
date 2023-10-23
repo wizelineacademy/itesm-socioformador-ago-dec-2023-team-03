@@ -1,10 +1,11 @@
 const express = require('express');
-const Joi = require('joi');
 
 const router = express.Router();
 
+const teamMemberValidators = require('../models/validators/teamMember.js')
+
 // Middlewares
-const validateRequestInfo = require('../middlewares/validateRequestInfo.js');
+const validateRequestData = require('../middlewares/validateRequestData.js');
 
 // Controllers
 const {
@@ -12,18 +13,19 @@ const {
   removeMemberFromTeam
 } = require('../controllers/teamMember.js');
 
+// Routes
 router.route('/')
   .post(
-    validateRequestInfo('body', {
-      teamId: Joi.string().guid({ version: 'uuidv4' }),
-      memberId: Joi.string().guid({ version: 'uuidv4' })
+    validateRequestData({
+      'body.teamId': teamMemberValidators.teamId,
+      'body.memberId': teamMemberValidators.memberId
     }),
     addMemberToTeam
   )
   .delete(
-    validateRequestInfo('body', {
-      teamId: Joi.string().guid({ version: 'uuidv4' }),
-      memberId: Joi.string().guid({ version: 'uuidv4' })
+    validateRequestData({
+      'body.teamId': teamMemberValidators.teamId,
+      'body.memberId': teamMemberValidators.memberId
     }),
     removeMemberFromTeam
   )

@@ -18,7 +18,8 @@ Prompt.init({
   },
   usedTokens: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: false,
+    defaultValue: 0
   }
 }, {
   tableName: 'prompt',

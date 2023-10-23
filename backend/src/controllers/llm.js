@@ -10,40 +10,26 @@ const { ApiError } = require('../errors');
 // ---------------------------------------------------------------------------------------------------------------------
 async function create(req, res, next) {
   try {
-    const body = req.body;
-    const name = body.name;
-
-    const llmValidator = new LlmValidator();
-
-    // Validate the name
-    const nameValidation = llmValidator.validateName(name);
-
-    // Check if the name validation resulted in an error
-    if (nameValidation.error) {
-      throw new ApiError(400, nameValidation.error.message);
-    }
-
-    const validatedName = nameValidation.value;
+    const name = req.body.name;
 
     // Attempt to find an existing llm with the same name
-    let llm = await LLM.findOne({ where: { name: validatedName } });
+    let llm = await LLM.findOne({ where: { name } });
 
     // If an existing llm is found, throw an ApiError indicating the llm already exists
     if (llm) {
-      throw new ApiError(400, 'LLM already exists');
+      throw new ApiError(400, `LLM with name "${name}" already exists`);
     }
 
     // If no existing llm is found, proceed to create a new llm
-    llm = await LLM.create({ name: validatedName });
-    const llmValues = llm.dataValues;
+    llm = await LLM.create({ name });
 
-    return res.status(201).json({
+    res.status(201).json({
       success: true,
       message: 'LLM created successfully',
-      data: { llm: llmValues }
+      data: { llm: llm.dataValues }
     });
   } catch(err) {
-    return next(err);
+    next(err);
   }
 }
 // ---------------------------------------------------------------------------------------------------------------------
