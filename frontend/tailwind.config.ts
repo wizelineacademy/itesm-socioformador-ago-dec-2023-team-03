@@ -15,6 +15,10 @@ const config: Config = {
       },
       colors: {
         'regal-blue': '#111823',
+        'regal-blue-dark': '#111823',
+        'regal-blue-normal': '#1F2533',
+        'regal-blue-light': '#2D3446',
+        'bg-regal-blue': '#111823'
       },
     },
   },
