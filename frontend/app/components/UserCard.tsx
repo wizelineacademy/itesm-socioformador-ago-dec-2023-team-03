@@ -5,6 +5,7 @@ import { Avatar } from 'antd'
 import { DollarTwoTone } from '@ant-design/icons';
 import Link from "next/link";
 import { useUser } from '@auth0/nextjs-auth0/client';
+import { usePathname } from "next/navigation";
 
 interface UserCardProps {
     reference?: string;
@@ -13,6 +14,9 @@ interface UserCardProps {
 const UserCard: React.FC<UserCardProps> = ({
         reference,
     }) => {
+    
+    const pathname = usePathname();
+    const adminRoute = pathname.split("/")[1];
     
     const { user, error, isLoading } = useUser();
 
@@ -44,7 +48,7 @@ const UserCard: React.FC<UserCardProps> = ({
             </div>
         );
         // If menu is not shown, show the avatar and username on Admin page
-    } else if (reference == "/admin" && hover == false) {
+    } else if (adminRoute == "admin" && hover == false) {
         return (
             <div className='flex flex-row items-center gap-x-2 py-2'>
             <div className='cursor-pointer' onMouseEnter={() => setHover(true)}>
@@ -61,17 +65,17 @@ const UserCard: React.FC<UserCardProps> = ({
         </div>
     );
     // Show menu after hovering on the avatar on Admin page
-    } else if (reference == "/admin" && hover == true) {
+    } else if (adminRoute == "admin" && hover == true) {
         return (
             <div onMouseLeave={() => setHover(false)}>
                 <div>
                     <div className="flex flex-col items-center py-1">
                         <div className="flex flex-col">
-                            <button className="bg-gray-300 hover:bg-gray-500 text-gray-800 font-bold py-2 px-10 rounded-full py-2.1 opacity-50">
-                                <Link href='/'>
+                            <Link href='/'>
+                                <button className="bg-gray-300 hover:bg-gray-500 text-gray-800 font-bold py-2 px-10 rounded-full py-2.1 opacity-50">
                                     Home
-                                </Link>
-                            </button>
+                                </button>                                
+                            </Link>
                             <Link href="/api/auth/logout" className='flex flex-col items-center'>
                                 <button className="pt-1 hover:text-gray-400">
                                     Logout
@@ -105,11 +109,11 @@ const UserCard: React.FC<UserCardProps> = ({
                 <div>
                     <div className="flex flex-col items-center py-1">
                         <div className="flex flex-col">
-                            <button className="bg-gray-300 hover:bg-gray-500 text-gray-800 font-bold py-2 px-10 rounded-full py-2.1 opacity-50">
-                                <Link href='/admin'>
+                            <Link href='/admin'>
+                                <button className="bg-gray-300 hover:bg-gray-500 text-gray-800 font-bold py-2 px-10 rounded-full py-2.1 opacity-50">
                                     Dashboard
-                                </Link>
-                            </button>
+                                </button>                                
+                            </Link>
                             <Link href="/api/auth/logout" className='flex flex-col items-center'>
                                 <button className="pt-1 hover:text-gray-400">
                                     Logout

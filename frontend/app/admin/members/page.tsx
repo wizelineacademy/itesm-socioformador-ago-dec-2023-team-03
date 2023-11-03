@@ -3,7 +3,7 @@
 import Box from "@/app/components/Box";
 import Header from "@/app/components/Header";
 import Sidebar from "@/app/components/Sidebar";
-import AdminMembersList from "../components/AdminMembersList";
+import AdminMembersList from "@/app/components/AdminMembersList";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { redirect, usePathname } from "next/navigation";
 
@@ -23,21 +23,18 @@ export default function Home() {
         )
     } else {
     return (
-      <>
-        {redirect("/admin/members")}
-      </>
-    //   <div className="h-full">
-    //     <Sidebar reference={pathname}>
-    //         <Header>
-    //             <div className="h-full">
-    //                 <Box className="h-full bg-white">
-    //                     {/* Admin Dashboard */}
-    //                     <AdminMembersList />
-    //                 </Box>
-    //             </div>
-    //         </Header>
-    //     </Sidebar>
-    //   </div>
+      <div className="h-full">
+        <Sidebar reference={pathname}>
+            <Header>
+                <div className="h-full">
+                    <Box className="h-full bg-white">
+                        {/* Admin Dashboard */}
+                        <AdminMembersList />
+                    </Box>
+                </div>
+            </Header>
+        </Sidebar>
+      </div>
     )
     }
   }
