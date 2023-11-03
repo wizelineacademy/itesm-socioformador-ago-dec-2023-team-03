@@ -51,11 +51,11 @@ const Header: React.FC<HeaderProps> = ({
                 <Box className = "py-2 text-right w-full text-3xl">
                     <Space direction='vertical'>
                         <div className="pr-20">
-                            <Dropdown menu={{ items }} placement='bottomLeft'>
+                            {/* <Dropdown menu={{ items }} placement='bottomLeft'>
                                 <Button ghost size="large">
                                     {selectedLlm ? selectedLlm  : 'Select LLM'}
                                 </Button>
-                            </Dropdown>
+                            </Dropdown> */}
                         </div>
                     </Space>
                 </Box>
