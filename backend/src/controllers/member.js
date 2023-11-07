@@ -2,7 +2,8 @@
 const {
   Member,
   Role,
-  Team
+  Team,
+  Chat
 } = require('../models');
 
 // Errors
@@ -42,14 +43,14 @@ async function login(req, res, next) {
     // Create a payload for the JSON Web Token (JWT) that includes member details and their role name
     const jwtPayload = { ...formattedMemberData };
 
-    // Generate a JWT using the payload, a secret, and an expiration time of 30 seconds
+    // Generate a JWT
     const token = await signJwt(jwtPayload, process.env.JWT_LOGIN_SECRET, {
-      expiresIn: 30
+      expiresIn: Number(process.env.JWT_LOGIN_EXP_TIME_IN_SECONDS)
     });
 
     // Set the generated token as a signed cookie in the response
     res.cookie('login-token', token, {
-      maxAge: 60000, // Expiration time for the cookie in milliseconds (60 seconds)
+      maxAge: Number(process.env.COOKIE_LOGIN_EXP_TIME_IN_MILLISECONDS),
       secure: false,  // Cookie can be sent over non-HTTPS connections (for development)
       httpOnly: true,  // Cookie is not accessible via JavaScript
       signed: true // If the cookie value is modified, it becomes invalid
@@ -118,7 +119,7 @@ async function getAll(req, res, next) {
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------------------------------------------------
-async function getMemberTeamsById(req, res, next) {
+async function getMemberTeams(req, res, next) {
   try {
     const memberId = req.params.id;
   
@@ -148,9 +149,36 @@ async function getMemberTeamsById(req, res, next) {
 }
 // ---------------------------------------------------------------------------------------------------------------------
 
+// ---------------------------------------------------------------------------------------------------------------------
+async function getMemberChats(req, res, next) {
+  try {
+    const memberId = req.params.id;
+    const teamId = req.query['team'];
+    const llmId = req.query['llm'];
+
+    const teamLLMMemberChats = await Chat.findAll({
+      where: { memberId, teamId, llmId },
+      order: [['createdAt', 'DESC']]
+    });
+
+    const formattedChats = teamLLMMemberChats.map((chat) => chat.toJSON());
+
+    res.status(200).json({
+      success: true,
+      data: {
+        chats: formattedChats
+      }
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+// ---------------------------------------------------------------------------------------------------------------------
+
 module.exports = {
   login,
   register,
   getAll,
-  getMemberTeamsById
+  getMemberTeams,
+  getMemberChats
 };

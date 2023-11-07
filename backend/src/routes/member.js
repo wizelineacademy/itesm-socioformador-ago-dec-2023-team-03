@@ -8,13 +8,15 @@ const memberValidator = require('../models/validators/member.js');
 
 // Middlewares
 const validateRequestData = require('../middlewares/validateRequestData.js');
+const validateLoginToken = require('../middlewares/validateLoginToken.js');
 
 // Controllers
 const {
   login,
   register,
   getAll,
-  getMemberTeamsById
+  getMemberTeams,
+  getMemberChats
 } = require('../controllers/member.js');
 
 // Routes
@@ -44,7 +46,16 @@ router.route('/:id/teams')
     validateRequestData({
       'params.id': Joi.string().guid({ version: 'uuidv4' }).required().label('Member ID')
     }),
-    getMemberTeamsById
+    getMemberTeams
   );
+
+router.route('/:id/chats')
+  .get(
+    validateRequestData({
+      'params.id': Joi.string().guid({ version: 'uuidv4' }).required().label('Member ID')
+    }),
+    getMemberChats
+  );
+
 
 module.exports = router;

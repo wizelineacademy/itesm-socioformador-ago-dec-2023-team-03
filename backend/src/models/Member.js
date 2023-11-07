@@ -13,17 +13,18 @@ Member.init({
     defaultValue: DataTypes.UUIDV4
   },
   firstName: {
-    type: DataTypes.STRING(50),
-    allowNull: false,
+    type: DataTypes.STRING(50)
   },
   lastName: {
-    type: DataTypes.STRING(50),
-    allowNull: false,
+    type: DataTypes.STRING(50)
   },
   email: {
     type: DataTypes.STRING(50),
     allowNull: false,
     unique: true,
+  },
+  picture: {
+    type: DataTypes.STRING(255)
   }
 }, {
   tableName: 'member',
@@ -35,8 +36,7 @@ Member.init({
 Role.hasMany(Member, {
   foreignKey: {
     name: 'roleId',
-    type: DataTypes.UUID,
-    allowNull: false
+    type: DataTypes.UUID
   }
 });
 Member.belongsTo(Role);
@@ -44,11 +44,11 @@ Member.belongsTo(Role);
 // Sync
 (async () => {
   try {
-    await Member.sync({ logging: false });
+    await Member.sync({ alter: true, logging: false });
     console.log('\'member\' model synchronized successfully');
   } catch (err) {
     console.error('Error synchronizing the \'member\' model:', err);
   }
 })();
 
-module.exports = Member
+module.exports = Member;

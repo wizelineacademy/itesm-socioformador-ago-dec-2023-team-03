@@ -3,15 +3,15 @@ const { ApiError } = require('../errors');
 
 async function isAdmin(req, res, next) {
   try {
-    const memberData = req.memberData;
+    const me = req.me;
 
-    console.log(memberData);
+    console.log(me);
 
-    if (!memberData) {
+    if (!me) {
       throw new ApiError(401, 'Unauthorized: Authentication is required');
     }
     
-    if (!memberData.roleName || memberData.roleName !== 'admin') {
+    if (!me.roleName || me.roleName !== 'admin') {
       throw new ApiError(403, 'Access denied');
     }
 

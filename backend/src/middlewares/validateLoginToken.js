@@ -1,5 +1,3 @@
-const jwt = require('jsonwebtoken');
-
 // Errors
 const { ApiError } = require('../errors');
 
@@ -10,14 +8,16 @@ async function validateLoginToken(req, res, next) {
   try {
     const signedCookies = req.signedCookies;
 
+    console.log(signedCookies);
+
     if (!signedCookies['login-token']) {
-      throw new ApiError(401, 'Unauthorized: Authentication is required');
+      throw new ApiError(401, 'Authentication is required');
     }
 
     const token = signedCookies['login-token'];
     const decodedToken = await verifyJwt(token, process.env.JWT_LOGIN_SECRET);
 
-    req.memberData = decodedToken;
+    req.me = decodedToken;
     next();
   } catch(err) {
     next(err);
