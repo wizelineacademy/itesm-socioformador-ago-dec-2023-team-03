@@ -14,7 +14,7 @@ import AdminTeamLLMsList from "@/app/components/AdminTeamLLMsList";
 export default function Home() {
     const pathname = usePathname();
     const { user, error, isLoading } = useUser();
-    const [showMembers , setShowMembers] = useState(false)
+    const [showMembers , setShowMembers] = useState(true)
 
     function handleClick (event:boolean){
         setShowMembers(event)
