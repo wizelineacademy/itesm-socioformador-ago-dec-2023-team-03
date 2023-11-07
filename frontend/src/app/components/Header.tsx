@@ -47,21 +47,20 @@ const Header: React.FC<HeaderProps> = ({
     const [loading, setLoading] = useState<boolean>(false);
 
     return (
-        <div className="h-full flex flex-col w-full">
-                <Box className = "py-2 text-right w-full text-3xl">
+        <div className="flex flex-col w-full">
+                <header className = "py-2 text-right w-full text-3xl">
                     <Space direction='vertical'>
                         <div className="pr-20">
-                            <Dropdown menu={{ items }} placement='bottomLeft'>
+                            {/* <Dropdown menu={{ items }} placement='bottomLeft'>
                                 <Button ghost size="large">
                                     {selectedLlm ? selectedLlm  : 'Select LLM'}
                                 </Button>
-                            </Dropdown>
+                            </Dropdown> */}
                         </div>
                     </Space>
-                </Box>
-                <main className="h-full" style={{ height: 'calc(100dvh - 60px)' }}>
-                    {children}
-                </main>
+                </header>
+
+                {children}
         </div>
     );
 };

@@ -14,10 +14,8 @@ function HomePage() {
   const [teams, setTeams] = React.useState([]);
 
   async function _login() {
-    setIsLoading(true);
     const body = { email: user.email };
     const res = await services.member.login(body);
-    setIsLoading(false);
     if (!res.success && res.error) {
       router.push('/login');
     }
