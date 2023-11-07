@@ -59,23 +59,26 @@ const Sidebar: React.FC<SidebarProps> = ({
         //sidebar for admin page
     } else if(adminRoute == "admin"){
         return (
-            <div className="flex h-full w-full">
-                <div className="hidden md:flex flex-col h-full w-[300px] p-2 ">
-                    <div className = "flex flex-col gap-5 px-4 py-5 text-3xl text-center text-white bg-regal-blue-normal">
-                        <Link href={'/admin'}>
-                            Wizeprompt
-                        </Link>
-                        <AdminNavButtons />
-                    </div>
-                    <Box className="h-full">
-                        <Filter />
-                    </Box>
-                    <Box className="bg-regal-blue-normal text-white">
-                        <UserCard reference={reference} />
-                    </Box>
-                </div>
-                <main className="h-full w-full">
+            <div className="h-screen w-screen">
+                <main className="flex flex-row h-full">
+
+                    <aside className="flex flex-col justify-between h-full w-64 p-2 ">
+                        <header className = "flex flex-col gap-5 px-4 py-5 bg-regal-blue-normal">
+                            <Link className="text-3xl text-white" href={'/admin'}>
+                                Wizeprompt
+                            </Link>
+                            <AdminNavButtons />
+                        </header>
+                        <Box className="h-full">
+                            <Filter />
+                        </Box>
+                        <footer className="bg-regal-blue-normal text-white">
+                            <UserCard reference={reference} />
+                        </footer>
+                    </aside>
+
                     {children}
+                    
                 </main>
             </div>
         );
