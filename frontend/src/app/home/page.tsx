@@ -1,8 +1,8 @@
 "use client";
 
-import ChatBox from "@/app/components/ChatBox";
-import Header from '@/app/components/Header';
-import Sidebar from '@/app/components/Sidebar';
+import ChatBox from "@/src/app/components/ChatBox";
+import Header from '@/src/app/components/Header';
+import Sidebar from '@/src/app/components/Sidebar';
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { redirect, usePathname} from "next/navigation";
 import Box from "../components/Box";

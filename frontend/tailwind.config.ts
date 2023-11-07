@@ -2,9 +2,9 @@ import type { Config } from 'tailwindcss'
 
 const config: Config = {
   content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    // './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    // './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/**/*.{js,ts,jsx,tsx,mdx}'
   ],
   theme: {
     extend: {
@@ -18,7 +18,8 @@ const config: Config = {
         'regal-blue-dark': '#111823',
         'regal-blue-normal': '#1F2533',
         'regal-blue-light': '#2D3446',
-        'bg-regal-blue': '#111823'
+        'bg-regal-blue': '#111823',
+        'brand-primary': '#E93D44'
       },
     },
   },

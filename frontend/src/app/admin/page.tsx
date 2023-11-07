@@ -1,8 +1,8 @@
 "use client";
 
-import Box from "@/app/components/Box";
-import Header from "@/app/components/Header";
-import Sidebar from "@/app/components/Sidebar";
+import Box from "@/src/app/components/Box";
+import Header from "@/src/app/components/Header";
+import Sidebar from "@/src/app/components/Sidebar";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { redirect, usePathname } from "next/navigation";
 
