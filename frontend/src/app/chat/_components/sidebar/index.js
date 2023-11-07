@@ -36,7 +36,7 @@ function Sidebar(props) {
   return (
     <aside className='flex flex-col bg-regal-blue-dark w-64 shrink-0 border-r border-gray-600 p-4'>
       <p className='mb-4'>
-        <span className='font-semibold text-brand-primary'>Team: </span>Equipo el nuevo 1
+        <span className='font-semibold text-brand-primary'>Team: </span>Wizeline Team
       </p>
       <button
           onClick={() => createChat()}

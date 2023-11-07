@@ -19,7 +19,7 @@ const categories = [
 function HomePageLayout({ children }) {
   return (
     <div className='w-screen h-screen flex'>
-      <aside className='bg-regal-blue-dark w-64 h-full shrink-0 border-r border-gray-600'>
+      <aside className='bg-regal-blue-dark flex flex-col w-64 h-full shrink-0 border-r border-gray-600'>
         <ul className='overflow-y-scroll h-full px-4'>
           {categories.map((category, idx) => (
             <li key={`${category}-${idx}`}>
@@ -33,6 +33,7 @@ function HomePageLayout({ children }) {
             </li>
           ))}
         </ul>
+        <Link href='/api/auth/logout'>Logout</Link>
       </aside>
       <main className='w-full bg-regal-blue-normal'>
         { children }
