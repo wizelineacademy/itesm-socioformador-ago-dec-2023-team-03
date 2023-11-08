@@ -1,56 +1,50 @@
+'use client';
+
+import React from 'react';
+
+// Components
 import Sidebar from './_components/sidebar';
 import Chat from './_components/chat';
 
-async function getUserChats(memberId, options) {
-  let queryStr = ''
-  if (options && options.queryParams) {
-    queryStr = '?';
-    const queryParams = options.queryParams;
-    const validQueryParams = ['team', 'llm'];
-    validQueryParams.forEach((validQueryParam, idx) => {
-      if (queryParams[validQueryParam]) {
-        queryStr += `${validQueryParam}=${queryParams[validQueryParam]}`;
-        if (idx !== validQueryParams.length - 1) {
-          queryStr += '&';
-        }
-      }
-    })
-  }
-  const res = await fetch(`http://localhost:8080/members/${memberId}/chats${queryStr}`, { cache:'no-store' });
-  return res.json();
-}
+// Services
+import services from '@/src/services';
 
-async function getChat(chatId) {
-  const res = await fetch(`http://localhost:8080/chats/${chatId}`, { cache: 'no-store' });
-  return res.json();
-}
+// Hooks
+import hooks from '../../hooks'
 
-async function ChatPage(props) {
-  const myId = 'cb26c0d3-5b1d-4fc0-816e-43f2f01cecb6';
+function ChatPage(props) {
+  const [chats, setChats] = React.useState([]);
   const searchParams = props.searchParams;
 
-  let chats = [];
-  const chatsResponse = await getUserChats(myId, {
-    queryParams: {
-      team: searchParams.team,
-      llm: searchParams.llm
-    }
-  })
+  const session = hooks.useSession();
 
-  if (chatsResponse.success) {
-    chats = chatsResponse.data.chats;
-    console.log(chats);
+  async function initialFetch() {
+    const myChats = await services.me.getMyChats({
+      query: {
+        'team-id': searchParams['team-id'],
+        'llm-id': searchParams['llm-id']
+      }
+    });
+
+    setChats(myChats.data.chats);
   }
 
+  React.useEffect(() => {
+    if (session.me) {
+      initialFetch();
+    }
+  }, [session.me]);
+
+  if (session.isLoading) return <div className='loader'></div>;
+  if (session.error) return null;
+
   return (
-    <>
-      <div className='relative z-0 flex h-full w-full overflow-hidden'>
-        <main className='flex w-full h-full'>
-          <Sidebar chats={chats} />
-          <Chat />
-        </main>
-      </div>
-    </>
+    <div className='relative z-0 flex h-full w-full overflow-hidden'>
+      <main className='flex w-full h-full'>
+        <Sidebar chats={chats} />
+        <Chat />
+      </main>
+    </div>
   )
 }
 

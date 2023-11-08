@@ -12,7 +12,11 @@ function globalErrorHandler(err, req, res, next) {
   if (err instanceof TokenExpiredError) {
     return res.status(401).json({
       success: false,
-      message: 'Your session has expired. Please log in again to continue.'
+      error: {
+        name: err.name,
+        message: 'Your session has expired. Please log in again to continue',
+        httpStatusCode: 401,
+      }
     });
   }
 

@@ -66,7 +66,12 @@ function Chat({ chat }) {
                   </div>
                 )
             ))
-            : <p>Hola</p>
+            : (
+              <div className='w-full h-full flex justify-center items-center flex-col'>
+                <h1 className='text-brand-primary text-5xl font-semibold mb-3'>Wizeprompt</h1>
+                <p className=' text-neutral-300 text-lg'>Start a conversation by writing whatever you want</p>
+              </div>
+            )
         }
       </div>
 

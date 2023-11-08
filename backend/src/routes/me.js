@@ -4,7 +4,9 @@ const router = express.Router();
 // Controllers
 const {
   getMe,
-  getMyTeams
+  getMyTeams,
+  getMyChats,
+  createChat
 } = require('../controllers/me.js');
 
 // Middlewares
@@ -15,5 +17,9 @@ router.route('/')
 
 router.route('/teams')
   .get(validateLoginToken, getMyTeams);
+
+router.route('/chats')
+  .get(validateLoginToken, getMyChats)
+  .post(validateLoginToken, createChat);
   
 module.exports = router;

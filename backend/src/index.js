@@ -23,12 +23,12 @@ const myRoutes = require('./routes/me.js');
 const notFoundRoute = require('./routes/notFound.js');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 // Setting global middlewares
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
-app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SIGNED_SECRET));
+app.use(express.json());
 
 // Setting routes
 app.use('/members', memberRoutes);

@@ -7,15 +7,17 @@ const verifyJwt = require('../utils/verifyJwt.js');
 async function validateLoginToken(req, res, next) {
   try {
     const signedCookies = req.signedCookies;
-
-    console.log(signedCookies);
-
-    if (!signedCookies['login-token']) {
-      throw new ApiError(401, 'Authentication is required');
+    if (!signedCookies) {
+      throw new ApiError(401, 'Authenticacion is required. No signed cookies were found');
     }
 
-    const token = signedCookies['login-token'];
-    const decodedToken = await verifyJwt(token, process.env.JWT_LOGIN_SECRET);
+    const loginToken = signedCookies['login-token'];
+    if (!loginToken) {
+      throw new ApiError(401, 'Authenticacion is required. No login token were found');
+    }
+
+    const loginTokenSecret = process.env.JWT_LOGIN_SECRET;
+    const decodedToken = await verifyJwt(loginToken, loginTokenSecret);
 
     req.me = decodedToken;
     next();

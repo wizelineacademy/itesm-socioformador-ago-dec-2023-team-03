@@ -9,4 +9,4 @@ async function validateIdInModel(id, model) {
   return foundItem;
 }
 
-module.exports = validateIdInModel
+module.exports = validateIdInModel;
