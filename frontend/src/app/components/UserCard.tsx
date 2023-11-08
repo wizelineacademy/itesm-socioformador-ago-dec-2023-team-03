@@ -20,15 +20,16 @@ const UserCard: React.FC<UserCardProps> = ({
     
     const { user, error, isLoading } = useUser();
 
+    // Hook for hover over the avatar
+    const [hover, setHover] = useState(false);
+
+    // Get the username from the user object given by Auth0
+    const userName = user?.given_name
+
     console.log(user)
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>{error.message}</div>;
-
-    // Hook for hover over the avatar
-    const [hover, setHover] = useState(false);
-    // Get the username from the user object given by Auth0
-    const userName = user?.given_name
 
     // If menu is not shown, show the avatar and username on Home page
     if (hover == false && reference == "/home") {
