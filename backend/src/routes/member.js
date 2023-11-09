@@ -57,5 +57,4 @@ router.route('/:id/chats')
     getMemberChats
   );
 
-
 module.exports = router;

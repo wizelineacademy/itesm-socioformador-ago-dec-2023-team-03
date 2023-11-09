@@ -9,6 +9,8 @@ const promptValidators = require('../models/validators/prompt.js');
 
 // Middlewares
 const validateRequestData = require('../middlewares/validateRequestData.js');
+const validateUserSession = require('../middlewares/validateUserSession.js');
+const checkRole = require('../middlewares/checkRole.js');
 
 // Controllers
 const {
@@ -22,14 +24,15 @@ const chatIdParamValidator = Joi.string().guid({ version: 'uuidv4' }).required()
 
 // Routes
 router.route('/')
-  // Create chat
   .post(
-    validateRequestData({
-      'body.title': chatValidators.title,
-      'body.memberId': chatValidators.memberId,
-      'body.teamId': chatValidators.teamId,
-      'body.llmId': chatValidators.llmId
-    }),
+    // validateRequestData({
+    //   'body.title': chatValidators.title,
+    //   'body.memberId': chatValidators.memberId,
+    //   'body.teamId': chatValidators.teamId,
+    //   'body.llmId': chatValidators.llmId
+    // }),
+    validateUserSession,
+    checkRole(['admin', 'user']),
     createChat
   )
 
@@ -51,12 +54,13 @@ router.route('/:id')
 
 // Routes for handling chat prompts
 router.route('/:id/prompts')
-  // Create a prompt
   .post(
-    validateRequestData({
-      'body.message': promptValidators.message,
-      'params.id': chatIdParamValidator
-    }),
+    validateUserSession,
+    checkRole(['admin', 'user']),
+    // validateRequestData({
+    //   'body.message': promptValidators.message,
+    //   'params.id': chatIdParamValidator
+    // }),
     createPrompt
   )
 

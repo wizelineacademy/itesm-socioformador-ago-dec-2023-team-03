@@ -1,5 +1,10 @@
 // Error
-const { ApiError } = require("../errors");
+const {
+  ApiError,
+  ClientError,
+  ServerError,
+  ExtendedError
+} = require("../errors");
 
 // Models
 const {
@@ -8,10 +13,17 @@ const {
   Chat,
   LLM,
   TeamMember,
-  TeamLLM
+  TeamLLM,
+  Prompt,
+  Response
 } = require("../models");
 
+const Joi = require('joi');
+
 const validateIdInModel = require('../utils/validateIdInModel.js');
+
+// Utils
+const generateChatCompletion = require('../utils/generateChatCompletion.js');
 
 // ---------------------------------------------------------------------------------------------------------------------
 function getMe(req, res, next) {
@@ -132,7 +144,7 @@ async function createChat(req, res, next) {
       memberId: member.id,
       teamId: team.id,
       llmId: llm.id,
-      title
+      title: title || 'New chat'
     });
 
     res.status(201).json({
@@ -146,9 +158,51 @@ async function createChat(req, res, next) {
 }
 // ---------------------------------------------------------------------------------------------------------------------
 
+// ---------------------------------------------------------------------------------------------------------------------
+async function createPrompt(req, res, next) {
+  try {
+    const me = req.me;
+    const chatId = req.params.chatId;
+    const { message } = req.body;
+
+    const chat = await validateIdInModel(chatId, Chat);
+    console.log(chat.toJSON());
+
+    // Get the chat LLM
+    const llm = await LLM.findByPk(chat.llmId);
+    console.log(llm.toJSON());
+
+    const completion = await generateChatCompletion(message, { model: llm.model });
+    console.log('Completion:', completion);
+    return
+
+    // TODO: Check user tokens in the team for the specific LLM
+
+    // Create prompt
+    await Prompt.create({
+      message,
+      usedTokens,
+      chatId,
+    });
+
+    // Create response
+    await Response.create({
+      message,
+      usedTokens,
+      isLiked,
+      chatId,
+      promptId
+    });
+    console.log(chat);
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   getMe,
   getMyTeams,
   getMyChats,
-  createChat
+  createChat,
+  createPrompt
 };

@@ -7,27 +7,31 @@ const {
   TeamLLM,
   LLM,
   Response,
-  Prompt
+  Prompt,
+  Tokens
 } = require('../models');
 
 // Errors
-const { ApiError } = require('../errors');
+const { ApiError, ClientError } = require('../errors');
 
 // Utils
-const validateIdInModel = require('../utils/validateIdInModel.js')
+const validateIdInModel = require('../utils/validateIdInModel.js');
+const generateChatCompletion = require('../utils/generateChatCompletion.js');
+const { SuccessResponse } = require('../responses');
 
 // ---------------------------------------------------------------------------------------------------------------------
 async function createChat(req, res, next) {
   try {
-    const { memberId, teamId, llmId, title } = req.body;
+    const me = req.me;
+    const { teamId, llmId, title } = req.body;
 
     // Validate models ID's existance
-    const member = await validateIdInModel(memberId, Member);
+    const member = await validateIdInModel(me.id, Member);
     const team = await validateIdInModel(teamId, Team);
     const llm = await validateIdInModel(llmId, LLM);
 
     // Check the member belongs to the team
-    const teamMember = await TeamMember.findOne({ where: { teamId, memberId } });
+    const teamMember = await TeamMember.findOne({ where: { teamId, memberId: member.id } });
 
     // If member not belongs to team, then throw an error
     if (!teamMember) {
@@ -45,7 +49,7 @@ async function createChat(req, res, next) {
     }
 
     // Create the chat
-    await Chat.create({ memberId, teamId, llmId, title });
+    await Chat.create({ memberId: member.id, teamId, llmId, title });
 
     res.status(201).json({
       success: true,
@@ -106,31 +110,60 @@ async function findChat(req, res, next) {
 // ---------------------------------------------------------------------------------------------------------------------
 async function createPrompt(req, res, next) {
   try {
+    const me = req.me;
     const chatId = req.params.id;
-    const message = req.body.message;
+    const { message } = req.body;
 
     // Check if chat with provided id exists
-    await validateIdInModel(chatId, Chat);
+    const chat = await validateIdInModel(chatId, Chat);
+
+    // Check if user has enough tokens
+    const memberTokens = await Tokens.findOne({ where: { memberId: me.id } });
+    console.log(memberTokens);
+
+    if (memberTokens.quantity <= 0) {
+      throw new ClientError(403, 'You dont have enough tokens to make a prompt');
+    }
+
+    // Get the chat LLM
+    const llm = await LLM.findByPk(chat.llmId);
+
+    const completion = await generateChatCompletion(message, { model: llm.model });
+
+    const promptTokens = completion.usage.prompt_tokens;
 
     // Create the prompt
-    const prompt = await Prompt.create({ chatId, message });
+    const prompt = await Prompt.create({
+      chatId: chat.id,
+      message,
+      usedTokens: promptTokens
+    });
+
+    const responseTokens = completion.usage.completion_tokens;
+    const responseMessage = completion.choices[0].message.content;
 
     // Create the response associated to the prompt
     const response = await Response.create({
-      chatId,
+      chatId: chat.id,
       promptId: prompt.id,
-      message: `Response to prompt: ${prompt.message}`
+      usedTokens: responseTokens,
+      message: responseMessage
     });
 
-    res.status(201).json({
-      success: true,
-      data: {
-        prompt: {
-          ...prompt.toJSON(),
-          response: response.toJSON()
-        }
-      }
+    const totalTokens = completion.usage.total_tokens;
+
+    // Remove the total tokens spent in the prompt for the user tokens
+    await memberTokens.decrement('quantity', { by: totalTokens });
+
+    const successResponse = new SuccessResponse(201, {
+      prompt: {
+        ...prompt.toJSON(),
+        response: response.toJSON()
+      },
+      totalTokens
     });
+
+    res.status(successResponse.statusCode).json(successResponse);
   } catch (err) {
     next(err);
   }

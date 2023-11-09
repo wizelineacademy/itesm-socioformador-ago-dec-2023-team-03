@@ -13,6 +13,10 @@ LLM.init({
   name: {
     type: DataTypes.STRING(50),
     allowNull: false
+  },
+  model: {
+    type: DataTypes.STRING(50),
+    allowNull: true
   }
 }, {
   tableName: 'llm',
@@ -23,7 +27,7 @@ LLM.init({
 // Sync
 (async () => {
   try {
-    await LLM.sync({ logging: false });
+    await LLM.sync({ alter: true, logging: false });
     console.log('\'llm\' model synchronized successfully');
   } catch (err) {
     console.error('Error synchronizing the \'llm\' model:', err);

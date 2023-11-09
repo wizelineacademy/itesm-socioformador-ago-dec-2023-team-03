@@ -8,7 +8,7 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import { useRouter } from 'next/navigation';
 
 function HomePage() {
-  const { user } = useUser();
+  const { user, isLoading, error } = useUser();
   const router = useRouter();
 
   async function login() {
@@ -25,6 +25,7 @@ function HomePage() {
     if (user) {
       (async () => {
         const getMeResponse = await services.me.getMe();
+        console.log(getMeResponse);
         if (getMeResponse.success) {
           console.log('User is already logged in');
           return router.push('/teams');
@@ -33,8 +34,10 @@ function HomePage() {
           login();
         }
       })();
+    } else if (!user && !isLoading) {
+      router.push('/login');
     }
-  }, [user]);
+  }, [user, isLoading]);
 
   return (
     <div className='w-screen h-screen flex'>

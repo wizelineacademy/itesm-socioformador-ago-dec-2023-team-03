@@ -6,11 +6,13 @@ const {
   getMe,
   getMyTeams,
   getMyChats,
-  createChat
+  createChat,
+  createPrompt
 } = require('../controllers/me.js');
 
 // Middlewares
 const validateLoginToken = require('../middlewares/validateLoginToken.js');
+const validateUserSession = require('../middlewares/validateUserSession.js');
 
 router.route('/')
     .get(validateLoginToken, getMe);
@@ -21,5 +23,8 @@ router.route('/teams')
 router.route('/chats')
   .get(validateLoginToken, getMyChats)
   .post(validateLoginToken, createChat);
-  
+
+router.route('/chats/:chatId/prompts')
+  .post(validateUserSession, createPrompt)
+
 module.exports = router;

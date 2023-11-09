@@ -20,6 +20,7 @@ const llmRoutes = require('./routes/llm.js');
 const chatRoutes = require('./routes/chat.js');
 const teamLlmRoutes = require('./routes/teamLlm.js');
 const myRoutes = require('./routes/me.js');
+const tokensRoutes = require('./routes/tokens.js');
 const notFoundRoute = require('./routes/notFound.js');
 
 const app = express();
@@ -38,6 +39,7 @@ app.use('/teams-members', teamMemberRoutes);
 app.use('/llms', llmRoutes);
 app.use('/chats', chatRoutes);
 app.use('/teams-llms', teamLlmRoutes);
+app.use('/tokens', tokensRoutes);
 app.use('/me', myRoutes);
 
 // Setting not found route
@@ -49,3 +51,11 @@ app.use(globalErrorHandler);
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+
+Error.prototype.toJson = function() {
+  return {
+    name: this.name,
+    message: this.message,
+    stack: this.stack,
+  }
+};
