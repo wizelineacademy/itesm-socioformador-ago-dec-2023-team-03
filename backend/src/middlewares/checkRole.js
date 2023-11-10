@@ -10,6 +10,7 @@ function checkRole(listOfValidRoles) {
       }
 
       if (!listOfValidRoles.includes(me.roleName)) {
+        console.log(me.roleName);
         throw new ClientError(403, 'Access denied');
       }
 
