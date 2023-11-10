@@ -62,6 +62,18 @@ async function createChat(req, res, next) {
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------------------------------------------------
+async function getAllChats(req, res, next) {
+  try {
+    const chats = await Chat.findAll();
+    const response = new SuccessResponse(201, { chats })
+    res.status(response.statusCode).json(response);
+  } catch (err) {
+    next(err);
+  }
+}
+// ---------------------------------------------------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------------------------------------------------
 async function deleteChat(req, res, next) {
   try {
     const chatId = req.params.id;
@@ -196,6 +208,7 @@ module.exports = {
   createChat,
   deleteChat,
   findChat,
+  getAllChats,
   createPrompt,
   getChatPrompts
 };

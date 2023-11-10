@@ -18,13 +18,15 @@ const {
   deleteChat,
   findChat,
   createPrompt,
-  getChatPrompts
+  getChatPrompts,
+  getAllChats
 } = require('../controllers/chat.js');
 
 const chatIdParamValidator = Joi.string().guid({ version: 'uuidv4' }).required().label('Chat ID');
 
 // Routes
 router.route('/')
+  .get(getAllChats)
   .post(
     // validateRequestData({
     //   'body.title': chatValidators.title,
