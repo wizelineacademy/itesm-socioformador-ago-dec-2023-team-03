@@ -13,35 +13,35 @@ import services from '@/src/services';
 import hooks from '../../hooks'
 
 function ChatPage(props) {
-  const [chats, setChats] = React.useState([]);
-  const searchParams = props.searchParams;
+  // const [chats, setChats] = React.useState([]);
+  // const searchParams = props.searchParams;
 
-  const session = hooks.useSession();
+  // const session = hooks.useSession();
 
-  async function initialFetch() {
-    const myChats = await services.me.getMyChats({
-      query: {
-        'team-id': searchParams['team-id'],
-        'llm-id': searchParams['llm-id']
-      }
-    });
+  // async function initialFetch() {
+  //   const myChats = await services.me.getMyChats({
+  //     query: {
+  //       'team-id': searchParams['team-id'],
+  //       'llm-id': searchParams['llm-id']
+  //     }
+  //   });
 
-    setChats(myChats.data.chats);
-  }
+  //   setChats(myChats.data.chats);
+  // }
 
-  React.useEffect(() => {
-    if (session.me) {
-      initialFetch();
-    }
-  }, [session.me]);
+  // React.useEffect(() => {
+  //   if (session.me) {
+  //     initialFetch();
+  //   }
+  // }, [session.me]);
 
-  if (session.isLoading) return <div className='loader'></div>;
-  if (session.error) return null;
+  // if (session.isLoading) return <div className='loader'></div>;
+  // if (session.error) return null;
 
   return (
     <div className='relative z-0 flex h-full w-full overflow-hidden'>
       <main className='flex w-full h-full'>
-        <Sidebar chats={chats} />
+        {/* <Sidebar chats={chats} /> */}
         <Chat />
       </main>
     </div>

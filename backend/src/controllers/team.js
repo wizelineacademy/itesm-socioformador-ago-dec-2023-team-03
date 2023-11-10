@@ -14,6 +14,9 @@ const TeamValidator = require('../validators/team.js');
 // Errors
 const { ApiError, ClientError } = require('../errors/index.js');
 
+// Responses
+const { SuccessResponse } = require('../responses');
+
 // Utils
 const validateIdInModel = require('../utils/validateIdInModel.js');
 
@@ -210,11 +213,30 @@ async function getLlms(req, res, next) {
 }
 // ---------------------------------------------------------------------------------------------------------------------
 
+// ---------------------------------------------------------------------------------------------------------------------
+async function findTeam(req, res, next) {
+  try {
+    const teamId = req.params.id;
+    const team = await Team.findByPk(teamId);
+
+    if (!team) {
+      throw new ClientError(404, 'Team not found');
+    }
+
+    const response = new SuccessResponse(200, { team });
+    res.status(response.statusCode).json(response);
+  } catch (err) {
+    next(err);
+  }
+}
+// ---------------------------------------------------------------------------------------------------------------------
+
 module.exports = {
   create,
   getAll,
   update,
   remove,
   getMembers,
-  getLlms
+  getLlms,
+  findTeam
 };

@@ -24,7 +24,4 @@ router.route('/chats')
   .get(validateLoginToken, getMyChats)
   .post(validateLoginToken, createChat);
 
-router.route('/chats/:chatId/prompts')
-  .post(validateUserSession, createPrompt)
-
 module.exports = router;

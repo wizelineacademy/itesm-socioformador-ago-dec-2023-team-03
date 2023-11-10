@@ -70,6 +70,7 @@ async function getAll(req, res, next) {
       minQty: 'min-qty',
       maxQty: 'max-qty',
       teamId: 'team-id',
+      memberId: 'member-id',
       llmId: 'llm-id'
     }
 
@@ -99,6 +100,11 @@ async function getAll(req, res, next) {
     const llmId = filters[validFilters.llmId];
     if (llmId) {
       whereClause.llmId = llmId;
+    }
+
+    const memberId = filters[validFilters.memberId];
+    if (memberId) {
+      whereClause.memberId = memberId;
     }
 
     const tokens = await Tokens.findAll({

@@ -17,7 +17,8 @@ const {
   createChat,
   deleteChat,
   findChat,
-  createPrompt
+  createPrompt,
+  getChatPrompts
 } = require('../controllers/chat.js');
 
 const chatIdParamValidator = Joi.string().guid({ version: 'uuidv4' }).required().label('Chat ID');
@@ -54,6 +55,10 @@ router.route('/:id')
 
 // Routes for handling chat prompts
 router.route('/:id/prompts')
+  .get(
+    validateUserSession,
+    getChatPrompts
+  )
   .post(
     validateUserSession,
     checkRole(['admin', 'user']),

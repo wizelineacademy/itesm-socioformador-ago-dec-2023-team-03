@@ -16,7 +16,8 @@ const {
   update,
   remove,
   getMembers,
-  getLlms
+  getLlms,
+  findTeam
 } = require('../controllers/team.js');
 
 // Routes
@@ -30,6 +31,7 @@ router.route('/')
   .get(getAll);
 
 router.route('/:id')
+  .get(findTeam)
   .patch(update)
   .delete(remove);
 

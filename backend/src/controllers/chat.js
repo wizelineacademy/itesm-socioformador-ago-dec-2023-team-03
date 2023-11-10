@@ -97,10 +97,32 @@ async function findChat(req, res, next) {
     res.status(200).json({
       success: true,
       data: {
-        chat: chat.toJSON(),
-        prompts
+        chat: {
+          ...chat.toJSON(),
+          prompts
+        }
       }
     });
+  } catch (err) {
+    next(err);
+  }
+}
+// ---------------------------------------------------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------------------------------------------------
+async function getChatPrompts(req, res, next) {
+  try {
+    const chatId = req.params.id;
+
+    const chat = await validateIdInModel(chatId, Chat);
+
+    const prompts = await chat.getPrompts({
+      include: Response,
+      order: [['createdAt', 'DESC']]
+    });
+
+    const response = new SuccessResponse(200, { prompts });
+    return res.status(response.statusCode).json(response);
   } catch (err) {
     next(err);
   }
@@ -174,5 +196,6 @@ module.exports = {
   createChat,
   deleteChat,
   findChat,
-  createPrompt
+  createPrompt,
+  getChatPrompts
 };

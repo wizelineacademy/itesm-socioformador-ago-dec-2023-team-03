@@ -11,14 +11,15 @@ import { RiCopperCoinFill } from 'react-icons/ri';
 import Image from 'next/image';
 import img from '/public/images/chat-gpt-logo.svg.png';
 
-function Chat({ chat }) {
+function Chat({ chat, tokens }) {
   const _chatContext = chatContext.use();
   const chatState = _chatContext.state;
   const chatActions = _chatContext.actions;
 
+  const prompts = chat.prompts || [];
+
   function sendPrompt(e) {
     e.preventDefault();
-    console.log(chatState);
     chatActions.setPrompt('');
   }
 
@@ -40,7 +41,7 @@ function Chat({ chat }) {
           </div>
           <div className='inline-flex items-center gap-x-1'>
             <RiCopperCoinFill className='inline' size={24} color='#E5B43C' />
-            <span className=' font-semibold'>12.000</span>
+            <span className=' font-semibold'>{tokens}</span>
           </div>
         </div>
       </header>
@@ -48,23 +49,21 @@ function Chat({ chat }) {
       {/* Messages container */}
       <div className='h-full overflow-y-scroll'>
         {
-          chat ?
-            new Array(10).fill(1).map((item, idx) => (
-              idx % 2 !== 0
-                ? (
-                  <div className='p-6 bg-regal-blue-light'>
-                    <div className='max-w-2xl mx-auto flex gap-x-3 relative'>
-                      <p className='text-base/7 text-gray-200 font-light'>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen.</p>
-                      <BiLike size={18} className='flex-shrink-0 absolute -right-5' />
-                    </div>
+          prompts && prompts.length ?
+            prompts.map((prompt, idx) => (
+              <div key={prompt.id}>
+                <div className='p-6 bg-regal-blue-light'>
+                  <div className='max-w-2xl mx-auto flex gap-x-3 relative'>
+                    <p className='text-base/7 text-gray-200 font-light'>{prompt.message}</p>
+                    <BiLike size={18} className='flex-shrink-0 absolute -right-5' />
                   </div>
-                ) : (
-                  <div style={{ borderColor: '#434957' }} className={`${idx !== 0 ? 'border-t' : ''} border-b p-6 bg-regal-blue-normal`}>
-                    <div className='max-w-2xl mx-auto'>
-                      <p className='text-base/7 text-gray-300 font-light'>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen.</p>
-                    </div>
+                </div>
+                <div style={{ borderColor: '#434957' }} className={`${idx !== 0 ? 'border-t' : ''} border-b p-6 bg-regal-blue-normal`}>
+                  <div className='max-w-2xl mx-auto'>
+                    <p className='text-base/7 text-gray-300 font-light'>{prompt.responses[0]?.message}</p>
                   </div>
-                )
+                </div>
+              </div>
             ))
             : (
               <div className='w-full h-full flex justify-center items-center flex-col'>

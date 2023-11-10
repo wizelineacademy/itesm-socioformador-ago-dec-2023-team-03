@@ -15,6 +15,22 @@ async function getTeamLLMs(team) {
   }
 }
 
+async function findTeamById(teamId) {
+  const routeUrl = `${baseUrl}/${teamId}`;
+
+  try {
+    const res = await fetch(routeUrl, {
+      cache: 'no-store'
+    });
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+}
+
 export default {
-  getTeamLLMs
+  getTeamLLMs,
+  findTeamById
 };
