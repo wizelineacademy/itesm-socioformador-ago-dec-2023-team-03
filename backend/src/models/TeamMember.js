@@ -35,7 +35,7 @@ Team.belongsToMany(Member, { through: TeamMember });
 // Sync
 (async () => {
   try {
-    await TeamMember.sync({ logging: false });
+    await TeamMember.sync({ alter: true, logging: false });
     console.log('\'team_member\' model synchronized successfully');
   } catch (err) {
     console.error('Error synchronizing the \'team_member\' model:', err);

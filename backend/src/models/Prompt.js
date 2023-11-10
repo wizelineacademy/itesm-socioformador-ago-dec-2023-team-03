@@ -40,7 +40,7 @@ Prompt.belongsTo(Chat);
 // Sync
 (async () => {
   try {
-    await Prompt.sync({ logging: false });
+    await Prompt.sync({ alter: true, logging: false });
     console.log('\'prompt\' model synchronized successfully');
   } catch (err) {
     console.error('Error synchronizing the \'prompt\' model:', err);

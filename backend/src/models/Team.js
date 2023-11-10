@@ -23,7 +23,7 @@ Team.init({
 // Sync
 (async () => {
   try {
-    await Team.sync({ logging: false });
+    await Team.sync({ alter: true, logging: false });
     console.log('\'team\' model synchronized successfully.');
   } catch (err) {
     console.error('Error synchronizing the \'team\' model:', err);

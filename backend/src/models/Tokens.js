@@ -55,7 +55,7 @@ Tokens.belongsTo(LLM);
 // Sync
 (async () => {
   try {
-    await Tokens.sync({ logging: false });
+    await Tokens.sync({ alter: true, logging: false });
     console.log('\'tokens\' model synchronized successfully');
   } catch (err) {
     console.error('Error synchronizing the \'tokens\' model:', err);
