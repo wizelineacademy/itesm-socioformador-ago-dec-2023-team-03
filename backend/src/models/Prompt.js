@@ -38,13 +38,13 @@ Chat.hasMany(Prompt, {
 Prompt.belongsTo(Chat);
 
 // Sync
-(async () => {
-  try {
-    await Prompt.sync({ alter: true, logging: false });
-    console.log('\'prompt\' model synchronized successfully');
-  } catch (err) {
-    console.error('Error synchronizing the \'prompt\' model:', err);
-  }
-})();
+// (async () => {
+//   try {
+//     await Prompt.sync({ alter: true, logging: false });
+//     console.log('\'prompt\' model synchronized successfully');
+//   } catch (err) {
+//     console.error('Error synchronizing the \'prompt\' model:', err);
+//   }
+// })();
 
 module.exports = Prompt;

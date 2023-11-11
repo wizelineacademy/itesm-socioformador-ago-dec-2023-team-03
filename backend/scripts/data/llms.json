@@ -1,0 +1,17 @@
+[
+  {
+    "id": "b1451ee2-6882-404d-8b77-77e180a41aed",
+    "name": "GPT-3",
+    "model": "gpt-3.5-turbo"
+  },
+  {
+    "id": "df6b630a-5bb8-4d89-962f-33ab565af734",
+    "name": "GPT-3",
+    "model": "davinci"
+  },
+  {
+    "id": "f03317f2-b0ee-4eff-9d06-1e28a5739990",
+    "name": "GPT-3",
+    "model": "curie"
+  }
+]

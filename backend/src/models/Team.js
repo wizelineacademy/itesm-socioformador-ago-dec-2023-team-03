@@ -21,13 +21,13 @@ Team.init({
 });
 
 // Sync
-(async () => {
-  try {
-    await Team.sync({ alter: true, logging: false });
-    console.log('\'team\' model synchronized successfully.');
-  } catch (err) {
-    console.error('Error synchronizing the \'team\' model:', err);
-  }
-})();
+// (async () => {
+//   try {
+//     await Team.sync({ alter: true, logging: false });
+//     console.log('\'team\' model synchronized successfully.');
+//   } catch (err) {
+//     console.error('Error synchronizing the \'team\' model:', err);
+//   }
+// })();
 
 module.exports = Team;

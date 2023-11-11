@@ -1,4 +1,4 @@
-const sequelize = require("sequelize");
+const sequelize = require('sequelize');
 
 const connection = new sequelize.Sequelize({
   username: process.env.PGUSER,
@@ -6,7 +6,7 @@ const connection = new sequelize.Sequelize({
   database: process.env.PGDATABASE,
   password: process.env.PGPASSWORD,
   port: process.env.PGPORT,
-  dialect: "postgres",
+  dialect: 'postgres',
   logging: false
 });
 

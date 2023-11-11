@@ -1,0 +1,50 @@
+[
+  {
+    "id": "789c9f84-28aa-4541-b3a9-edae5d8af21e",
+    "firstName": "Elviro",
+    "lastName": "Dominguez",
+    "email": "a01424591@tec.mx",
+    "picture": "",
+    "roleId": "13981fc2-251a-4b40-a326-de8fe54c8633"
+  },
+  {
+    "id": "258061cb-038c-430a-8f0f-5a571eaa1707",
+    "firstName": "Elena",
+    "lastName": "Ballinas",
+    "email": "a01173324@tec.mx",
+    "picture": "",
+    "roleId": "13981fc2-251a-4b40-a326-de8fe54c8633"
+  },
+  {
+    "id": "29c9579f-3006-4aa1-85fc-f13d6ffb640d",
+    "firstName": "Diego",
+    "lastName": "Samperio",
+    "email": "a01276097@tec.mx",
+    "picture": "",
+    "roleId": "13981fc2-251a-4b40-a326-de8fe54c8633"
+  },
+  {
+    "id": "b9d6554c-f12e-4e26-be76-d38f40f7db4e",
+    "firstName": "Emilio",
+    "lastName": "Rivas",
+    "email": "a01368205@tec.mx",
+    "picture": "",
+    "roleId": "13981fc2-251a-4b40-a326-de8fe54c8633"
+  },
+  {
+    "id": "a4405261-c288-4a4b-80df-deaa98037b2b",
+    "firstName": "Arturo",
+    "lastName": "Arguelles",
+    "email": "a01177145@tec.mx",
+    "picture": "",
+    "roleId": "13981fc2-251a-4b40-a326-de8fe54c8633"
+  },
+  {
+    "id": "23f13144-134e-43c1-a55c-d0a289579ffa",
+    "firstName": "Juan",
+    "lastName": "Bedoya",
+    "email": "a00832898@tec.mx",
+    "picture": "",
+    "roleId": "13981fc2-251a-4b40-a326-de8fe54c8633"
+  }
+]

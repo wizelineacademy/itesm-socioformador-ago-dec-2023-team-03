@@ -13,10 +13,12 @@ Member.init({
     defaultValue: DataTypes.UUIDV4
   },
   firstName: {
-    type: DataTypes.STRING(50)
+    type: DataTypes.STRING(50),
+    allowNull: false
   },
   lastName: {
-    type: DataTypes.STRING(50)
+    type: DataTypes.STRING(50),
+    allowNull: false
   },
   email: {
     type: DataTypes.STRING(50),
@@ -42,13 +44,13 @@ Role.hasMany(Member, {
 Member.belongsTo(Role);
 
 // Sync
-(async () => {
-  try {
-    await Member.sync({ alter: true, logging: false });
-    console.log('\'member\' model synchronized successfully');
-  } catch (err) {
-    console.error('Error synchronizing the \'member\' model:', err);
-  }
-})();
+// (async () => {
+//   try {
+//     await Member.sync({ alter: true, logging: false });
+//     console.log('\'member\' model synchronized successfully');
+//   } catch (err) {
+//     console.error('Error synchronizing the \'member\' model:', err);
+//   }
+// })();
 
 module.exports = Member;

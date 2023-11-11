@@ -54,13 +54,13 @@ LLM.hasMany(Chat, {
 Chat.belongsTo(LLM);
 
 // Sync
-(async () => {
-  try {
-    await Chat.sync({ alter: true, logging: false });
-    console.log('\'chat\' model synchronized successfully');
-  } catch (err) {
-    console.error('Error synchronizing the \'chat\' model:', err);
-  }
-})();
+// (async () => {
+//   try {
+//     await Chat.sync({ alter: true, logging: false });
+//     console.log('\'chat\' model synchronized successfully');
+//   } catch (err) {
+//     console.error('Error synchronizing the \'chat\' model:', err);
+//   }
+// })();
 
 module.exports = Chat;

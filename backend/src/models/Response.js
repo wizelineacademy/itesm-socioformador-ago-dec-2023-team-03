@@ -53,13 +53,13 @@ Prompt.hasMany(Response, {
 Response.belongsTo(Prompt);
 
 // Sync
-(async () => {
-  try {
-    await Response.sync({ alter: true, logging: false });
-    console.log('\'response\' model synchronized successfully');
-  } catch (err) {
-    console.error('Error synchronizing the \'response\' model:', err);
-  }
-})();
+// (async () => {
+//   try {
+//     await Response.sync({ alter: true, logging: false });
+//     console.log('\'response\' model synchronized successfully');
+//   } catch (err) {
+//     console.error('Error synchronizing the \'response\' model:', err);
+//   }
+// })();
 
 module.exports = Response;
