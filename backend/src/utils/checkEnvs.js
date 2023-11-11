@@ -1,11 +1,7 @@
-function checkEnvs(envs) {
-  const undefinedEnvs = [];
+const filterByCondition = require('./filterByConditon.js')
 
-  for (const env of envs) {
-    if (!process.env[env]) {
-      undefinedEnvs.push(env);
-    }
-  }
+function checkEnvs(envs) {
+  const undefinedEnvs = filterByCondition(envs, (env) => !process.env[env]);
 
   if (undefinedEnvs.length > 0) {
     let errorMessage = undefinedEnvs.length === 1
