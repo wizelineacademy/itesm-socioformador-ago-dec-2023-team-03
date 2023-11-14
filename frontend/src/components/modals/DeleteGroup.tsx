@@ -1,10 +1,11 @@
 "use client";
 
 interface NewGroupProps {
+  openSubModal: () => void;
   close: () => void;
 }
 
-export default function DeleteGroup({ close }: NewGroupProps) {
+export default function DeleteGroup({ close, openSubModal }: NewGroupProps) {
   const handleClose = () => {
     close();
   }
@@ -31,7 +32,7 @@ export default function DeleteGroup({ close }: NewGroupProps) {
       </div>
       <footer className="flex justify-around">
         <button onClick={() => handleClose()} className="text-white bg-gray-500 py-1 px-4 rounded-2xl hover:bg-gray-700">Go back</button>
-        <button onClick={() => handleDelete()} className="text-white bg-red-500 py-1 px-4 rounded-2xl hover:bg-red-700">Delete</button>
+        <button onClick={() => openSubModal()} className="text-white bg-red-500 py-1 px-4 rounded-2xl hover:bg-red-700">Delete</button>
       </footer>
     </>
   );

@@ -1,10 +1,11 @@
 "use client";
 
 interface NewGroupProps {
+  openUserModal: () => void;
   close: () => void;
 }
 
-export default function RemoveUser({ close }: NewGroupProps) {
+export default function RemoveUser({ openUserModal, close }: NewGroupProps) {
   const handleClose = () => {
     close();
   }
@@ -31,7 +32,7 @@ export default function RemoveUser({ close }: NewGroupProps) {
       </div>
       <footer className="flex justify-around">
         <button onClick={() => handleClose()} className="text-white bg-gray-500 py-1 px-4 rounded-2xl hover:bg-gray-700">Go back</button>
-        <button onClick={() => handleRemove()} className="text-white bg-red-500 py-1 px-4 rounded-2xl hover:bg-red-700">Remove</button>
+        <button onClick={() => openUserModal()} className="text-white bg-red-500 py-1 px-4 rounded-2xl hover:bg-red-700">Remove</button>
       </footer>
     </>
   );
