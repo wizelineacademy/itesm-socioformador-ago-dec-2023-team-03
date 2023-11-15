@@ -25,13 +25,13 @@ LLM.init({
 });
 
 // Sync
-(async () => {
-  try {
-    await LLM.sync({ alter: true, logging: false });
-    console.log('\'llm\' model synchronized successfully');
-  } catch (err) {
-    console.error('Error synchronizing the \'llm\' model:', err);
-  }
-})();
+// (async () => {
+//   try {
+//     await LLM.sync({ alter: true, logging: false });
+//     console.log('\'llm\' model synchronized successfully');
+//   } catch (err) {
+//     console.error('Error synchronizing the \'llm\' model:', err);
+//   }
+// })();
 
 module.exports = LLM;

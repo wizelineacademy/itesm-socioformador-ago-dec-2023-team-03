@@ -12,6 +12,7 @@ Role.init({
   },
   name: {
     type: DataTypes.STRING(50),
+    unique: true,
     allowNull: false
   }
 }, {
@@ -21,13 +22,16 @@ Role.init({
 });
 
 // Sync
-(async () => {
-  try {
-    await Role.sync({ alter: true, logging: false });
-    console.log('\'role\' model synchronized successfully');
-  } catch (err) {
-    console.error('Error synchronizing the \'role\' model:', err);
-  }
-})();
+// (async () => {
+//   try {
+//     console.log('Syncing');
+//     await Role.sync({ alter: true, logging: false });
+//     console.log('Syncing2');
+//     console.log('\'role\' model synchronized successfully');
+//   } catch (err) {
+//     console.log('Syncing failed');
+//     console.error('Error synchronizing the \'role\' model:', err);
+//   }
+// })();
 
 module.exports = Role;

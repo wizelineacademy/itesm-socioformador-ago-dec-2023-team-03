@@ -12,6 +12,7 @@ function globalErrorHandler(err, req, res, next) {
   }
 
   if (err instanceof ServerError || err instanceof ExtendedError) {
+    if (inDevMode) console.error(err);
     return res.status(httpStatusCode).json({
       success: false,
       message: 'Internal server error',
@@ -40,6 +41,7 @@ function globalErrorHandler(err, req, res, next) {
     });
   }
 
+  if (inDevMode) console.error(err);
   return res.status(httpStatusCode).json({
     success: false,
     error: {

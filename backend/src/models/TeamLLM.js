@@ -33,13 +33,13 @@ LLM.belongsToMany(Team, { through: TeamLLM });
 Team.belongsToMany(LLM, { through: TeamLLM });
 
 // Sync
-(async () => {
-  try {
-    await TeamLLM.sync({ alter: true, logging: false });
-    console.log('\'team_llm\' model synchronized successfully');
-  } catch (err) {
-    console.error('Error synchronizing the \'team_llm\' model:', err);
-  }
-})();
+// (async () => {
+//   try {
+//     await TeamLLM.sync({ alter: true, logging: false });
+//     console.log('\'team_llm\' model synchronized successfully');
+//   } catch (err) {
+//     console.error('Error synchronizing the \'team_llm\' model:', err);
+//   }
+// })();
 
 module.exports = TeamLLM;

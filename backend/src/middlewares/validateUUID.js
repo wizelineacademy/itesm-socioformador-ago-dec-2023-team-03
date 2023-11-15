@@ -12,7 +12,7 @@ function validateUUID(uuid, options) {
         .validate(uuid);
       
       if (uuidValidation.error) {
-        throw new ApiError(400, uuidValidation.error.message);
+        throw new Error(uuidValidation.error.message);
       }
   
       next();
