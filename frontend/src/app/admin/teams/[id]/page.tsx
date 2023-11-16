@@ -1,63 +1,51 @@
 "use client";
 
 import AdminMembersList from "@/src/app/components/AdminMembersList";
-import Header from "@/src/app/components/Header";
 import Sidebar from "@/src/app/components/Sidebar";
-import { useUser } from "@auth0/nextjs-auth0/client";
-import { redirect, usePathname } from "next/navigation";
 import Link from "next/link";
 import { CgArrowLeft } from "react-icons/cg";
-import { useState } from "react";
 import AdminTeamLLMsList from "@/src/app/components/AdminTeamLLMsList";
+import useMembers from "@/src/hooks/useMembers";
 
 
-export default function Home() {
-    const pathname = usePathname();
-    const { user, error, isLoading } = useUser();
-    const [showMembers, setShowMembers] = useState(true)
+export default function Home({ params }: { params: { id: string } }) {
+    const [members, setMembers, membersLoading] = useMembers(params.id);
 
     function handleClick(event: boolean) {
-        setShowMembers(event)
     }
 
-    if (error) { console.log(error) }
-    if (isLoading) { return <div className="loader"></div> }
+    if (membersLoading) return <div>Members loading!...</div>
 
-    if (!user) {
-        return (
-            <>
-                {redirect("/login")}
-            </>
-        )
-    } else {
+    console.log(members)
 
-        return (
+    return (
 
-            <Sidebar reference={pathname}>
-                <Header>
-
-                    <header className="flex px-4 py-1 gap-5 justify-between w-full bg-regal-blue-normal">
-                        <Link href='/admin/teams' className="flex w-10 justify-center items-center aspect-square">
-                            <button className="flex justify-center items-center py-2 bg-blue-500 rounded-xl h-full aspect-square">
-                                <CgArrowLeft size={25} />
+        <Sidebar>
+            <div className="flex flex-col h-full w-full overflow-auto">
+                <div className="flex flex-row flex-none px-4 gap-5 items-center justify-between w-full bg-regal-blue-normal">
+                    <div className="w-fit">
+                        <Link href='/admin/teams' >
+                            <button className="bg-blue-500 rounded-xl hover:bg-blue-700 align-middle">
+                                <CgArrowLeft size={35} />
                             </button>
                         </Link>
-                        <button onClick={() => handleClick(true)} className="flex-auto py-2 bg-blue-500 rounded-xl w-1/3">
-                            members
+                    </div>
+                    <div className="flex flex-row space-x-3">
+                        <button onClick={() => handleClick(true)} className="text-sm font-semibold p-2 bg-blue-500 rounded-xl w-fit hover:bg-blue-700">
+                            MEMBERS
                         </button>
-                        <button onClick={() => handleClick(false)} className="flex-auto py-2 bg-blue-500 rounded-xl w-1/3">
+                        <button onClick={() => handleClick(false)} className="text-sm font-semibold p-2 bg-blue-500 rounded-xl w-fit hover:bg-blue-700">
                             LLMs
                         </button>
-                    </header>
-                    {showMembers ? (
-                        <AdminMembersList />
-                    ) : (
-                        <AdminTeamLLMsList />
-                    )}
-
-                </Header>
-            </Sidebar>
-
-        )
-    }
+                    </div>
+                </div>
+                <div className="flex flex-col h-full space-y-2 p-5">
+                    {/* Map through all members */}
+                    {members && members.map((member) => (
+                        <AdminMembersList key={member.id} member={member} />
+                    ))}
+                </div>
+            </div>
+        </Sidebar>
+    )
 }
