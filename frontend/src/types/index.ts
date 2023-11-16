@@ -14,10 +14,10 @@ export interface Member {
     createdAt: string;
     updatedAt: string;
     roleId: string;
-    team_member: {
-        teamId: string;
-        memberId: string;
-        createdAt: string;
-        updatedAt: string;
+    team_member?: {
+        teamId?: string;
+        memberId?: string;
+        createdAt?: string;
+        updatedAt?: string;
     }
 }

@@ -1,6 +1,3 @@
-import img from '/public/images/chat-gpt-logo.svg.png';
-import Image from 'next/image';
-import { CgClose } from 'react-icons/cg';
 import AdminListDeleteButton from './AdminListDeleteButton';
 import { Member } from '@/src/types';
 
