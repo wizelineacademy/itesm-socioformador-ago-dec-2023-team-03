@@ -30,7 +30,23 @@ async function findTeamById(teamId) {
   }
 }
 
+async function getAllTeams() {
+  const routeUrl = `${baseUrl}`;
+
+  try {
+    const res = await fetch(routeUrl, {
+      cache: 'no-store'
+    });
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+}
+
 export default {
   getTeamLLMs,
-  findTeamById
+  findTeamById,
+  getAllTeams,
 };
