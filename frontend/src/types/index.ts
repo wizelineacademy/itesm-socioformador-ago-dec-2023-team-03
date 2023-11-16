@@ -21,3 +21,11 @@ export interface Member {
         updatedAt?: string;
     }
 }
+
+export interface LLM {
+    id: string;
+    name: string;
+    model: string;
+    createdAt: string;
+    updatedAt: string;
+}
