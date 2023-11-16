@@ -1,6 +1,6 @@
 const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/teams`;
 
-async function getTeamLLMs(team) {
+async function getTeamLLMs(team: string) {
   const routeUrl = `${baseUrl}/${team}/llms`;
 
   try {
@@ -15,7 +15,7 @@ async function getTeamLLMs(team) {
   }
 }
 
-async function findTeamById(teamId) {
+async function findTeamById(teamId: string) {
   const routeUrl = `${baseUrl}/${teamId}`;
 
   try {
@@ -30,7 +30,7 @@ async function findTeamById(teamId) {
   }
 }
 
-async function getAllTeams() {
+export async function getAllTeams() {
   const routeUrl = `${baseUrl}`;
 
   try {
@@ -41,12 +41,26 @@ async function getAllTeams() {
     return data;
   } catch (err) {
     console.error(err);
-    return null;
+    return [];
+  }
+}
+
+export async function getAllTeamMembers(teamId: string) {
+  const routeUrl = `${baseUrl}/${teamId}/members`;
+
+  try {
+    const res = await fetch(routeUrl, {
+      cache: 'no-store'
+    });
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.error(err);
+    return [];
   }
 }
 
 export default {
   getTeamLLMs,
   findTeamById,
-  getAllTeams,
 };
