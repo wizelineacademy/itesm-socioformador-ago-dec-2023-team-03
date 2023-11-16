@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import testPrompts from "../data/prompts.json";
 import testResponses from "../data/responses.json";
 import Prompt from "./Prompt";
@@ -52,12 +52,12 @@ export default function ChatBox() {
     fetchResponses() */
   }, [])
 
-  const handleGenerate = async (e) => {
+  const handleGenerate = async (e: { preventDefault: () => void; }) => {
     e.preventDefault()
     addPrompt({ id: prompts.length + 1, input: input })
   }
 
-  const handleChangeInput = (e) => {
+  const handleChangeInput = (e: { target: { value: SetStateAction<string>; }; }) => {
     setInput(e.target.value)
   }
 
