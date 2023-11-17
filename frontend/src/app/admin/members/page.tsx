@@ -1,5 +1,6 @@
 "use client";
 
+
 import Sidebar from "@/src/app/components/Sidebar";
 import AdminMembersList from "@/src/app/components/AdminMembersList";
 import useAllMembers from "@/src/hooks/useAllMembers";
@@ -41,4 +42,5 @@ export default function Home() {
     </Sidebar>
   )
 }
+
 
