@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { useRef } from "react";
 
 export default function AdminListDeleteButton() {
+
   const dialog = useRef<null | HTMLDialogElement>(null);
   const modalGroup = useRef<null | HTMLDialogElement>(null);
   const modalUser = useRef<null | HTMLDialogElement>(null);

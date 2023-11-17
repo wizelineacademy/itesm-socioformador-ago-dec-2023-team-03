@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Member } from "../types";
-import { getAllTeamMembers } from "../services/team";
+import { Member } from "@/src/types";
+import { getAllMembers } from "@/src/services/member";
 
-export default function useMembers(teamId: string) {
+export default function useAllMembers() {
     const [members, setMembers] = useState<Member[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
@@ -12,7 +12,7 @@ export default function useMembers(teamId: string) {
     useEffect(() => {
         const fetchMembers = async () => {
             try {
-                const response = await getAllTeamMembers(teamId);
+                const response = await getAllMembers();
                 if (response.success && response.data && response.data.members) {
                     const membersFromAPI = response.data.members;
                     setMembers(membersFromAPI);
