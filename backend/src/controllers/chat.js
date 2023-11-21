@@ -49,11 +49,12 @@ async function createChat(req, res, next) {
     }
 
     // Create the chat
-    await Chat.create({ memberId: member.id, teamId, llmId, title });
+    const chat = await Chat.create({ memberId: member.id, teamId, llmId, title });
 
     res.status(201).json({
       success: true,
-      message: 'Chat created successfully'
+      message: 'Chat created successfully',
+      data: { chat }
     });
   } catch (err) {
     next(err);
@@ -185,19 +186,25 @@ async function createPrompt(req, res, next) {
     });
 
     const totalTokens = completion.usage.total_tokens;
+    console.log('Hola de server');
 
     // Remove the total tokens spent in the prompt for the user tokens
     await memberTokens.decrement('quantity', { by: totalTokens });
 
-    const successResponse = new SuccessResponse(201, {
-      prompt: {
-        ...prompt.toJSON(),
-        response: response.toJSON()
-      },
-      totalTokens
-    });
+    const resps = await prompt.getResponses();
+    console.log(resps);
+    console.log('PROMPT:', prompt);
+    console.log('RESPONSE:', response);
 
-    res.status(successResponse.statusCode).json(successResponse);
+    // const successResponse = new SuccessResponse(201, {
+    //   prompt: {
+    //     ...prompt.toJSON(),
+    //     response: response.toJSON()
+    //   },
+    //   totalTokens
+    // });
+
+    // res.status(successResponse.statusCode).json(successResponse);
   } catch (err) {
     next(err);
   }

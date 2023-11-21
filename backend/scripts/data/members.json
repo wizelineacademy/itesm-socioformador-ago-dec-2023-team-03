@@ -46,5 +46,13 @@
     "email": "a00832898@tec.mx",
     "picture": "",
     "roleId": "13981fc2-251a-4b40-a326-de8fe54c8633"
+  },
+  {
+    "id": "9c6232f5-c08e-4854-bf5b-a91abd1fb3ac",
+    "firstName": "Juan",
+    "lastName": "Bedoya",
+    "email": "juanbedoya.barbosa@gmail.com",
+    "picture": "",
+    "roleId": "13981fc2-251a-4b40-a326-de8fe54c8633"
   }
 ]

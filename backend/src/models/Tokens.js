@@ -28,8 +28,7 @@ Tokens.init({
 Member.hasMany(Tokens, {
   foreignKey: {
     name: 'memberId',
-    type: DataTypes.UUID,
-    allowNull: false
+    type: DataTypes.UUID
   }
 });
 Tokens.belongsTo(Member);
@@ -37,8 +36,7 @@ Tokens.belongsTo(Member);
 Team.hasMany(Tokens, {
   foreignKey: {
     name: 'teamId',
-    type: DataTypes.UUID,
-    allowNull: false
+    type: DataTypes.UUID
   }
 });
 Tokens.belongsTo(Team);
@@ -46,8 +44,7 @@ Tokens.belongsTo(Team);
 LLM.hasMany(Tokens, {
   foreignKey: {
     name: 'llmId',
-    type: DataTypes.UUID,
-    allowNull: false
+    type: DataTypes.UUID
   }
 });
 Tokens.belongsTo(LLM);
