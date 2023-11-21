@@ -42,7 +42,7 @@ function ChatPageLayout() {
       'member-id': session.me.id
     })
 
-    const tokensQty = getTokensResponse.data.tokens[0].quantity;
+    const tokensQty = getTokensResponse.data.tokens[0]?.quantity || 0;
     setTokens(tokensQty);
 
     const teamResponse = await services.team.findTeamById(teamId);

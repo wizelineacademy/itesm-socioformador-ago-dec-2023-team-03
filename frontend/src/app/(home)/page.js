@@ -1,20 +1,24 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import services from '../../services';
 
 import { useUser } from '@auth0/nextjs-auth0/client';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+
+import { toast } from 'react-hot-toast';
 
 function HomePage() {
   const { user, isLoading, error } = useUser();
+  const [serverError, setServerError] = useState('');
   const router = useRouter();
 
   async function login() {
     const body = { email: user.email };
     const res = await services.member.login(body);
     if (!res.success && res.error) {
+      toast.error(res.error.message);
       router.push('/login');
     } else if (res.success) {
       router.push('/teams');
@@ -24,7 +28,13 @@ function HomePage() {
   React.useEffect(() => {
     if (user) {
       (async () => {
-        const getMeResponse = await services.me.getMe();
+        let getMeResponse;
+        try {
+          getMeResponse = await services.me.getMe();
+        } catch (err) {
+          setServerError(err);
+          console.error(err);
+        }
         console.log(getMeResponse);
         if (getMeResponse.success) {
           console.log('User is already logged in');
@@ -42,6 +52,7 @@ function HomePage() {
   return (
     <div className='w-screen h-screen flex'>
       <h1>Autenticando. Validando credenciales</h1>
+      <p>{serverError}</p>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import chatContext from '../../_context';
 
@@ -10,16 +10,53 @@ import { RiCopperCoinFill } from 'react-icons/ri';
 
 import Image from 'next/image';
 import img from '/public/images/chat-gpt-logo.svg.png';
+import services from '@/src/services';
+import { useSearchParams } from 'next/navigation';
 
 function Chat({ chat, tokens }) {
   const _chatContext = chatContext.use();
   const chatState = _chatContext.state;
   const chatActions = _chatContext.actions;
+  const [prompts, setPrompts] = useState(chat.prompts || []);
 
-  const prompts = chat.prompts || [];
+  const searchParams = useSearchParams();
 
-  function sendPrompt(e) {
+  async function sendPrompt(e) {
     e.preventDefault();
+
+    const teamId = searchParams.get('team-id');
+    const llmId = searchParams.get('llm-id');
+    const chatId = searchParams.get('chat-id');
+
+    let chat;
+    if (!chatId) {
+      const res = await services.chat.create({
+        teamId,
+        llmId,
+        title: ''
+      });
+      if (res.success) {
+        chat = res.data.chat;
+      }
+    }
+
+    let prompt;
+    if (chat) {
+      const res = await services.chat.createPrompt(chat.id);
+      if (res.success) {
+        console.log('success');
+        // prompt = res.data.prompt;
+        // setPrompts([...prompts, prompt]);
+      }
+    }
+
+
+    console.log('CHAT', chat);
+    console.log('PROMPT', prompt);
+    return;
+
+    services.chat.createPrompt()
+    console.log(chatState);
     chatActions.setPrompt('');
   }
 
