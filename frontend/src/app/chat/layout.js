@@ -18,6 +18,7 @@ function ChatPageLayout() {
   const [chats, setChats] = React.useState([]);
   const [tokens, setTokens] = React.useState(null);
   const [teamName, setTeamName] = React.useState('');
+  const [llm, setLlm] = React.useState(null);
   const [selectedChatId, setSelectedChatId] = React.useState(null);
   const [selectedChat, setSelectedChat] = React.useState({});
   const searchParams = useSearchParams();
@@ -35,8 +36,12 @@ function ChatPageLayout() {
     });
 
     const chats = myChats.data.chats;
-
     setChats(chats);
+
+    const llmRes = await services.llm.find(llmId);
+    if (llmRes.success) {
+      setLlm(llmRes.data.llm);
+    }
 
     if (chats.length > 0) {
       setSelectedChatId(chats[0].id);
@@ -89,9 +94,9 @@ function ChatPageLayout() {
             selectedChatId={selectedChatId}
           />
           <Chat
-            chat={selectedChat}
             tokens={tokens}
-            setChats={setChats} 
+            setChats={setChats}
+            llm={llm}
             selectedChatId={selectedChatId}
             setTokens={setTokens}
           />

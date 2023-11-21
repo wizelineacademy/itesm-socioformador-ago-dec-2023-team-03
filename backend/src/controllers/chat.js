@@ -148,7 +148,6 @@ async function createPrompt(req, res, next) {
     const me = req.me;
     const chatId = req.params.id;
     const { message } = req.body;
-    console.log(req.body);
 
     // Check if chat with provided id exists
     const chat = await validateIdInModel(chatId, Chat);
@@ -191,16 +190,13 @@ async function createPrompt(req, res, next) {
       message: responseMessage
     });
 
+    const shortMessage = shortenString(message, 20);
+
+    await chat.update({ title: shortMessage });
     const totalTokens = completion.usage.total_tokens;
-    console.log('Hola de server');
 
     // Remove the total tokens spent in the prompt for the user tokens
     await memberTokens.decrement('quantity', { by: totalTokens });
-
-    const resps = await prompt.getResponses();
-    console.log(resps);
-    console.log('PROMPT:', prompt);
-    console.log('RESPONSE:', response);
 
     const successResponse = new SuccessResponse(201, {
       prompt: {
@@ -216,6 +212,13 @@ async function createPrompt(req, res, next) {
   }
 }
 // ---------------------------------------------------------------------------------------------------------------------
+
+function shortenString(str, maxLength) {
+  if (str.length > maxLength) {
+    return str.substring(0, maxLength - 3) + '...';
+  }
+  return str;
+}
 
 module.exports = {
   createChat,

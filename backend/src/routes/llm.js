@@ -10,7 +10,8 @@ const validateRequestData = require('../middlewares/validateRequestData.js');
 
 // Controllers
 const {
-  create
+  create,
+  find
 } = require('../controllers/llm.js');
 
 router.route('/')
@@ -20,5 +21,8 @@ router.route('/')
     }),
     create
   );
+
+router.route('/:id')
+  .get(find)
 
 module.exports = router;

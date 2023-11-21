@@ -90,7 +90,7 @@ async function getMyChats(req, res, next) {
         model: Chat,
         where: whereClause
       },
-      order: [[Chat, 'createdAt', 'DESC']]
+      order: [[Chat, 'updatedAt', 'DESC']]
     });
     
     let chats;

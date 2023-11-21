@@ -40,6 +40,17 @@ async function createPrompt(chatId, body) {
   return data;
 }
 
+async function remove(chatId) {
+  const routeUrl = `${baseUrl}/${chatId}`;
+  const res = await fetch(routeUrl, {
+    method: 'DELETE',
+    cache: 'no-store',
+    credentials: 'include'
+  });
+  const data = await res.json();
+  return data;
+}
+
 async function getPrompts(chatId) {
   const routeUrl = `${baseUrl}/${chatId}/prompts`;
   const res = await fetch(routeUrl, {
@@ -58,5 +69,6 @@ export default {
   findChatById,
   create,
   createPrompt,
-  getPrompts
+  getPrompts,
+  remove
 };

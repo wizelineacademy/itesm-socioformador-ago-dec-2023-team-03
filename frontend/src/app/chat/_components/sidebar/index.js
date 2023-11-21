@@ -1,14 +1,14 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import { BiMessageAlt } from 'react-icons/bi';
 import { CgMathPlus } from 'react-icons/cg';
 
 import { useSearchParams } from 'next/navigation';
 import services from '@/src/services';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 function Sidebar({
   chats,
@@ -18,9 +18,26 @@ function Sidebar({
   selectedChatId
 }) {
   const searchParams = useSearchParams();
+  const [hoveredChatIdx, setHoveredChatIdx] = useState(null);
+
+  const teamId = searchParams.get('team-id');
+  const llmId = searchParams.get('llm-id');
+
+  async function deleteChat(chatId) {
+    const res = await services.chat.remove(chatId);
+    console.log(res);
+
+    const myChats = await services.me.getMyChats({
+      query: {
+        'team-id': teamId,
+        'llm-id': llmId
+      }
+    });
+
+    setChats(myChats.data.chats);
+  }
+
   async function createChat() {
-    const teamId = searchParams.get('team-id');
-    const llmId = searchParams.get('llm-id');
     const chatId = searchParams.get('chat-id');
 
     let chat;
@@ -39,7 +56,7 @@ function Sidebar({
       const res = await services.chat.create({
         teamId,
         llmId,
-        title: `${day}/${month}/${year} - ${hour}:${minutes}`
+        title: `${year}-${month}-${day} ${hour}:${minutes}`
       });
       if (res.success) {
         chat = res.data.chat;
@@ -65,11 +82,22 @@ function Sidebar({
         {chats.map((chat, idx) => (
           <li key={`${idx}-${chat.id}`}>
             <button
-              className={('flex w-full rounded-md px-2 py-3 items-center gap-x-2 hover:bg-regal-blue-light' +
+              onMouseEnter={() => setHoveredChatIdx(idx)}
+              onMouseLeave={() => setHoveredChatIdx(null)}
+              className={('flex w-full rounded-md px-2 py-3 pr-3 justify-between items-center hover:bg-regal-blue-light' +
                           (chat.id === selectedChatId ? ' bg-regal-blue-light' : ''))}
-              onClick={() => setSelectedChatId(chat.id)}>
+              onClick={() => setSelectedChatId(chat.id)}
+            >
+              <div className='flex items-center gap-x-2'>
                 <BiMessageAlt />
                 {chat.title}
+              </div>
+              {hoveredChatIdx === idx && (
+                <button onClick={() => deleteChat(chat.id)}>
+                  <RiDeleteBin6Line color={'#E93D44'} size={16} />
+                </button>
+                )
+              }
             </button>
           </li>
         ))}

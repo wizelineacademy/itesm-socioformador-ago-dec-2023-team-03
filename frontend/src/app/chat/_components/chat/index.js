@@ -13,7 +13,7 @@ import img from '/public/images/chat-gpt-logo.svg.png';
 import services from '@/src/services';
 import { useSearchParams } from 'next/navigation';
 
-function Chat({ chat, tokens, selectedChatId, setTokens }) {
+function Chat({ tokens, selectedChatId, setTokens, llm, setChats }) {
   const _chatContext = chatContext.use();
   const chatState = _chatContext.state;
   const chatActions = _chatContext.actions;
@@ -45,6 +45,16 @@ function Chat({ chat, tokens, selectedChatId, setTokens }) {
     if (promptsRes.success) {
       setPrompts(promptsRes.data.prompts);
     }
+
+    const myChats = await services.me.getMyChats({
+      query: {
+        'team-id': teamId,
+        'llm-id': llmId
+      }
+    });
+
+    const chats = myChats.data.chats;
+    setChats(chats);
 
     setPromptIsLoading(false);
     chatActions.setPrompt('');
@@ -80,7 +90,7 @@ function Chat({ chat, tokens, selectedChatId, setTokens }) {
               alt='ChatGPT logo'
               src={img}
             />
-            <span className='font-semibold'>ChatGPT-4</span>
+            <span className='font-semibold'>{llm?.name}</span>
           </div>
           <div className='inline-flex items-center gap-x-1'>
             <RiCopperCoinFill className='inline' size={24} color='#E5B43C' />
@@ -98,7 +108,7 @@ function Chat({ chat, tokens, selectedChatId, setTokens }) {
                 <div className='p-6 bg-regal-blue-light'>
                   <div className='max-w-2xl mx-auto flex gap-x-3 relative'>
                     <p className='text-base/7 text-gray-200 font-light'>{prompt.message}</p>
-                    <BiLike size={18} className='flex-shrink-0 absolute -right-5' />
+                    {/* <BiLike size={18} className='flex-shrink-0 absolute -right-5' /> */}
                   </div>
                 </div>
                 <div style={{ borderColor: '#434957' }} className={`${idx !== 0 ? 'border-t' : ''} border-b p-6 bg-regal-blue-normal`}>
