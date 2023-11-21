@@ -49,12 +49,7 @@ function HomePage() {
     }
   }, [user, isLoading]);
 
-  return (
-    <div className='w-screen h-screen flex'>
-      <h1>Autenticando. Validando credenciales</h1>
-      <p>{serverError}</p>
-    </div>
-  )
+  return <div className='loader'></div>
 }
 
 export default HomePage;
