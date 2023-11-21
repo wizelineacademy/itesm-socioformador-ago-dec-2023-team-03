@@ -23,8 +23,6 @@ function Sidebar({
     const llmId = searchParams.get('llm-id');
     const chatId = searchParams.get('chat-id');
 
-    const router = useRouter();
-
     let chat;
     if (!chatId) {
       const date = new Date();
