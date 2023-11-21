@@ -34,7 +34,13 @@ function ChatPageLayout() {
       }
     });
 
-    setChats(myChats.data.chats);
+    const chats = myChats.data.chats;
+
+    setChats(chats);
+
+    if (chats.length > 0) {
+      setSelectedChatId(chats[0].id);
+    }
 
     const getTokensResponse = await services.tokens.getTokens({
       'team-id': teamId,
@@ -60,7 +66,6 @@ function ChatPageLayout() {
     if (selectedChatId) {
       async function findChat() {
         const chatResponse = await services.chat.findChatById(selectedChatId);
-        console.log(chatResponse);
         if (chatResponse.success && chatResponse.data && chatResponse.data.chat) {
           setSelectedChat(chatResponse.data.chat);
         }
@@ -78,11 +83,18 @@ function ChatPageLayout() {
         <main className='flex w-full h-full'>
           <Sidebar
             chats={chats}
+            setChats={setChats}
             teamName={teamName}
             setSelectedChatId={setSelectedChatId}
             selectedChatId={selectedChatId}
           />
-          <Chat chat={selectedChat} tokens={tokens} />
+          <Chat
+            chat={selectedChat}
+            tokens={tokens}
+            setChats={setChats} 
+            selectedChatId={selectedChatId}
+            setTokens={setTokens}
+          />
         </main>
       </div>
     </chatContext.Provider>

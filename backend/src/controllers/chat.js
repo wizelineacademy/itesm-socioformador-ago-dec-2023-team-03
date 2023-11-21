@@ -131,7 +131,7 @@ async function getChatPrompts(req, res, next) {
 
     const prompts = await chat.getPrompts({
       include: Response,
-      order: [['createdAt', 'DESC']]
+      order: [['createdAt', 'ASC']]
     });
 
     const response = new SuccessResponse(200, { prompts });
@@ -148,13 +148,19 @@ async function createPrompt(req, res, next) {
     const me = req.me;
     const chatId = req.params.id;
     const { message } = req.body;
+    console.log(req.body);
 
     // Check if chat with provided id exists
     const chat = await validateIdInModel(chatId, Chat);
 
     // Check if user has enough tokens
-    const memberTokens = await Tokens.findOne({ where: { memberId: me.id } });
-    console.log(memberTokens);
+    const memberTokens = await Tokens.findOne({
+      where: {
+        memberId: me.id,
+        llmId: req.body.llmId,
+        teamId: req.body.teamId
+      }
+    });
 
     if (memberTokens.quantity <= 0) {
       throw new ClientError(403, 'You dont have enough tokens to make a prompt');
@@ -196,15 +202,15 @@ async function createPrompt(req, res, next) {
     console.log('PROMPT:', prompt);
     console.log('RESPONSE:', response);
 
-    // const successResponse = new SuccessResponse(201, {
-    //   prompt: {
-    //     ...prompt.toJSON(),
-    //     response: response.toJSON()
-    //   },
-    //   totalTokens
-    // });
+    const successResponse = new SuccessResponse(201, {
+      prompt: {
+        ...prompt.toJSON(),
+        response: response.toJSON()
+      },
+      totalTokens
+    });
 
-    // res.status(successResponse.statusCode).json(successResponse);
+    res.status(successResponse.statusCode).json(successResponse);
   } catch (err) {
     next(err);
   }

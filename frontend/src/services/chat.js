@@ -25,12 +25,30 @@ async function create(body) {
   return data;
 }
 
-async function createPrompt(chatId) {
+async function createPrompt(chatId, body) {
   const routeUrl = `${baseUrl}/${chatId}/prompts`;
   const res = await fetch(routeUrl, {
     method: 'POST',
     cache: 'no-store',
+    headers: {
+      'Content-Type': 'application/json'
+    },
     credentials: 'include',
+    body: JSON.stringify(body)
+  });
+  const data = await res.json();
+  return data;
+}
+
+async function getPrompts(chatId) {
+  const routeUrl = `${baseUrl}/${chatId}/prompts`;
+  const res = await fetch(routeUrl, {
+    method: 'GET',
+    cache: 'no-store',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include'
   });
   const data = await res.json();
   return data;
@@ -39,5 +57,6 @@ async function createPrompt(chatId) {
 export default {
   findChatById,
   create,
-  createPrompt
+  createPrompt,
+  getPrompts
 };

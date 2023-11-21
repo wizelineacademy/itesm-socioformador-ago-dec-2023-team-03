@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import chatContext from '../../_context';
 
@@ -13,11 +13,14 @@ import img from '/public/images/chat-gpt-logo.svg.png';
 import services from '@/src/services';
 import { useSearchParams } from 'next/navigation';
 
-function Chat({ chat, tokens }) {
+function Chat({ chat, tokens, selectedChatId, setTokens }) {
   const _chatContext = chatContext.use();
   const chatState = _chatContext.state;
   const chatActions = _chatContext.actions;
-  const [prompts, setPrompts] = useState(chat.prompts || []);
+  const [prompts, setPrompts] = useState([]);
+  const [promptIsLoading, setPromptIsLoading] = useState(false);
+
+  const promptsRef = useRef();
 
   const searchParams = useSearchParams();
 
@@ -26,41 +29,44 @@ function Chat({ chat, tokens }) {
 
     const teamId = searchParams.get('team-id');
     const llmId = searchParams.get('llm-id');
-    const chatId = searchParams.get('chat-id');
 
-    let chat;
-    if (!chatId) {
-      const res = await services.chat.create({
-        teamId,
-        llmId,
-        title: ''
-      });
-      if (res.success) {
-        chat = res.data.chat;
-      }
+    setPromptIsLoading(true);
+
+    const res = await services.chat.createPrompt(selectedChatId, {
+      llmId, teamId, message: chatState.prompt
+    });
+
+    const totalTokens = res.data?.totalTokens;
+    if (totalTokens) {
+      setTokens((currTokens) => currTokens - totalTokens);
     }
 
-    let prompt;
-    if (chat) {
-      const res = await services.chat.createPrompt(chat.id);
-      if (res.success) {
-        console.log('success');
-        // prompt = res.data.prompt;
-        // setPrompts([...prompts, prompt]);
-      }
+    const promptsRes = await services.chat.getPrompts(selectedChatId);
+    if (promptsRes.success) {
+      setPrompts(promptsRes.data.prompts);
     }
 
-
-    console.log('CHAT', chat);
-    console.log('PROMPT', prompt);
-    return;
-
-    services.chat.createPrompt()
-    console.log(chatState);
+    setPromptIsLoading(false);
     chatActions.setPrompt('');
   }
 
-  console.log(chat);
+  useEffect(() => {
+    (async() => {
+      if (selectedChatId) {
+        const res = await services.chat.getPrompts(selectedChatId);
+        if (res.success) {
+          setPrompts(res.data.prompts);
+        }
+      }
+    })();
+  }, [selectedChatId]);
+
+  useEffect(() => {
+    promptsRef.current.scrollTo({
+      top: promptsRef.current.scrollHeight,
+      behavior: 'smooth'
+    });
+  }, [selectedChatId, prompts, promptIsLoading]);
 
   return (
     <div className='w-full flex flex-col'>
@@ -84,7 +90,7 @@ function Chat({ chat, tokens }) {
       </header>
 
       {/* Messages container */}
-      <div className='h-full overflow-y-scroll'>
+      <div className='h-full overflow-y-scroll' ref={promptsRef}>
         {
           prompts && prompts.length ?
             prompts.map((prompt, idx) => (
@@ -109,18 +115,24 @@ function Chat({ chat, tokens }) {
               </div>
             )
         }
+        {promptIsLoading && <p>Generando respuesta...</p>}
       </div>
 
       {/* Input bar container */}
-      <div className='bg-regal-blue-normal w-full h-24 flex-shrink-0 px-5 flex items-center border-t border-t-gray-600'>
+      <div className={('bg-regal-blue-normal w-full h-24 flex-shrink-0 px-5 flex items-center border-t border-t-gray-600' +
+      `${selectedChatId !== null ? ' opacity-1' : ' opacity-50'}` +
+      `${promptIsLoading ? ' opacity-50' : ' opacity-1'}`
+      )}>
         <form className='w-full flex' onSubmit={sendPrompt}>
           <textarea
+            disabled={selectedChatId === null}
             onChange={(e) => chatActions.setPrompt(e.target.value)}
             value={chatState.prompt}
             className='w-full resize-none block rounded-tl-md rounded-bl-md p-3 h-12 outline-none bg-regal-blue-light'
             placeholder='Send a message'
           />
           <button
+            disabled={selectedChatId === null || promptIsLoading}
             className='flex justify-center items-center aspect-square h-12 rounded-tr-md rounded-br-md'
             style={{ backgroundColor: '#E93D44' }}
             type='submit'
