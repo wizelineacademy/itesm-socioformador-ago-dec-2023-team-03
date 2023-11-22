@@ -1,7 +1,6 @@
 "use client";
 
 import AdminMembersList from "@/src/app/components/AdminMembersList";
-import AddMember from "@/src/components/modals/AddMemberInGroup";
 import useAllMembers from "@/src/hooks/useAllMembers";
 import { Member } from "@/src/types";
 import { useEffect, useRef, useState } from "react";
@@ -50,7 +49,7 @@ export default function MembersPage() {
         </button>
       </div>
       <dialog ref={modal} className="py-3 px-14 rounded-2xl space-y-4">
-        <AddMember close={closeModal} />
+        {/* <AddMember close={closeModal} /> */}
       </dialog>
       <div className="flex flex-col flex-grow h-full space-y-2 p-5 overflow-y-auto bg-regal-blue-normal">
         {filteredMembers.map((member) => (

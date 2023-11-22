@@ -1,17 +1,18 @@
 "use client";
 
 import AdminMembersList from "@/src/app/components/AdminMembersList";
-import Sidebar from "@/src/app/components/Sidebar";
-import Link from "next/link";
-import { CgArrowLeft } from "react-icons/cg";
 import AdminTeamLLMsList from "@/src/app/components/AdminTeamLLMsList";
-import useMembers from "@/src/hooks/useMembers";
+import AddMember from "@/src/components/modals/AddMemberInGroup";
 import useLLM from "@/src/hooks/useLLM";
-
+import useMembers from "@/src/hooks/useMembers";
+import Link from "next/link";
+import { useRef } from "react";
 
 export default function Home({ params }: { params: { id: string } }) {
+    console.log(params.id);
     const [members, setMembers, membersLoading] = useMembers(params.id);
     const [llm, setLLM, llmLoading] = useLLM(params.id);
+    const modal = useRef<null | HTMLDialogElement>(null);
 
     if (membersLoading) return (
         <div className="flex flex-col w-full h-full items-center justify-center align-middle">
@@ -24,7 +25,18 @@ export default function Home({ params }: { params: { id: string } }) {
     }
 
     function handleAddMember(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
-        throw new Error("Function not implemented.");
+        const openModal = () => {
+            if (modal.current) {
+                modal.current.showModal();
+            }
+        }
+        openModal();
+    }
+
+    const closeModal = () => {
+        if (modal.current) {
+            modal.current.close();
+        }
     }
 
     return (
@@ -46,6 +58,9 @@ export default function Home({ params }: { params: { id: string } }) {
                     </button>
                 </div>
             </div>
+            <dialog ref={modal} className="py-3 px-14 rounded-2xl space-y-4">
+                <AddMember teamId={params.id} close={closeModal} />
+            </dialog>
             <div className="flex flex-col h-full space-y-2 p-5 overflow-y-auto bg-regal-blue-normal">
                 {/* Map through all members */}
                 {members && members.map((member) => (
