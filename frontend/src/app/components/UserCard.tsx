@@ -30,7 +30,11 @@ const UserCard: React.FC<UserCardProps> = ({
             ) : null}
 
             <div className="flex flex-row align-middle items-center space-x-2">
-                <Avatar size={{ xs: 24, sm: 32, md: 40, lg: 40, xl: 40, xxl: 40 }} src={user.user.picture} />
+                <div className="avatar">
+                    <div className="w-12 rounded-full">
+                        <img src={user.user.picture} alt="" />
+                    </div>
+                </div>
                 <p>{user.user.given_name}</p>
             </div>
         </div>
