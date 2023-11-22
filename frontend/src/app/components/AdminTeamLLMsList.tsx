@@ -1,6 +1,5 @@
 import img from '/public/images/chat-gpt-logo.svg.png';
 import Image from 'next/image';
-import { CgClose, CgMathPlus } from 'react-icons/cg';
 import AdminListDeleteButton from './AdminListDeleteButton';
 import { LLM } from '@/src/types';
 
@@ -11,17 +10,19 @@ interface AdminTeamLLMsListProps {
 const AdminTeamLLMsList: React.FC<AdminTeamLLMsListProps> = ({
     llm,
 }) => {
+
+    function handleOpenLLM(event: React.MouseEvent<HTMLDivElement, MouseEvent>): void {
+        throw new Error('Function not implemented.');
+    }
+
     return (
-        <div className="flex flex-row p-4 space-x-3 items-center justify-center">
-            <figure><Image src={img} width={50} height={50} alt="Movie" /></figure>
+        <div onClick={handleOpenLLM} className="mb-5 btn btn-lg btn-neutral flex flex-row space-x-3 items-center justify-center">
+            <Image src={img} width={40} height={40} alt="" />
             <div className="flex flex-col">
-                <h2 className="card-title">{llm?.name}</h2>
+                <h2 className="card-title text-md">{llm?.name}</h2>
                 <div className="card-actions justify-end">
-                    <p>{llm?.model}</p>
+                    <p className="text-sm">{llm?.model}</p>
                 </div>
-            </div>
-            <div>
-                <AdminListDeleteButton />
             </div>
         </div>
     )

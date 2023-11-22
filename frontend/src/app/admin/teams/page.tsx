@@ -37,7 +37,7 @@ export default function TeamsPage() {
     <div className="flex flex-col overflow-auto h-full">
       <div className="flex flex-row flex-none justify-between items-center space-x-4 p-2">
         <input type="text" className="px-3 py-2 text-black bg-gray-100 rounded-xl w-1/3" placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
-        <button className="flex w-fit text-sm px-3 py-2 btn btn-accent text-white" onClick={handleCreateGroup}>
+        <button className="flex w-fit text-sm px-3 py-2 btn btn-neutral btn-md text-white" onClick={handleCreateGroup}>
           Create Team
         </button>
       </div>

@@ -8,8 +8,11 @@ interface AdminMemberListProps {
 const AdminMemberList: React.FC<AdminMemberListProps> = ({
     member,
 }) => {
+    function handleRemoveMember(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
+        throw new Error("Function not implemented.");
+    }
     return (
-        <div className="flex flex-row h-fit p-2 rounded-lg w-full btn btn-primary items-center justify-between">
+        <div className="flex flex-row h-fit p-2 rounded-lg w-full btn pointer-events-none btn-primary items-center justify-between">
             <div className="flex flex-row items-center space-x-2">
                 <div className="avatar">
                     <div className="w-8 rounded-full items-center align-middle justify-center ">
@@ -25,9 +28,11 @@ const AdminMemberList: React.FC<AdminMemberListProps> = ({
                 <p>{member?.firstName ?? "First Name"}</p>
                 <p>{member?.lastName ?? "Last Name"}</p>
             </div>
-            <div>
-                <AdminListDeleteButton />
-            </div>
+            <button onClick={() => handleRemoveMember} className="btn btn-circle btn-sm pointer-events-auto">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
         </div>
     )
 }
