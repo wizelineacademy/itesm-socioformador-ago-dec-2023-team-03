@@ -38,7 +38,7 @@ export default function RootLayout({
   children,
 }) {
   return (
-    <html lang="en">
+    <html data-theme="wizeline" lang="en">
       <UserProvider>
         <body>
           {children}

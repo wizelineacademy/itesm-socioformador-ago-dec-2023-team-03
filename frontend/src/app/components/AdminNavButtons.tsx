@@ -1,14 +1,19 @@
-import { Button } from "antd"
+import Link from "next/link";
 
-export default function AdminNavButtons(){
-    return(
+export default function AdminNavButtons() {
+    return (
         <div className="flex flex-col gap-3">
-            <Button className="bg-regal-blue-light text-white" href="/admin/members">
-                Members
-            </Button>
-            <Button className="bg-regal-blue-light text-white" href="/admin/teams">
-                Teams
-            </Button>
+            <Link href="/admin/members">
+                <button className="btn btn-secondary w-full text-lg" >
+                    Members
+                </button>
+            </Link>
+
+            <Link href="/admin/teams">
+                <button className="btn btn-secondary w-full text-lg" >
+                    Teams
+                </button>
+            </Link>
         </div>
     )
 }

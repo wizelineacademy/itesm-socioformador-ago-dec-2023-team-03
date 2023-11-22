@@ -1,37 +1,34 @@
-"use client";
-
 import UserCard from "./UserCard";
 import Link from "next/link";
-import SidebarItem from "./SidebarItem";
 import chat_history from "../data/chat_history.json";
-import Filter from "./Filter";
 import AdminNavButtons from "./AdminNavButtons";
-import { usePathname } from "next/navigation";
 
 interface SidebarProps {
     reference?: string;
     children: React.ReactNode;
+    user?: any;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
     reference,
-    children
+    children,
+    user
 }) => {
     // Store chat history in local variable
     const chatHistory = chat_history;
-    const pathname = usePathname();
-    const adminRoute = pathname.split("/")[1];
     return (
-        <div className="flex flex-row h-screen w-screen">
-            <div className="flex flex-col justify-between h-full w-64">
-                <div className="flex flex-col gap-5 px-4 py-5 ">
+        <div data-theme="wizeline" className="flex flex-row h-screen w-screen">
+            <div className="flex flex-col justify-between w-64">
+                <div className="flex flex-col gap-5 px-4 py-5 items-center justify-center">
                     <Link className="text-3xl text-white" href={'/admin'}>
                         Wizeprompt
                     </Link>
+                </div>
+                <div className="flex flex-col flex-grow h-full p-3">
                     <AdminNavButtons />
                 </div>
-                <div className="bg-regal-blue-normal text-white">
-                    <UserCard reference={reference} />
+                <div className="p-3 text-white">
+                    <UserCard user={user} />
                 </div>
             </div>
             <div className="flex flex-col h-screen w-full overflow-auto">
@@ -39,8 +36,6 @@ const Sidebar: React.FC<SidebarProps> = ({
             </div>
         </div>
     );
-
-
 }
 
 export default Sidebar;
