@@ -89,7 +89,8 @@ async function getMyChats(req, res, next) {
       include: {
         model: Chat,
         where: whereClause
-      }
+      },
+      order: [[Chat, 'updatedAt', 'DESC']]
     });
     
     let chats;

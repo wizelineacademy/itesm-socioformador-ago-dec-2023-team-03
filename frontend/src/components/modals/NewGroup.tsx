@@ -36,9 +36,9 @@ export default function NewGroup({ close }: NewGroupProps) {
 
   return (
     <>
-      <header>
+      <div>
         <h1 className="text-center text-lg font-semibold">New Group</h1>
-      </header>
+      </div>
       <form className="space-x-4">
         <label htmlFor="group">Group Name:</label>
         <input
@@ -49,10 +49,10 @@ export default function NewGroup({ close }: NewGroupProps) {
           onChange={handleInputChange}
         />
       </form>
-      <footer className="flex justify-around">
+      <div className="flex justify-around">
         <button onClick={() => handleClose()} className="text-white bg-red-500 py-1 px-4 rounded-2xl hover:bg-red-700">Cancel</button>
         <button type="submit" onClick={(e) => handleSubmit(e)} className="text-white bg-green-500 py-1 px-4 rounded-2xl hover:bg-green-700">Create</button>
-      </footer>
+      </div>
     </>
   );
 }

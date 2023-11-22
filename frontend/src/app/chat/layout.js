@@ -18,6 +18,7 @@ function ChatPageLayout() {
   const [chats, setChats] = React.useState([]);
   const [tokens, setTokens] = React.useState(null);
   const [teamName, setTeamName] = React.useState('');
+  const [llm, setLlm] = React.useState(null);
   const [selectedChatId, setSelectedChatId] = React.useState(null);
   const [selectedChat, setSelectedChat] = React.useState({});
   const searchParams = useSearchParams();
@@ -34,7 +35,17 @@ function ChatPageLayout() {
       }
     });
 
-    setChats(myChats.data.chats);
+    const chats = myChats.data.chats;
+    setChats(chats);
+
+    const llmRes = await services.llm.find(llmId);
+    if (llmRes.success) {
+      setLlm(llmRes.data.llm);
+    }
+
+    if (chats.length > 0) {
+      setSelectedChatId(chats[0].id);
+    }
 
     const getTokensResponse = await services.tokens.getTokens({
       'team-id': teamId,
@@ -42,7 +53,7 @@ function ChatPageLayout() {
       'member-id': session.me.id
     })
 
-    const tokensQty = getTokensResponse.data.tokens[0].quantity;
+    const tokensQty = getTokensResponse.data.tokens[0]?.quantity || 0;
     setTokens(tokensQty);
 
     const teamResponse = await services.team.findTeamById(teamId);
@@ -60,7 +71,6 @@ function ChatPageLayout() {
     if (selectedChatId) {
       async function findChat() {
         const chatResponse = await services.chat.findChatById(selectedChatId);
-        console.log(chatResponse);
         if (chatResponse.success && chatResponse.data && chatResponse.data.chat) {
           setSelectedChat(chatResponse.data.chat);
         }
@@ -78,11 +88,18 @@ function ChatPageLayout() {
         <main className='flex w-full h-full'>
           <Sidebar
             chats={chats}
+            setChats={setChats}
             teamName={teamName}
             setSelectedChatId={setSelectedChatId}
             selectedChatId={selectedChatId}
           />
-          <Chat chat={selectedChat} tokens={tokens} />
+          <Chat
+            tokens={tokens}
+            setChats={setChats}
+            llm={llm}
+            selectedChatId={selectedChatId}
+            setTokens={setTokens}
+          />
         </main>
       </div>
     </chatContext.Provider>

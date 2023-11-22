@@ -35,6 +35,23 @@ async function create(req, res, next) {
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------------------------------------------------
+async function find(req, res, next) {
+  try {
+    const { id } = req.params;
+    // Retrieve all llm's from the database (setting 'raw' to 'true' to get plain data)
+    const llm = await LLM.findByPk(id);
+
+    return res.status(200).json({
+      success: true,
+      data: { llm }
+    });
+  } catch(err) {
+    return next(err);
+  }
+}
+// ---------------------------------------------------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------------------------------------------------
 async function getAll(req, res, next) {
   try {
     // Retrieve all llm's from the database (setting 'raw' to 'true' to get plain data)
@@ -122,5 +139,6 @@ module.exports = {
   create,
   getAll,
   update,
-  remove
+  remove,
+  find
 };

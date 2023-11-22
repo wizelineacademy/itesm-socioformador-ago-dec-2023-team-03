@@ -3,7 +3,8 @@ const {
   Member,
   Team,
   TeamMember,
-  Chat
+  Chat,
+  Tokens
 } = require('../models');
 
 // Errors
@@ -28,6 +29,8 @@ async function addMemberToTeam(req, res, next) {
     }
 
     teamMember = await TeamMember.create({ teamId, memberId });
+
+    await Tokens.create({ memberId, teamId });
 
     res.status(201).json({
       success: true,
@@ -56,6 +59,7 @@ async function removeMemberFromTeam(req, res, next) {
 
     // Remove all the chats from the member associated with the team
     await Chat.destroy({ where: { teamId, memberId } });
+    await Tokens.destroy({ where: { teamId, memberId } })
 
     res.status(200).json({
       success: true,
