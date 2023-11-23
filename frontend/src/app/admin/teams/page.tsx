@@ -1,16 +1,17 @@
 "use client";
 
-import Sidebar from "@/src/app/components/Sidebar";
-import { useRouter } from "next/navigation";
+import NewGroup from "@/src/components/modals/NewGroup";
 import useTeams from "@/src/hooks/useTeams";
 import { Team } from "@/src/types";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 export default function TeamsPage() {
   const router = useRouter();
   const [teams, setTeams, teamsLoading] = useTeams();
   const [search, setSearch] = useState<string>("");
   const [filteredTeams, setFilteredTeams] = useState<Team[]>(teams);
+  const modal = useRef<null | HTMLDialogElement>(null);
 
   useEffect(() => {
     const filteredTeams = teams.filter((team) => {
@@ -20,7 +21,12 @@ export default function TeamsPage() {
   }, [search, teams]);
 
   function handleCreateGroup(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
-    throw new Error("Function not implemented.");
+    const openModal = () => {
+      if (modal.current) {
+        modal.current.showModal();
+      }
+    }
+    openModal();
   }
 
   if (teamsLoading) return (
@@ -33,6 +39,12 @@ export default function TeamsPage() {
     router.push(`/admin/teams/${teamId}`)
   }
 
+  const closeModal = () => {
+    if (modal.current) {
+      modal.current.close();
+    }
+  }
+
   return (
     <div className="flex flex-col overflow-auto h-full">
       <div className="flex flex-row flex-none justify-between items-center space-x-4 p-2">
@@ -41,6 +53,9 @@ export default function TeamsPage() {
           Create Team
         </button>
       </div>
+      <dialog ref={modal} className="py-3 px-14 rounded-2xl space-y-4">
+        <NewGroup close={closeModal} />
+      </dialog>
       <div className="flex flex-col overflow-y-auto flex-grow h-full">
         <ul className="space-y-3 h-full p-5 overflow-y-scroll bg-regal-blue-normal">
           {filteredTeams && filteredTeams.map((team: Team) => (
