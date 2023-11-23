@@ -1,15 +1,15 @@
 import { CgClose } from "react-icons/cg";
 
-import DeleteGroup from "@/src/components/modals/DeleteGroup";
+import DeleteTeam from "@/src/components/modals/DeleteTeam";
 import Modal from "@/src/components/modals/Modal";
-import RemoveUser from "@/src/components/modals/RemoveUser";
+import RemoveUser from "@/src/components/modals/RemoveMember";
 import { usePathname } from "next/navigation";
 import { useRef } from "react";
 
-export default function AdminListDeleteButton() {
+export default function AdminListDeleteButton({ teamId }: { teamId: string }) {
 
   const dialog = useRef<null | HTMLDialogElement>(null);
-  const modalGroup = useRef<null | HTMLDialogElement>(null);
+  const modalTeam = useRef<null | HTMLDialogElement>(null);
   const modalUser = useRef<null | HTMLDialogElement>(null);
   const pathname = usePathname();
 
@@ -26,14 +26,14 @@ export default function AdminListDeleteButton() {
   }
 
   const openSubModal = () => {
-    if (modalGroup.current) {
-      modalGroup.current.showModal();
+    if (modalTeam.current) {
+      modalTeam.current.showModal();
     }
   }
 
   const closeSubModal = () => {
-    if (modalGroup.current) {
-      modalGroup.current.close();
+    if (modalTeam.current) {
+      modalTeam.current.close();
     }
   }
 
@@ -55,11 +55,11 @@ export default function AdminListDeleteButton() {
         <CgClose size={25} />
       </button>
       <dialog ref={dialog} className="py-3 px-14 rounded-2xl space-y-4">
-        {pathname === "/admin/teams" ? <DeleteGroup openSubModal={openSubModal} close={closeModal} /> : <RemoveUser openUserModal={openUserModal} close={closeModal} />}
+        {pathname === "/admin/teams/" ? <DeleteTeam openSubModal={openSubModal} close={closeModal} /> : <RemoveUser openUserModal={openUserModal} close={closeModal} />}
       </dialog>
 
-      <dialog ref={modalGroup} className="py-3 px-14 rounded-2xl space-y-4">
-        <Modal title="Message" message="The group has been deleted" close={closeSubModal} />
+      <dialog ref={modalTeam} className="py-3 px-14 rounded-2xl space-y-4">
+        <Modal title="Message" message="The Team has been deleted" close={closeSubModal} />
       </dialog>
 
       <dialog ref={modalUser} className="py-3 px-14 rounded-2xl space-y-4">

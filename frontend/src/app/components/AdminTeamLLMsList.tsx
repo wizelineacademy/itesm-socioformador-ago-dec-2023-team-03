@@ -1,7 +1,6 @@
-import img from '/public/images/chat-gpt-logo.svg.png';
-import Image from 'next/image';
-import AdminListDeleteButton from './AdminListDeleteButton';
 import { LLM } from '@/src/types';
+import Image from 'next/image';
+import img from '/public/images/chat-gpt-logo.svg.png';
 
 interface AdminTeamLLMsListProps {
     llm?: LLM;
