@@ -54,9 +54,9 @@ export default function AdminListDeleteButton({ teamId }: { teamId: string }) {
       <button className='flex bg-red-600 hover:bg-red-500 rounded-md h-10 justify-self-center aspect-square justify-center items-center' onClick={() => openModal()}>
         <CgClose size={25} />
       </button>
-      <dialog ref={dialog} className="py-3 px-14 rounded-2xl space-y-4">
+      {/* <dialog ref={dialog} className="py-3 px-14 rounded-2xl space-y-4">
         {pathname === "/admin/teams/" ? <DeleteTeam openSubModal={openSubModal} close={closeModal} /> : <RemoveUser openUserModal={openUserModal} close={closeModal} />}
-      </dialog>
+      </dialog> */}
 
       <dialog ref={modalTeam} className="py-3 px-14 rounded-2xl space-y-4">
         <Modal title="Message" message="The Team has been deleted" close={closeSubModal} />
