@@ -49,11 +49,12 @@ async function createChat(req, res, next) {
     }
 
     // Create the chat
-    await Chat.create({ memberId: member.id, teamId, llmId, title });
+    const chat = await Chat.create({ memberId: member.id, teamId, llmId, title });
 
     res.status(201).json({
       success: true,
-      message: 'Chat created successfully'
+      message: 'Chat created successfully',
+      data: { chat }
     });
   } catch (err) {
     next(err);
@@ -130,7 +131,7 @@ async function getChatPrompts(req, res, next) {
 
     const prompts = await chat.getPrompts({
       include: Response,
-      order: [['createdAt', 'DESC']]
+      order: [['createdAt', 'ASC']]
     });
 
     const response = new SuccessResponse(200, { prompts });
@@ -152,8 +153,13 @@ async function createPrompt(req, res, next) {
     const chat = await validateIdInModel(chatId, Chat);
 
     // Check if user has enough tokens
-    const memberTokens = await Tokens.findOne({ where: { memberId: me.id } });
-    console.log(memberTokens);
+    const memberTokens = await Tokens.findOne({
+      where: {
+        memberId: me.id,
+        llmId: req.body.llmId,
+        teamId: req.body.teamId
+      }
+    });
 
     if (memberTokens.quantity <= 0) {
       throw new ClientError(403, 'You dont have enough tokens to make a prompt');
@@ -184,6 +190,9 @@ async function createPrompt(req, res, next) {
       message: responseMessage
     });
 
+    const shortMessage = shortenString(message, 20);
+
+    await chat.update({ title: shortMessage });
     const totalTokens = completion.usage.total_tokens;
 
     // Remove the total tokens spent in the prompt for the user tokens
@@ -203,6 +212,13 @@ async function createPrompt(req, res, next) {
   }
 }
 // ---------------------------------------------------------------------------------------------------------------------
+
+function shortenString(str, maxLength) {
+  if (str.length > maxLength) {
+    return str.substring(0, maxLength - 3) + '...';
+  }
+  return str;
+}
 
 module.exports = {
   createChat,

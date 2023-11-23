@@ -19,7 +19,7 @@ export default function Modal({ title, message, close }: ModalProps) {
         <p>{message}</p>
       </div>
       <footer className="flex justify-center">
-        <button onClick={() => handleClose()} className="text-white bg-gray-500 py-1 px-4 rounded-2xl hover:bg-gray-700">Close</button>
+        <button onClick={() => handleClose()} className="text-white bg-gray-500 py-1 px-4 rounded-2xl hover:bg-gray-700 pointer-events-auto">Close</button>
       </footer>
     </>
   );

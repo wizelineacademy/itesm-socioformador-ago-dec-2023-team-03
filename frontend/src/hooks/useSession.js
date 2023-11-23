@@ -26,7 +26,6 @@ export default function useSession() {
         } else {
           setUserSession(response.data.me);
         }
-        console.log(response);
       } catch (error) {
         console.error('Error fetching user session:', error);
         setSessionError(error);

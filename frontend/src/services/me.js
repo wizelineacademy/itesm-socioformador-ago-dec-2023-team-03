@@ -1,13 +1,17 @@
 const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/me`;
 
 async function getMe() {
-  const routeUrl = baseUrl;
-  const res = await fetch(routeUrl, {
-    cache: 'no-store',
-    credentials: 'include',
-  });
-  const data = await res.json();
-  return data;
+  try {
+    const routeUrl = baseUrl;
+    const res = await fetch(routeUrl, {
+      cache: 'no-store',
+      credentials: 'include',
+    });
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    throw err;
+  }
 }
 
 async function getMyTeams() {

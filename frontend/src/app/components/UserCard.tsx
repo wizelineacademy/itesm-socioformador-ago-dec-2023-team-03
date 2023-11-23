@@ -3,120 +3,42 @@
 import { useState } from "react";
 import { Avatar } from 'antd'
 import Link from "next/link";
-import { useUser } from '@auth0/nextjs-auth0/client';
 import { usePathname } from "next/navigation";
 
 interface UserCardProps {
-    reference?: string;
+    user?: any;
 }
 
 const UserCard: React.FC<UserCardProps> = ({
-    reference,
+    user,
 }) => {
-
-    const pathname = usePathname();
-    const adminRoute = pathname.split("/")[1];
-
-    const { user, error, isLoading } = useUser();
-
-    // Hook for hover over the avatar
     const [hover, setHover] = useState(false);
 
-    if (isLoading) return <div>Loading...</div>;
-    if (error) return <div>{error.message}</div>;
+    console.log(hover)
 
-    // If menu is not shown, show the avatar and username on Home page
-    if (hover == false && reference == "/home") {
-        return (
-            <div className='flex flex-row items-center gap-x-2 py-2'>
-                <div className='cursor-pointer' onMouseEnter={() => setHover(true)}>
-                    <Avatar size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }} src={user?.picture || ""}>
-                    </Avatar>
+    return (
+        <div className="flex flex-col flex-none space-y-3 w-full" onMouseLeave={() => setHover(false)} onMouseEnter={() => setHover(true)}>
+            {hover ? (
+                <div className="flex flex-col align-center items-center w-full space-y-2">
+                    <Link href="/">
+                        <p className="btn btn-secondary text-lg rounded-3xl p-2 pl-7 pr-7">Home</p>
+                    </Link>
+                    <Link href="/api/auth/logout">
+                        <p className="text-sm rounded-xl p-1 hover:text-regal-blue-light">Sign Out</p>
+                    </Link>
                 </div>
-                <div>
-                    <p className="truncate w-fill text-md"> {user?.nickname ?? "User"}  </p>
-                </div>
-            </div>
-        );
-        // If menu is not shown, show the avatar and username on Admin page
-    } else if (adminRoute == "admin" && hover == false) {
-        return (
-            <div className='flex flex-row items-center gap-x-2 py-2'>
-                <div className='cursor-pointer' onMouseEnter={() => setHover(true)}>
-                    <Avatar size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }} src={user?.picture || ""}>
-                    </Avatar>
-                </div>
-                <div>
-                    <p className="truncate w-fill text-md"> {user?.nickname ?? "User"}  </p>
-                </div>
-            </div>
-        );
-        // Show menu after hovering on the avatar on Admin page
-    } else if (adminRoute == "admin" && hover == true) {
-        return (
-            <div onMouseLeave={() => setHover(false)}>
-                <div>
-                    <div className="flex flex-col items-center py-1">
-                        <div className="flex flex-col">
-                            <Link href='/'>
-                                <button className="bg-gray-300 hover:bg-gray-500 text-gray-800 font-bold py-2 px-10 rounded-full py-2.1 opacity-50">
-                                    Home
-                                </button>
-                            </Link>
-                            <Link href="/api/auth/logout" className='flex flex-col items-center'>
-                                <button className="pt-1 hover:text-gray-400">
-                                    Logout
-                                </button>
-                            </Link>
-                        </div>
-                    </div>
-                    <div className='flex flex-row items-center gap-x-2 py-2'>
-                        <div className='cursor-pointer' onMouseEnter={() => setHover(true)}>
-                            <Avatar size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }} src={user?.picture || ""}>
+            ) : null}
 
-                            </Avatar>
-                        </div>
-                        <div>
-                            <p className="truncate w-fill text-md">
-                                {user?.nickname ?? ""}
-                            </p>
-                        </div>
+            <div className="flex flex-row align-middle items-center space-x-2">
+                <div className="avatar">
+                    <div className="w-12 rounded-full">
+                        <img src={user.user.picture} alt="" />
                     </div>
                 </div>
+                <p>{user.user.given_name}</p>
             </div>
-        );
-    } else {
-        // Show menu after hovering on the avatar on Home page
-        return (
-            <div onMouseLeave={() => setHover(false)}>
-                <div>
-                    <div className="flex flex-col items-center py-1">
-                        <div className="flex flex-col">
-                            <Link href='/admin'>
-                                <button className="bg-gray-300 hover:bg-gray-500 text-gray-800 font-bold py-2 px-10 rounded-full py-2.1 opacity-50">
-                                    Dashboard
-                                </button>
-                            </Link>
-                            <Link href="/api/auth/logout" className='flex flex-col items-center'>
-                                <button className="pt-1 hover:text-gray-400">
-                                    Logout
-                                </button>
-                            </Link>
-                        </div>
-                    </div>
-                    <div className='flex flex-row items-center gap-x-2 py-2'>
-                        <div className='cursor-pointer' onMouseEnter={() => setHover(true)}>
-                            <Avatar size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }} src={user?.picture || ""}>
-                            </Avatar>
-                        </div>
-                        <div>
-                            <p className="truncate w-fill text-md">{user?.nickname ?? "User"} </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-};
+        </div>
+    )
+}
 
 export default UserCard;

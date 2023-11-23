@@ -1,15 +1,15 @@
 "use client";
-import DeleteGroup from "@/src/components/modals/DeleteGroup";
+import DeleteTeam from "@/src/components/modals/DeleteTeam";
 import Modal from "@/src/components/modals/Modal";
 import NewGroup from "@/src/components/modals/NewGroup";
-import RemoveUser from "@/src/components/modals/RemoveUser";
+import RemoveUser from "@/src/components/modals/RemoveMember";
 import { useRef } from "react";
 
 export default function ModalPage() {
   const dialog = useRef(null);
   const dialogNewGroup = useRef(null);
   const dialogRemoveUser = useRef(null);
-  const dialogDeleteGroup = useRef(null);
+  const dialogDeleteTeam = useRef(null);
 
   const openModal = () => {
     dialog.current.showModal();
@@ -34,12 +34,12 @@ export default function ModalPage() {
     dialogRemoveUser.current.close();
   }
 
-  const openModalDeleteGroup = () => {
-    dialogDeleteGroup.current.showModal();
+  const openModalDeleteTeam = () => {
+    dialogDeleteTeam.current.showModal();
   }
 
-  const closeModalDeleteGroup = () => {
-    dialogDeleteGroup.current.close();
+  const closeModalDeleteTeam = () => {
+    dialogDeleteTeam.current.close();
   }
 
   return (
@@ -56,9 +56,9 @@ export default function ModalPage() {
       <dialog ref={dialogRemoveUser} className="py-3 px-14 rounded-2xl space-y-4">
         <RemoveUser close={closeModalRemoveUser} />
       </dialog>
-      <button onClick={() => openModalDeleteGroup()}>Delete Group</button>
-      <dialog ref={dialogDeleteGroup} className="py-3 px-14 rounded-2xl space-y-4">
-        <DeleteGroup close={closeModalDeleteGroup} />
+      <button onClick={() => openModalDeleteTeam()}>Delete Group</button>
+      <dialog ref={dialogDeleteTeam} className="py-3 px-14 rounded-2xl space-y-4">
+        <DeleteTeam close={closeModalDeleteTeam} />
       </dialog>
     </>
   );
