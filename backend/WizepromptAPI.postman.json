@@ -1,0 +1,845 @@
+{
+	"info": {
+		"_postman_id": "2d53e7f1-6842-48ac-868f-9f965dee72b4",
+		"name": "Wizeprompt API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14038275"
+	},
+	"item": [
+		{
+			"name": "members",
+			"item": [
+				{
+					"name": "tokens",
+					"item": [
+						{
+							"name": "Give tokens to member",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"teamId\": \"d1d36390-651f-488d-bb3d-b2f6216dc3c4\",\n    \"llmId\": \"5a36c72a-99e7-494f-8fa0-d456ced61283\",\n    \"quantity\": -1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/members/cb26c0d3-5b1d-4fc0-816e-43f2f01cecb6/tokens",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"members",
+										"cb26c0d3-5b1d-4fc0-816e-43f2f01cecb6",
+										"tokens"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"juanbedoya.barbosa@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/members/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"members",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"juan\",\n    \"lastName\": \"bedoya\",\n    \"email\": \"juanbedoya.barbosa@gmail.com\",\n    \"roleId\": \"69aa81c4-8a4b-49e6-8917-b6d946208b90\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/members/register",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"members",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/members",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"members"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get member teams",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/members/cb26c0d3-5b1d-4fc0-816e-43f2f01cecb6/teams",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"members",
+								"cb26c0d3-5b1d-4fc0-816e-43f2f01cecb6",
+								"teams"
+							]
+						},
+						"description": "Usage: /members/:memberId/teams. Where \"memberId\" is a member ID from the database."
+					},
+					"response": []
+				},
+				{
+					"name": "Get member chats",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/members/264cd451-05ef-45d8-9528-3307fc538d2f/chats?team-id=5fc21cc8-14d6-4e32-8c4a-86a4762814ab&llm-id=3a8f9893-1435-48f5-bd34-1cc0a5b6dfac",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"members",
+								"264cd451-05ef-45d8-9528-3307fc538d2f",
+								"chats"
+							],
+							"query": [
+								{
+									"key": "team-id",
+									"value": "5fc21cc8-14d6-4e32-8c4a-86a4762814ab"
+								},
+								{
+									"key": "llm-id",
+									"value": "3a8f9893-1435-48f5-bd34-1cc0a5b6dfac"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete member",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/members/23f13144-134e-43c1-a55c-d0a289579ffa",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"members",
+								"23f13144-134e-43c1-a55c-d0a289579ffa"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "roles",
+			"item": [
+				{
+					"name": "Create new role",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/roles",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all roles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/roles",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update role",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"ROLE 10\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/roles/3279f104-c063-47c1-83d0-8d2157c5a96c",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"roles",
+								"3279f104-c063-47c1-83d0-8d2157c5a96c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete role",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/roles/3279f104-c063-47c1-83d0-8d2157c5a96c",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"roles",
+								"3279f104-c063-47c1-83d0-8d2157c5a96c"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "chats",
+			"item": [
+				{
+					"name": "prompts",
+					"item": [
+						{
+							"name": "Create prompt",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"message\": \"¿Cual es el animal mas grande?\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/chats/b4b2f877-c584-4616-ad0a-6b33cd9bcabd/prompts",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"chats",
+										"b4b2f877-c584-4616-ad0a-6b33cd9bcabd",
+										"prompts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get chat prompts",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/chats/b4b2f877-c584-4616-ad0a-6b33cd9bcabd/prompts",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"chats",
+										"b4b2f877-c584-4616-ad0a-6b33cd9bcabd",
+										"prompts"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Create new chat",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"My Chat 11\",\n    \"teamId\": \"d1d36390-651f-488d-bb3d-b2f6216dc3c4\",\n    \"llmId\": \"5a36c72a-99e7-494f-8fa0-d456ced61283\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/chats",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"chats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete chat",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/chats/10ffd4aa-cb28-4405-a7ed-202c4e0a9073",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"chats",
+								"10ffd4aa-cb28-4405-a7ed-202c4e0a9073"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find chat",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/chats",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"chats"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "teams",
+			"item": [
+				{
+					"name": "Create team",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Team 2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/teams",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"teams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/teams",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"teams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get team members",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/teams/5fc21cc8-14d6-4e32-8c4a-86a4762814ab/members",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"teams",
+								"5fc21cc8-14d6-4e32-8c4a-86a4762814ab",
+								"members"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get team LLM's",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/teams/d1d36390-651f-488d-bb3d-b2f6216dc3c4/llms",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"teams",
+								"d1d36390-651f-488d-bb3d-b2f6216dc3c4",
+								"llms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get team",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/teams/d1d36390-651f-488d-bb3d-b2f6216dc3c4",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"teams",
+								"d1d36390-651f-488d-bb3d-b2f6216dc3c4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "llms",
+			"item": [
+				{
+					"name": "Create LLM",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"ChatGPT-3.5\",\n    \"model\": \"gpt-3.5-turbo\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/llms",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"llms"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "teams-members",
+			"item": [
+				{
+					"name": "Add member to team",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"teamId\": \"c66a29cc-f485-4026-9974-9f3c853b4be5\",\n    \"memberId\": \"9c6232f5-c08e-4854-bf5b-a91abd1fb3ac\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/teams-members",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"teams-members"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove member from team",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"teamId\": \"c66a29cc-f485-4026-9974-9f3c853b4be5\",\n    \"memberId\": \"9c6232f5-c08e-4854-bf5b-a91abd1fb3ac\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/teams-members",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"teams-members"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "teams-llms",
+			"item": [
+				{
+					"name": "Give LLM access to team",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"teamId\": \"d1d36390-651f-488d-bb3d-b2f6216dc3c4\",\n    \"llmId\": \"5a36c72a-99e7-494f-8fa0-d456ced61283\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/teams-llms",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"teams-llms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove LLM access to team",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"teamId\": \"5fc21cc8-14d6-4e32-8c4a-86a4762814ab\",\n    \"llmId\": \"3a8f9893-1435-48f5-bd34-1cc0a5b6dfac\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/teams-llms",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"teams-llms"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "me",
+			"item": [
+				{
+					"name": "chats",
+					"item": [
+						{
+							"name": "Get my chats",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/me/chats?llm-id=2d6f0598-6c08-4828-8602-e830bb135c56&team-id=d1d36390-651f-488d-bb3d-b2f6216dc3c4",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"me",
+										"chats"
+									],
+									"query": [
+										{
+											"key": "llm-id",
+											"value": "2d6f0598-6c08-4828-8602-e830bb135c56"
+										},
+										{
+											"key": "team-id",
+											"value": "d1d36390-651f-488d-bb3d-b2f6216dc3c4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create chat",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Mi nuevo chat\",\n    \"teamId\": \"d1d36390-651f-488d-bb3d-b2f6216dc3c4\",\n    \"llmId\": \"5a36c72a-99e7-494f-8fa0-d456ced61283\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/me/chats",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"me",
+										"chats"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create prompt",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"message\": \"Quiero saber cuanto es 4 + 4\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/me/chats/6a4922e5-e380-4709-b2c8-b47632489a80/prompts",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"me",
+										"chats",
+										"6a4922e5-e380-4709-b2c8-b47632489a80",
+										"prompts"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get my teams",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/me/teams",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"me",
+								"teams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get me",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/me",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "tokens",
+			"item": [
+				{
+					"name": "Create tokens",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"memberId\": \"9c6232f5-c08e-4854-bf5b-a91abd1fb3ac\",\n    \"teamId\": \"c66a29cc-f485-4026-9974-9f3c853b4be5\",\n    \"llmId\": \"b1451ee2-6882-404d-8b77-77e180a41aed\",\n    \"quantity\": 1000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/tokens",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"tokens"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all tokens",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/tokens",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"tokens"
+							],
+							"query": [
+								{
+									"key": "team-id",
+									"value": "d1d36390-651f-488d-bb3d-b2f6216dc3c4",
+									"disabled": true
+								},
+								{
+									"key": "llm-id",
+									"value": "5a36c72a-99e7-494f-8fa0-d456ced61283",
+									"disabled": true
+								},
+								{
+									"key": "min-qty",
+									"value": "100",
+									"disabled": true
+								},
+								{
+									"key": "max-qty",
+									"value": "151",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
