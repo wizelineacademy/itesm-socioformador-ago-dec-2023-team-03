@@ -2,13 +2,14 @@ import Modal from "@/src/components/modals/Modal";
 import RemoveMember from "@/src/components/modals/RemoveMember";
 import { Member } from '@/src/types';
 import { usePathname } from "next/navigation";
+import { eventNames } from "process";
 import { useRef, useState } from "react";
 
 
 interface AdminMemberListProps {
     member: Member;
     groupId: string;
-    onDeleteMember: (event: React.FormEvent) => void;
+    onDeleteMember?: (event: React.FormEvent) => void;
 }
 
 const AdminMemberList: React.FC<AdminMemberListProps> = ({
@@ -36,6 +37,12 @@ const AdminMemberList: React.FC<AdminMemberListProps> = ({
     const closeSubModal = () => {
         if (modalConfirm.current) {
             modalConfirm.current.close();
+        }
+    }
+
+    const handleRemoveClick = (event: React.FormEvent) => {
+        if (onDeleteMember) {
+            onDeleteMember(event);
         }
     }
 
@@ -77,7 +84,7 @@ const AdminMemberList: React.FC<AdminMemberListProps> = ({
                     </button>
                 </div>
                 <dialog ref={modalMember} className="py-3 px-14 rounded-2xl space-y-4">
-                    <RemoveMember pathname={pathname} close={closeModalMember} onSubmit={onDeleteMember} />
+                    <RemoveMember pathname={pathname} close={closeModalMember} onSubmit={handleRemoveClick} />
                 </dialog>
                 <dialog ref={modalConfirm} className="py-3 px-14 rounded-2xl space-y-4">
                     {
