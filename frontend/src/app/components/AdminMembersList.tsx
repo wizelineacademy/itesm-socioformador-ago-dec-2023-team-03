@@ -45,7 +45,7 @@ const AdminMemberList: React.FC<AdminMemberListProps> = ({
     return (
         <>
             <div className="flex flex-row flex-none w-full items-center">
-                <div className="flex flex-row w-full pointer-events-none btn btn-primary justify-start" style={{ width: 'calc(100% - 40px)' }}>
+                <div className="flex flex-row w-full pointer-events-none btn btn-primary justify-between" style={{ width: 'calc(100% - 40px)' }}>
                     <div className="flex flex-row items-center space-x-3">
                         <div className="avatar w-8 rounded-full items-center align-middle justify-center ">
                             {member?.picture ? (
@@ -56,11 +56,14 @@ const AdminMemberList: React.FC<AdminMemberListProps> = ({
                                 </svg>
                             )}
                         </div>
+                        <div className="flex flex-row space-x-1">
+                            <p>{member?.firstName ?? "First Name"}</p>
+                            <p>{member?.lastName ?? "Last Name"}</p>
+
+                        </div>
                     </div>
-                    <div className="flex flex-row space-x-1">
-                        <p>{member?.firstName ?? "First Name"}</p>
-                        <p>{member?.lastName ?? "Last Name"}</p>
-                    </div>
+
+                    <p>{member?.email ?? "Last Name"}</p>
                 </div>
                 <div className="flex flex-row flex-none">
                     <button onClick={(event) => { event.stopPropagation(); openModalMember(); }} className="btn btn-circle btn-sm pointer-events-auto ml-4">
