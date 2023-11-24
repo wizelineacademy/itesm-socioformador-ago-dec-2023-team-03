@@ -25,7 +25,7 @@ async function deleteMember(req, res, next) {
   try {
     const { id } = req.params;
 
-    await Member.update({ active: false }, { where: id });
+    await Member.update({ active: false }, { where: { id } });
 
     res.status(200).json({
       success: true,
