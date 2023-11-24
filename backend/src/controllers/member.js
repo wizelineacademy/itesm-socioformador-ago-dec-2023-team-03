@@ -21,6 +21,24 @@ const signJwt = require('../utils/signJwt.js');
 const validateIdInModel = require('../utils/validateIdInModel.js');
 
 // ---------------------------------------------------------------------------------------------------------------------
+async function deleteMember(req, res, next) {
+  try {
+    const { id } = req.params;
+
+    await Member.update({ active: false }, { where: id });
+
+    res.status(200).json({
+      success: true,
+      message: 'Member deleted'
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+// ---------------------------------------------------------------------------------------------------------------------
+
+
+// ---------------------------------------------------------------------------------------------------------------------
 async function login(req, res, next) {
   try {
     const email = req.body.email;
@@ -188,5 +206,6 @@ module.exports = {
   register,
   getAll,
   getMemberTeams,
-  getMemberChats
+  getMemberChats,
+  deleteMember
 };

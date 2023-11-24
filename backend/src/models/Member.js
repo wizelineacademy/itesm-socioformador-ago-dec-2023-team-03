@@ -27,6 +27,10 @@ Member.init({
   },
   picture: {
     type: DataTypes.STRING(255)
+  },
+  isActive: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true
   }
 }, {
   tableName: 'member',
