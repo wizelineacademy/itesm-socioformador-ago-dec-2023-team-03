@@ -27,7 +27,7 @@ export default function useAllMembers() {
             }
         };
         fetchMembers();
-    }, []);
+    }, [members.length]);
 
     // Update Members
     const updateMembers = (members: Member[]) => {

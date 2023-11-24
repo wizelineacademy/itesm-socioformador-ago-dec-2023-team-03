@@ -5,6 +5,7 @@ import useTeams from "@/src/hooks/useTeams";
 import { Team } from "@/src/types";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { createTeam } from "@/src/services/team";
 
 export default function TeamsPage() {
   const router = useRouter();
@@ -45,6 +46,19 @@ export default function TeamsPage() {
     }
   }
 
+  function handleSubmit(event: React.FormEvent<Element>, teamName: string): void {
+    createTeam(teamName).then((team) => {
+      const newTeam: Team = {
+        id: team.data.team.id,
+        name: team.data.team.name,
+        createdAt: team.data.team.createdAt,
+        updatedAt: team.data.team.updatedAt,
+      }
+      setTeams([...teams, newTeam]);
+      closeModal();
+    });
+  }
+
   return (
     <div className="flex flex-col overflow-auto h-full">
       <div className="flex flex-row flex-none justify-between items-center space-x-4 p-2">
@@ -54,7 +68,7 @@ export default function TeamsPage() {
         </button>
       </div>
       <dialog ref={modal} className="py-3 px-14 rounded-2xl space-y-4">
-        <NewGroup close={closeModal} />
+        <NewGroup close={closeModal} onSubmit={handleSubmit} />
       </dialog>
       <div className="flex flex-col overflow-y-auto flex-grow h-full">
         <ul className="space-y-3 h-full p-5 overflow-y-scroll bg-regal-blue-normal">
