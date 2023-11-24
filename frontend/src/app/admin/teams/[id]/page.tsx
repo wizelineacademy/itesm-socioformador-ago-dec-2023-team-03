@@ -13,9 +13,10 @@ import { useRef } from "react";
 import { Member } from "@/src/types";
 import { addTeamMember, removeTeam } from "@/src/services/team";
 import { useRouter } from "next/navigation";
+import { removeTeamMember } from "@/src/services/team";
 
 export default function Home({ params }: { params: { id: string } }) {
-    const [members, setMembers, membersLoading] = useMembers(params.id);
+    const [members, setMembers, membersLoading, membersError, deleteMember] = useMembers(params.id);
     const [llm, setLLM, llmLoading] = useLLM(params.id);
     const modal = useRef<null | HTMLDialogElement>(null);
     const modalDeleteTeam = useRef<null | HTMLDialogElement>(null);
@@ -68,6 +69,12 @@ export default function Home({ params }: { params: { id: string } }) {
         }
     }
 
+    const closeLLMModal = () => {
+        if (modalLLM.current) {
+            modalLLM.current.close();
+        }
+    }
+
     function handleAddLLM(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
         const openLLMModal = () => {
             if (modalLLM.current) {
@@ -78,21 +85,22 @@ export default function Home({ params }: { params: { id: string } }) {
     }
 
     function handleAddMember(event: React.FormEvent, member: Member): void {
-        addTeamMember(params.id, member.id!).then(res => {
+        addTeamMember(params.id, member.id!).then(() => {
+            setMembers([...members, member]);
             closeModal();
         });
-    }
-
-    const closeLLMModal = () => {
-        if (modalLLM.current) {
-            modalLLM.current.close();
-        }
     }
 
     function handleDeleteTeam(event: React.FormEvent): void {
         removeTeam(params.id).then((res) => {
             closeDeleteTeamModal();
             router.push('/admin/teams');
+        });
+    }
+
+    function handleDeleteMember(event: React.FormEvent<Element>, groupId: string, memberId: string): void {
+        removeTeamMember(groupId, memberId).then(() => {
+            deleteMember(memberId);
         });
     }
 
@@ -127,7 +135,7 @@ export default function Home({ params }: { params: { id: string } }) {
 
             <div className="flex flex-col h-full w-full space-y-2 p-5 overflow-y-auto bg-regal-blue-normal">
                 {members && members.map((member) => (
-                    <AdminMembersList key={member.id} member={member} groupId={params.id} />
+                    <AdminMembersList key={member.id} member={member} groupId={params.id} onDeleteMember={(event) => handleDeleteMember(event, params.id, member.id!)} />
                 ))}
             </div>
             <div className="flex p-2 flex-row w-full items-center justify-between">

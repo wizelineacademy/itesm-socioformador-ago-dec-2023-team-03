@@ -3,16 +3,18 @@ import RemoveMember from "@/src/components/modals/RemoveMember";
 import { Member } from '@/src/types';
 import { usePathname } from "next/navigation";
 import { useRef, useState } from "react";
-import { removeTeamMember } from "@/src/services/team";
+
 
 interface AdminMemberListProps {
     member: Member;
     groupId: string;
+    onDeleteMember: (event: React.FormEvent) => void;
 }
 
 const AdminMemberList: React.FC<AdminMemberListProps> = ({
     member,
     groupId,
+    onDeleteMember
 }) => {
     const modalMember = useRef<null | HTMLDialogElement>(null);
     const modalConfirm = useRef<null | HTMLDialogElement>(null);
@@ -37,10 +39,12 @@ const AdminMemberList: React.FC<AdminMemberListProps> = ({
         }
     }
 
-    function handleSubmit(event: React.FormEvent<Element>): void {
-        removeTeamMember(groupId, member.id!);
-        closeModalMember();
-    }
+    // function handleSubmit(event: React.FormEvent<Element>): void {
+    //     removeTeamMember(groupId, member.id!).then(() => {
+    //         closeModalMember();
+    //         deleteMember();
+    //     });
+    // }
 
     return (
         <>
@@ -73,7 +77,7 @@ const AdminMemberList: React.FC<AdminMemberListProps> = ({
                     </button>
                 </div>
                 <dialog ref={modalMember} className="py-3 px-14 rounded-2xl space-y-4">
-                    <RemoveMember pathname={pathname} close={closeModalMember} onSubmit={handleSubmit} />
+                    <RemoveMember pathname={pathname} close={closeModalMember} onSubmit={onDeleteMember} />
                 </dialog>
                 <dialog ref={modalConfirm} className="py-3 px-14 rounded-2xl space-y-4">
                     {
