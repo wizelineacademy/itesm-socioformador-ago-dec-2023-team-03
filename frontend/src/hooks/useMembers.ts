@@ -27,7 +27,7 @@ export default function useMembers(teamId: string) {
             }
         };
         fetchMembers();
-    }, [members.length]);
+    }, [members]);
 
     // Update Members
     const updateMembers = (members: Member[]) => {
