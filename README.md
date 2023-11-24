@@ -1,83 +1,76 @@
-# Wizeprompt - A simple and fast prompt for AI generators
+# Wizeprompt: Your Gateway to AI-Powered Conversations
 
-**Wizeprompt** is a simple and fast prompt for AI generators. It is designed to be easy to use and to be used with any AI generator for Wizeline enterprise.
+Welcome to **Wizeprompt**, the streamlined and efficient solution for integrating AI generators into the Wizeline enterprise ecosystem. Our platform is crafted to offer simplicity, speed, and security, ensuring a seamless and productive experience in leveraging Large Language Models (LLMs).
 
-## Why Wizeprompt?
+## Why Choose Wizeprompt?
 
-Wizeprompt is **easy**, **fast** and **secure**. With Wizeprompt you can:
-- Ask to any LLMs any question you want, all in one place.
-- Consult the history of your conversations and go back to them.
-- Keep the conversations to yourself
-- Manage the use and access of your teams to the LLMs
+**Wizeprompt** stands out for its **user-friendliness**, **rapid performance**, and **robust security**. With Wizeprompt, you gain:
 
-## Stack
+- **Unified Access to LLMs**: Engage with various LLMs conveniently from a single platform.
+- **Historical Insights**: Easily revisit past conversations, allowing for continuous learning and reference.
+- **Privacy and Confidentiality**: Your discussions remain private, ensuring secure and confidential communication.
+- **Team Management and Control**: Efficiently manage your team’s access and usage of LLMs, aligning with your operational needs and budget.
 
-This app is built with several technologies, including:
+## Technical Stack
 
-For the `frontend`:
-- [Next.js](https://nextjs.org/): React framework for production
-- [React](https://reactjs.org/): JavaScript library for building user interfaces
-- [Tailwind CSS](https://tailwindcss.com/): A utility-first CSS framework for rapidly building custom designs
-- [TypeScript](https://www.typescriptlang.org/): A typed superset of JavaScript that compiles to plain JavaScript
+Wizeprompt is built upon a combination of cutting-edge technologies:
 
-For the `backend`:
-- [PostgreSQL](https://www.postgresql.org/): A powerful, open source object-relational database system
-- [Kysely](https://kysely.dev/): A SQL query builder for TypeScript
-- [Express](https://expressjs.com/): Fast, unopinionated, minimalist web framework for Node.js
-- [Node.js](https://nodejs.org/en/): A JavaScript runtime built on Chrome's V8 JavaScript engine
+### Frontend
+- **[Next.js](https://nextjs.org/)**: A React framework optimized for production.
+- **[React](https://reactjs.org/)**: A library for building dynamic user interfaces.
+- **[Tailwind CSS](https://tailwindcss.com/)**: A utility-first CSS framework for custom designs.
+- **[TypeScript](https://www.typescriptlang.org/)**: JavaScript with syntax for types.
 
-**Note**: *We are considering taking advantage of Next.js capabilities to build the frontend and backend as well.*
+### Backend
+- **[PostgreSQL](https://www.postgresql.org/)**: Advanced open-source relational database.
+- **[Kysely](https://kysely.dev/)**: A TypeScript-friendly SQL query builder.
+- **[Express](https://expressjs.com/)**: Minimalist web framework for Node.js.
+- **[Node.js](https://nodejs.org/en/)**: JavaScript runtime based on Chrome's V8 engine.
 
-## How will it work? ⚙️
+*Note: We are exploring the feasibility of leveraging Next.js for both frontend and backend development.*
 
-1. The app is going to be connected to the LLMs (like Chatgpt or Bard) through an API. 
+## Functional Workflow ⚙️
 
-2. The app is going to be connected to a PostgreSQL database to store the prompts and the responses. 
+1. **API Integration**: Connects with various LLMs like ChatGPT or Bard.
+2. **Database Interaction**: Utilizes PostgreSQL for storing prompts and responses.
+3. **Frontend Communication**: Enables prompt submission and response retrieval.
+4. **Access and Usage Monitoring**: Manages and tracks usage based on specific organizational requirements.
 
-3. Then, the frontend is going to be connected to the app to send the prompts and receive the responses.
+## Deployment Strategies 🚀
 
-4. This while the access is being controled based on your needs, budget, and use; and the use is being monitored
+- **Frontend**: Options include deploying on [AWS](https://aws.amazon.com/) via [Amplify](https://aws.amazon.com/amplify/), or using [Vercel](https://vercel.com/).
+- **Backend**: Deployment through [AWS Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/).
 
-## Deployment 🚀
-
-For the **frontend** we plan to deploy this app to [AWS](https://aws.amazon.com/) using [Amplify](https://aws.amazon.com/amplify/) or to [Vercel](https://vercel.com/) and [Elastic Beanstalk](https://aws.amazon.com/) for the backend.
-
-## Getting Started:
-
-To get started with Wizeprompt, follow these steps:
+## Quick Start Guide:
 
 ### 1. **Clone the Repository**:
-
 ```bash
 git clone https://github.com/wizelineacademy/itesm-socioformador-ago-dec-2023-team-03.git
 ```
 
-### 2. **Navigate to the Project Directory**:
-
+### 2. **Project Setup**:
+Navigate to the project directory:
 ```bash
 cd itesm-socioformador-ago-dec-2023-team-03
 ```
 
 ### 3. **Install Dependencies**:
-Make sure you have [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed. Run the following command to install the required packages:
-
+Ensure [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) are installed, then run:
 ```bash
 npm install
 ```
 
-### 4. **Start the Development Server**:
-After installing the dependencies, start the local development server with:
-
+### 4. **Launch Development Server**:
+Start the server and open the app in your default browser (typically `http://localhost:3000/`):
 ```bash
 npm run dev
 ```
-This command will start the server and open the application in your default browser. By default, it should run on `http://localhost:3000/`, unless you've configured it differently.
 
-### 5. **Build for Production** (Optional):
-If you want to generate a production-ready build, execute:
-
+### 5. **Production Build** (Optional):
+For a production-ready build:
 ```bash
 npm run build
 ```
-This will create an optimized version of the app in the `build` directory.
+This creates an optimized version in the `build` directory.
 
+Wizeprompt is designed to enhance your engagement with AI technology, offering a streamlined, secure, and efficient approach to AI interactions within the Wizeline ecosystem.
