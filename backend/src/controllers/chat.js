@@ -48,6 +48,20 @@ async function createChat(req, res, next) {
       throw new ApiError(404, errorMessage);
     }
 
+    const memberTokens = await member.getTokens({ where: { llmId, teamId } });
+
+    let tokensQty;
+    if (memberTokens.length > 0) {
+      tokensQty = memberTokens[0].quantity;
+    } else {
+      tokensQty = 0;
+    }
+
+    if (tokensQty <= 0) {
+      const errorMessage = `You cannot create a chat because you currently have ${tokensQty} tokens`;
+      throw new ApiError(403, errorMessage);
+    }
+
     // Create the chat
     const chat = await Chat.create({ memberId: member.id, teamId, llmId, title });
 

@@ -67,18 +67,6 @@ function ChatPageLayout() {
     }
   }, [session.me]);
 
-  React.useEffect(() => {
-    if (selectedChatId) {
-      async function findChat() {
-        const chatResponse = await services.chat.findChatById(selectedChatId);
-        if (chatResponse.success && chatResponse.data && chatResponse.data.chat) {
-          setSelectedChat(chatResponse.data.chat);
-        }
-      }
-      findChat();
-    }
-  }, [selectedChatId]);
-
   if (session.isLoading) return <div className='loader'></div>;
   if (session.error) return null;
 

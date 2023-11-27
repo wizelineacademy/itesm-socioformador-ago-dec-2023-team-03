@@ -42,7 +42,7 @@ function ChatPage(props) {
     <div className='relative z-0 flex h-full w-full overflow-hidden'>
       <main className='flex w-full h-full'>
         {/* <Sidebar chats={chats} /> */}
-        <Chat />
+        {/* <Chat /> */}
       </main>
     </div>
   )
