@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { LLM } from "../types";
-import { getAllLLM } from "@/src/services/llm";
+import { getLLM } from "@/src/services/llm";
 
-export default function useLLM(teamId: string) {
+export default function useAllLLM() {
+
     const [llms, setLLMs] = useState<LLM[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
@@ -12,7 +13,7 @@ export default function useLLM(teamId: string) {
     useEffect(() => {
         const fetchLLMs = async () => {
             try {
-                const response = await getAllLLM(teamId);
+                const response = await getLLM();
                 if (response.success && response.data && response.data.llms) {
                     const llmsFromAPI = response.data.llms;
                     setLLMs(llmsFromAPI);
@@ -27,7 +28,7 @@ export default function useLLM(teamId: string) {
             }
         };
         fetchLLMs();
-    }, [llms]);
+    }, []);
 
     // Update LLms
     const updateLLMs = (llms: LLM[]) => {

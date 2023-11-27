@@ -2,8 +2,7 @@ import Modal from "@/src/components/modals/Modal";
 import RemoveMember from "@/src/components/modals/RemoveMember";
 import { Member } from '@/src/types';
 import { usePathname } from "next/navigation";
-import { eventNames } from "process";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 
 interface AdminMemberListProps {

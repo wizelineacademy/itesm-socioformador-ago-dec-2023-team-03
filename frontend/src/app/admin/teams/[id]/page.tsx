@@ -25,8 +25,6 @@ export default function Home({ params }: { params: { id: string } }) {
 
     const router = useRouter();
 
-    console.log(members)
-
     if (membersLoading) return (
         <div className="flex flex-col w-full h-full items-center justify-center align-middle">
             <span className="loading loading-spinner loading-lg text-accent "></span>

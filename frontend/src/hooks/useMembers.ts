@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Member } from "../types";
 import { getAllTeamMembers } from "../services/team";
 
@@ -27,7 +27,7 @@ export default function useMembers(teamId: string) {
             }
         };
         fetchMembers();
-    }, [teamId]);
+    }, [teamId, members]);
 
     // Update Members
     const updateMembers = (members: Member[]) => {
