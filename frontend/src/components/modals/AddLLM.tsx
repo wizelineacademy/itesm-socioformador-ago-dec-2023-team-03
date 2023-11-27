@@ -20,6 +20,11 @@ export default function AddMLLM({ close, groupId }: AddLLMProps) {
     setFilteredLLMs(filteredLLMs);
   }, [input, llms]);
 
+  const handleClose = () => {
+    setInput("");
+    close();
+  }
+
   if (loadingLLMs) return (
     <div className="flex flex-col w-full h-full items-center justify-center align-middle">
       <span className="loading loading-spinner loading-lg text-accent "></span>
@@ -50,6 +55,7 @@ export default function AddMLLM({ close, groupId }: AddLLMProps) {
           )
         }
       </div>
+      <button onClick={handleClose} className="btn btn-neutral text-white w-full">Close</button>
     </>
   );
 }

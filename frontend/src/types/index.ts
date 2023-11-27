@@ -6,13 +6,13 @@ export interface Team {
 }
 
 export interface Member {
-    id: string;
+    id?: string;
     firstName: string;
     lastName: string;
     email: string;
-    picture: string;
-    createdAt: string;
-    updatedAt: string;
+    picture?: string;
+    createdAt?: string;
+    updatedAt?: string;
     roleId: string;
     team_member?: {
         teamId?: string;

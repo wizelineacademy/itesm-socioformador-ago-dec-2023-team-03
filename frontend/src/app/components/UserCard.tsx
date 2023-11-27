@@ -14,8 +14,6 @@ const UserCard: React.FC<UserCardProps> = ({
 }) => {
     const [hover, setHover] = useState(false);
 
-    console.log(hover)
-
     return (
         <div className="flex flex-col flex-none space-y-3 w-full" onMouseLeave={() => setHover(false)} onMouseEnter={() => setHover(true)}>
             {hover ? (

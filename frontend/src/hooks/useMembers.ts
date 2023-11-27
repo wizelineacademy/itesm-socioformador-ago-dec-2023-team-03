@@ -27,12 +27,17 @@ export default function useMembers(teamId: string) {
             }
         };
         fetchMembers();
-    }, []);
+    }, [teamId]);
 
     // Update Members
     const updateMembers = (members: Member[]) => {
         setMembers(members);
     };
 
-    return [members, updateMembers, loading, error] as const;
+    // Función para eliminar un miembro
+    const deleteMember = (memberId: string) => {
+        setMembers(prevMembers => prevMembers.filter(member => member.id !== memberId));
+    };
+
+    return [members, updateMembers, loading, error, deleteMember] as const;
 }

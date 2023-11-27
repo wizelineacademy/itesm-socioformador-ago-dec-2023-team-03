@@ -10,29 +10,28 @@ import useLLM from "@/src/hooks/useLLM";
 import useMembers from "@/src/hooks/useMembers";
 import Link from "next/link";
 import { useRef } from "react";
+import { Member } from "@/src/types";
+import { addTeamMember, removeTeam } from "@/src/services/team";
+import { useRouter } from "next/navigation";
+import { removeTeamMember } from "@/src/services/team";
 
 export default function Home({ params }: { params: { id: string } }) {
-    const [members, setMembers, membersLoading] = useMembers(params.id);
+    const [members, setMembers, membersLoading, membersError, deleteMember] = useMembers(params.id);
     const [llm, setLLM, llmLoading] = useLLM(params.id);
     const modal = useRef<null | HTMLDialogElement>(null);
     const modalDeleteTeam = useRef<null | HTMLDialogElement>(null);
     const modalConfirm = useRef<null | HTMLDialogElement>(null);
     const modalLLM = useRef<null | HTMLDialogElement>(null);
 
+    const router = useRouter();
+
+    console.log(members)
+
     if (membersLoading) return (
         <div className="flex flex-col w-full h-full items-center justify-center align-middle">
             <span className="loading loading-spinner loading-lg text-accent "></span>
         </div>
     );
-
-    function handleAddMember(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
-        const openModal = () => {
-            if (modal.current) {
-                modal.current.showModal();
-            }
-        }
-        openModal();
-    }
 
     const closeModal = () => {
         if (modal.current) {
@@ -64,6 +63,18 @@ export default function Home({ params }: { params: { id: string } }) {
         }
     }
 
+    const openModal = () => {
+        if (modal.current) {
+            modal.current.showModal();
+        }
+    }
+
+    const closeLLMModal = () => {
+        if (modalLLM.current) {
+            modalLLM.current.close();
+        }
+    }
+
     function handleAddLLM(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
         const openLLMModal = () => {
             if (modalLLM.current) {
@@ -73,10 +84,24 @@ export default function Home({ params }: { params: { id: string } }) {
         openLLMModal();
     }
 
-    const closeLLMModal = () => {
-        if (modalLLM.current) {
-            modalLLM.current.close();
-        }
+    function handleAddMember(event: React.FormEvent, member: Member): void {
+        addTeamMember(params.id, member.id!).then(() => {
+            setMembers([...members, member]);
+            closeModal();
+        });
+    }
+
+    function handleDeleteTeam(event: React.FormEvent): void {
+        removeTeam(params.id).then((res) => {
+            closeDeleteTeamModal();
+            router.push('/admin/teams');
+        });
+    }
+
+    function handleDeleteMember(event: React.FormEvent<Element>, groupId: string, memberId: string): void {
+        removeTeamMember(groupId, memberId).then(() => {
+            deleteMember(memberId);
+        });
     }
 
     return (
@@ -90,7 +115,7 @@ export default function Home({ params }: { params: { id: string } }) {
                     </button>
                 </Link>
                 <div className="space-x-4">
-                    <button onClick={handleAddMember} className="btn btn-neutral btn-sm text-white">
+                    <button onClick={() => openModal()} className="btn btn-neutral btn-sm text-white">
                         Add Member
                     </button>
                     <button onClick={openDeleteTeamModal} className="btn btn-accent btn-sm text-white">
@@ -99,19 +124,18 @@ export default function Home({ params }: { params: { id: string } }) {
                 </div>
             </div>
             <dialog ref={modal} className="py-3 px-14 rounded-2xl space-y-4">
-                <AddMember teamId={params.id} close={closeModal} />
+                <AddMember teamId={params.id} close={closeModal} onSubmit={handleAddMember} />
             </dialog>
             <dialog ref={modalDeleteTeam} className="py-3 px-14 rounded-2xl space-y-4">
-                <DeleteTeam openSubModal={openSubModal} close={closeDeleteTeamModal} />
+                <DeleteTeam openSubModal={openSubModal} close={closeDeleteTeamModal} onSubmit={handleDeleteTeam} />
             </dialog>
             <dialog ref={modalConfirm} className="py-3 px-14 rounded-2xl space-y-4">
                 <Modal title="Message" message="The team has been deleted" close={closeSubModal} />
             </dialog>
 
-            <div className="flex flex-col h-full space-y-2 p-5 overflow-y-auto bg-regal-blue-normal">
-                {/* Map through all members */}
+            <div className="flex flex-col h-full w-full space-y-2 p-5 overflow-y-auto bg-regal-blue-normal">
                 {members && members.map((member) => (
-                    <AdminMembersList key={member.id} member={member} groupId={params.id} />
+                    <AdminMembersList key={member.id} member={member} groupId={params.id} onDeleteMember={(event) => handleDeleteMember(event, params.id, member.id!)} />
                 ))}
             </div>
             <div className="flex p-2 flex-row w-full items-center justify-between">
@@ -122,7 +146,6 @@ export default function Home({ params }: { params: { id: string } }) {
                 <AddLLM groupId={params.id} close={closeLLMModal} />
             </dialog>
             <div className="flex flex-row h-fit space-x-6 p-2 overflow-x-auto overflow-y-hidden mb-2">
-                {/* Map through all LLMs */}
                 {llm && llm.map((llm) => (
                     <AdminTeamLLMsList key={llm.id} llm={llm} />
                 ))}

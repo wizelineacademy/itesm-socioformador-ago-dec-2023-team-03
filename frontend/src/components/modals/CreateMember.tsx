@@ -3,17 +3,13 @@ import { useState } from "react";
 
 interface AddMemberProps {
   close: () => void;
+  onSubmit: (event: React.FormEvent, member: Member) => void;
 }
 
-export default function AddMemberInGroup({ close }: AddMemberProps) {
+export default function AddMemberInGroup({ close, onSubmit }: AddMemberProps) {
   const [name, setName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-
-  /*  picture: string;
-   createdAt: string;
-   updatedAt: string;
-   roleId: string; */
   const [member, setMember] = useState<Member | null>(null);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,15 +24,18 @@ export default function AddMemberInGroup({ close }: AddMemberProps) {
     setEmail(e.target.value);
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-  }
-
   const handleClose = () => {
     setName("");
     setLastName("");
     setEmail("");
     close();
+  }
+
+  const newMember: Member = {
+    firstName: name,
+    lastName: lastName,
+    email: email,
+    roleId: "388694b9-b700-477f-911d-6eb406b52789",
   }
   return (
     <>
@@ -62,7 +61,7 @@ export default function AddMemberInGroup({ close }: AddMemberProps) {
 
       <div className="flex justify-around">
         <button onClick={() => handleClose()} className="text-white bg-red-500 py-1 px-4 rounded-2xl hover:bg-red-700">Cancel</button>
-        <button type="submit" onClick={(e) => handleSubmit(e)} className="text-white bg-green-500 py-1 px-4 rounded-2xl hover:bg-green-700">Create</button>
+        <button type="submit" onClick={(event) => onSubmit(event, newMember)} className="text-white bg-green-500 py-1 px-4 rounded-2xl hover:bg-green-700">Create</button>
       </div>
     </>
   )

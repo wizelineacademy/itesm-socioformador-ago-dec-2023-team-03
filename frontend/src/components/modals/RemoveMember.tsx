@@ -1,29 +1,21 @@
 "use client";
 
 interface RemoveMemberProps {
-  openMemberModal: () => void;
   pathname: string;
   close: () => void;
+  onSubmit: (event: React.FormEvent) => void;
 }
 
-export default function RemoveMember({ openMemberModal, pathname, close }: RemoveMemberProps) {
+export default function RemoveMember({
+  pathname,
+  close,
+  onSubmit,
+}: RemoveMemberProps) {
 
   const handleClose = () => {
     close();
   }
-  /* const handleRemove = async () => {
-    try {
-      const res = await fetch('/api/groups', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' }
-      });
-      const data = await res.json();
-      console.log(data);
-      handleClose();
-    } catch (err) {
-      console.error(err);
-    }
-  } */
+
   return (
     <>
       <header>
@@ -39,7 +31,7 @@ export default function RemoveMember({ openMemberModal, pathname, close }: Remov
       </div>
       <footer className="flex justify-around">
         <button onClick={() => handleClose()} className="text-white bg-gray-500 py-1 px-4 rounded-2xl hover:bg-gray-700 pointer-events-auto">Go back</button>
-        <button onClick={() => openMemberModal()} className="text-white bg-red-500 py-1 px-4 rounded-2xl hover:bg-red-700 pointer-events-auto">Remove</button>
+        <button onClick={onSubmit} className="text-white bg-red-500 py-1 px-4 rounded-2xl hover:bg-red-700 pointer-events-auto">Remove</button>
       </footer>
     </>
   );
