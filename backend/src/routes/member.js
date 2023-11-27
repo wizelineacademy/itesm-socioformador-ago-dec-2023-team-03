@@ -17,7 +17,8 @@ const {
   getAll,
   getMemberTeams,
   getMemberChats,
-  deleteMember
+  deleteMember,
+  update
 } = require('../controllers/member.js');
 
 // Routes
@@ -41,7 +42,7 @@ router.route('/register')
   );
 
 router.route('/').get(getAll);
-router.route('/:id').delete(deleteMember);
+router.route('/:id').delete(deleteMember).put(update);
 
 router.route('/:id/teams')
   .get(

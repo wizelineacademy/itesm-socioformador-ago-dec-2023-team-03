@@ -175,6 +175,24 @@ async function getMemberTeams(req, res, next) {
 }
 // ---------------------------------------------------------------------------------------------------------------------
 
+async function update(req, res, next) {
+  try {
+    const { id } = req.params;
+    const { firstName, lastName, email, active } = req.body;
+
+    const member = await Member.update({
+      firstName, lastName, email, active
+    }, { where: { id } });
+
+    res.status(200).json({
+      success: true,
+      data: { member }
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
 // ---------------------------------------------------------------------------------------------------------------------
 async function getMemberChats(req, res, next) {
   try {
@@ -207,5 +225,6 @@ module.exports = {
   getAll,
   getMemberTeams,
   getMemberChats,
-  deleteMember
+  deleteMember,
+  update
 };
