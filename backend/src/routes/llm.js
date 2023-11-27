@@ -11,7 +11,8 @@ const validateRequestData = require('../middlewares/validateRequestData.js');
 // Controllers
 const {
   create,
-  find
+  find,
+  getAll
 } = require('../controllers/llm.js');
 
 router.route('/')
@@ -20,7 +21,7 @@ router.route('/')
       'body.name': LLMValidators.name
     }),
     create
-  );
+  ).get(getAll);
 
 router.route('/:id')
   .get(find)
