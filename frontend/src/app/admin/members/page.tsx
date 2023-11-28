@@ -7,12 +7,20 @@ import { createMember } from "@/src/services/member";
 import { Member } from "@/src/types";
 import { useEffect, useRef, useState } from "react";
 
+/**
+ * MembersPage component.
+ * @function
+ * @returns {JSX.Element} Rendered component.
+ */
 export default function MembersPage() {
+  // State variables for members, search term, and filtered members
   const [members, setMembers, loadingMembers] = useAllMembers();
   const [search, setSearch] = useState<string>("");
   const [filteredMembers, setFilteredMembers] = useState<Member[]>(members);
+  // Reference to the modal
   const modal = useRef<null | HTMLDialogElement>(null);
 
+  // Effect hook for filtering members based on the search term.
   useEffect(() => {
     const filteredMembers = members.filter((member) => {
       const fullName = `${member.firstName} ${member.lastName}`;
@@ -23,19 +31,27 @@ export default function MembersPage() {
 
   console.log(members);
 
+  // Opens the modal
   const openModal = () => {
     if (modal.current) {
       modal.current.showModal();
     }
   }
 
+  // Closes the modal
   const closeModal = () => {
     if (modal.current) {
       modal.current.close();
     }
   }
 
+  /**
+   * Handles the create member event.
+   * @param {React.FormEvent} event - The event.
+   * @param {Member} member - The member.
+   */
   function handleCreateMember(event: React.FormEvent, member: Member): void {
+    // Create the member and add it to the list of members with the useAllMembers custom hook.
     createMember(member.firstName, member.lastName, member.email, member.roleId).then((res) => {
       const newMember: Member = {
         firstName: member.firstName,
@@ -49,7 +65,7 @@ export default function MembersPage() {
     });
   }
 
-
+  // If the members are loading, display a loading spinner.
   if (loadingMembers) return (
     <div className="flex flex-col w-full h-full items-center justify-center align-middle">
       <span className="loading loading-spinner loading-lg text-accent "></span>
@@ -68,6 +84,7 @@ export default function MembersPage() {
         <CreateMember close={closeModal} onSubmit={handleCreateMember} />
       </dialog>
       <div className="flex flex-col flex-grow h-full space-y-2 p-5 overflow-y-auto bg-regal-blue-normal">
+        {/* map filteredMembers with the AdminMembersList component */}
         {filteredMembers.map((member) => (
           <AdminMembersList key={member.id} member={member} groupId={""} />
         ))}

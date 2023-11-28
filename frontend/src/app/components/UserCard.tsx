@@ -1,17 +1,28 @@
 "use client";
 
-import { useState } from "react";
-import { Avatar } from 'antd'
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useState } from "react";
 
+/**
+ * Interface for UserCardProps.
+ * @interface
+ * @property {any} [user] - The user.
+ */
 interface UserCardProps {
     user?: any;
 }
 
+/**
+ * UserCard component for user profile info used in the sidebar component (displayed at the bottom).
+ * @component
+ * @param {UserCardProps} props - The props.
+ * @param {any} [props.user] - The user.
+ * @returns {JSX.Element} The rendered UserCard component.
+ */
 const UserCard: React.FC<UserCardProps> = ({
     user,
 }) => {
+    // State for hover.
     const [hover, setHover] = useState(false);
 
     return (
@@ -30,9 +41,11 @@ const UserCard: React.FC<UserCardProps> = ({
             <div className="flex flex-row align-middle items-center space-x-2">
                 <div className="avatar">
                     <div className="w-12 rounded-full">
+                        {/* Photo from logged Google account */}
                         <img src={user.picture} alt="" />
                     </div>
                 </div>
+                {/* Name from logged Google account */}
                 <p>{user.given_name}</p>
             </div>
         </div>

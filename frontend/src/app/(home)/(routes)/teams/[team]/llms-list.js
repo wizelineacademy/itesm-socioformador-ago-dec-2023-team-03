@@ -6,20 +6,32 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { RiCopperCoinFill } from 'react-icons/ri';
 
+/**
+ * LlmsList component. This components list all LLMs of a team.
+ * @function
+ * @param {object} props - Component props.
+ * @param {Array} props.llms - The llms array.
+ * @param {string} props.teamId - The team ID.
+ * @returns {JSX.Element|null} Rendered component.
+ */
 function LlmsList({ llms, teamId }) {
+  // State variable for tokens
   const [tokens, setTokens] = useState([]);
 
+  // Use the useSession hook to get the current session
   const session = hooks.useSession();
 
+  // Get the tokens of the user
   useEffect(() => {
     if (session.me) {
-      (async() => {
+      (async () => {
         for (const llm of llms) {
           const getTokensResponse = await services.tokens.getTokens({
             'team-id': teamId,
             'llm-id': llm.id,
             'member-id': session.me.id
           });
+          // Add the tokens to the state (including the previous state), if there are no tokens add null
           setTokens((prev) => [...prev, getTokensResponse.data.tokens[0] || null]);
           console.log(getTokensResponse);
         }
@@ -33,6 +45,7 @@ function LlmsList({ llms, teamId }) {
 
   return (
     <ul>
+      {/* map llms if the length is greather than 0, if not shows a legend */}
       {
         llms.length > 0
           ? (

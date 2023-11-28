@@ -1,17 +1,21 @@
 'use client';
 
-import React from 'react';
-
 // Components
-import Sidebar from './_components/sidebar';
+/* import Sidebar from './_components/sidebar'; */
 import Chat from './_components/chat';
 
 // Services
-import services from '@/src/services';
+/* import services from '@/src/services'; */
 
 // Hooks
-import hooks from '../../hooks'
+/* import hooks from '../../hooks' */
 
+/**
+ * The ChatPage component itself.
+ * @function
+ * @param {object} props - Component props.
+ * @returns {JSX.Element} Rendered component.
+ */
 function ChatPage(props) {
   // const [chats, setChats] = React.useState([]);
   // const searchParams = props.searchParams;

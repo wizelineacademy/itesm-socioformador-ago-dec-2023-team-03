@@ -17,7 +17,7 @@ interface AdminMemberListProps {
 }
 
 /**
- * AdminMemberList component.
+ * AdminMemberList component. Used for see the members of a team and delete them.
  * @component
  * @param {AdminMemberListProps} props - The props.
  * @returns {JSX.Element} The rendered AdminMemberList component.

@@ -1,18 +1,28 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import chatContext from '../../_context';
 
 import { MdSend } from 'react-icons/md';
-import { BiLike } from 'react-icons/bi';
 import { RiCopperCoinFill } from 'react-icons/ri';
 
-import Image from 'next/image';
-import img from '/public/images/chat-gpt-logo.svg.png';
 import services from '@/src/services';
+import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
+import img from '/public/images/chat-gpt-logo.svg.png';
 
+/**
+ * The Chat component itself.
+ * @component
+ * @param {Object} props - The props.
+ * @param {number} props.tokens - The tokens.
+ * @param {string} props.selectedChatId - The selected chat ID.
+ * @param {Function} props.setTokens - The function to set tokens.
+ * @param {Object} props.llm - The LLM.
+ * @param {Function} props.setChats - The function to set chats.
+ * @returns {JSX.Element} The rendered Chat component.
+ */
 function Chat({ tokens, selectedChatId, setTokens, llm, setChats }) {
   const _chatContext = chatContext.use();
   const chatState = _chatContext.state;
@@ -24,6 +34,11 @@ function Chat({ tokens, selectedChatId, setTokens, llm, setChats }) {
 
   const searchParams = useSearchParams();
 
+  /**
+   * Sends a prompt.
+   * @async
+   * @param {Event} e - The event.
+   */
   async function sendPrompt(e) {
     e.preventDefault();
 
@@ -41,11 +56,13 @@ function Chat({ tokens, selectedChatId, setTokens, llm, setChats }) {
       setTokens((currTokens) => currTokens - totalTokens);
     }
 
+    // If the prompts request is successful, set the prompts state with the received data
     const promptsRes = await services.chat.getPrompts(selectedChatId);
     if (promptsRes.success) {
       setPrompts(promptsRes.data.prompts);
     }
 
+    // Make a request to get the user's chats
     const myChats = await services.me.getMyChats({
       query: {
         'team-id': teamId,
@@ -53,15 +70,18 @@ function Chat({ tokens, selectedChatId, setTokens, llm, setChats }) {
       }
     });
 
+    // Set the chats state with the received data
     const chats = myChats.data.chats;
     setChats(chats);
 
+    // Set the loading state to false and clear the prompt
     setPromptIsLoading(false);
     chatActions.setPrompt('');
   }
 
+  // Use effect hook to fetch prompts when the selected chat ID changes
   useEffect(() => {
-    (async() => {
+    (async () => {
       if (selectedChatId) {
         const res = await services.chat.getPrompts(selectedChatId);
         if (res.success) {
@@ -71,6 +91,7 @@ function Chat({ tokens, selectedChatId, setTokens, llm, setChats }) {
     })();
   }, [selectedChatId]);
 
+  // Use effect hook to scroll to the bottom of the prompts list when it updates
   useEffect(() => {
     promptsRef.current.scrollTo({
       top: promptsRef.current.scrollHeight,
@@ -80,6 +101,7 @@ function Chat({ tokens, selectedChatId, setTokens, llm, setChats }) {
 
   return (
     <div className='w-full flex flex-col'>
+      {/* Display current LLM and their tokens in the header */}
       <header className='h-14 bg-regal-blue-normal border-b border-b-gray-600 shrink-0'>
         <div className='flex justify-between items-center h-full px-4'>
           <div className='inline-flex items-center gap-x-3'>
@@ -125,13 +147,14 @@ function Chat({ tokens, selectedChatId, setTokens, llm, setChats }) {
               </div>
             )
         }
+        {/* When the prompt is loading show this */}
         {promptIsLoading && <p>Generando respuesta...</p>}
       </div>
 
       {/* Input bar container */}
       <div className={('bg-regal-blue-normal w-full h-24 flex-shrink-0 px-5 flex items-center border-t border-t-gray-600' +
-      `${selectedChatId !== null ? ' opacity-1' : ' opacity-50'}` +
-      `${promptIsLoading ? ' opacity-50' : ' opacity-1'}`
+        `${selectedChatId !== null ? ' opacity-1' : ' opacity-50'}` +
+        `${promptIsLoading ? ' opacity-50' : ' opacity-1'}`
       )}>
         <form className='w-full flex' onSubmit={sendPrompt}>
           <textarea
@@ -147,7 +170,7 @@ function Chat({ tokens, selectedChatId, setTokens, llm, setChats }) {
             style={{ backgroundColor: '#E93D44' }}
             type='submit'
           >
-              <MdSend size={18} />
+            <MdSend size={18} />
           </button>
         </form>
       </div>

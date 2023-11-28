@@ -1,12 +1,16 @@
 'use client';
 
-import Link from 'next/link'
+import Link from 'next/link';
 
-import { HiOutlineUserGroup } from 'react-icons/hi';
-import { AiOutlineUser } from 'react-icons/ai';
 import { usePathname } from 'next/navigation';
+import { AiOutlineUser } from 'react-icons/ai';
 import { BiLogOut } from "react-icons/bi";
+import { HiOutlineUserGroup } from 'react-icons/hi';
 
+/**
+ * Categories for the sidebar.
+ * @type {Array.<{name: string, slug: string, Icon: React.ComponentType}>}
+ */
 const categories = [
   {
     name: 'Teams',
@@ -20,8 +24,15 @@ const categories = [
   }
 ]
 
+/**
+ * Sidebar component.
+ * @function
+ * @returns {JSX.Element} Rendered sidebar component.
+ */
 function Sidebar() {
+  // Get the current pathname
   const pathname = usePathname();
+  // Get the selected category from the pathname
   const selectedCategory = pathname.split('/')[1];
 
   return (

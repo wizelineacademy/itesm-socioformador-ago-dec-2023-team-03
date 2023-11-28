@@ -2,11 +2,16 @@
 
 import NewGroup from "@/src/components/modals/NewGroup";
 import useTeams from "@/src/hooks/useTeams";
+import { createTeam } from "@/src/services/team";
 import { Team } from "@/src/types";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { createTeam } from "@/src/services/team";
 
+/**
+ * TeamsPage component.
+ * @function
+ * @returns {JSX.Element} Rendered component.
+ */
 export default function TeamsPage() {
   const router = useRouter();
   const [teams, setTeams, teamsLoading] = useTeams();
@@ -14,6 +19,7 @@ export default function TeamsPage() {
   const [filteredTeams, setFilteredTeams] = useState<Team[]>(teams);
   const modal = useRef<null | HTMLDialogElement>(null);
 
+  // Effect hook for filtering teams based on the search term.
   useEffect(() => {
     const filteredTeams = teams.filter((team) => {
       return team.name.toLowerCase().includes(search.toLowerCase());
@@ -21,6 +27,10 @@ export default function TeamsPage() {
     setFilteredTeams(filteredTeams);
   }, [search, teams]);
 
+  /**
+   * Handles the creation of a new group.
+   * @param {React.MouseEvent<HTMLButtonElement, MouseEvent>} event - The mouse event.
+   */
   function handleCreateGroup(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
     const openModal = () => {
       if (modal.current) {
@@ -30,12 +40,18 @@ export default function TeamsPage() {
     openModal();
   }
 
+  // If teams are loading, display a loading spinner.
   if (teamsLoading) return (
     <div className="flex flex-col w-full h-full items-center justify-center align-middle">
       <span className="loading loading-spinner loading-lg text-accent "></span>
     </div>
   );
 
+  /**
+   * Handles the team details event.
+   * @param {React.MouseEvent<HTMLDivElement, MouseEvent>} event - The mouse event.
+   * @param {string}
+   */
   function handleTeamDetails(event: React.MouseEvent<HTMLDivElement, MouseEvent>, teamId: string): void {
     router.push(`/admin/teams/${teamId}`)
   }
@@ -46,6 +62,11 @@ export default function TeamsPage() {
     }
   }
 
+  /**
+   * Handles the create team event.
+   * @param {React.FormEvent} event - The event.
+   * @param {string} teamName - The team name.
+   */
   function handleSubmit(event: React.FormEvent<Element>, teamName: string): void {
     createTeam(teamName).then((team) => {
       const newTeam: Team = {
@@ -72,6 +93,7 @@ export default function TeamsPage() {
       </dialog>
       <div className="flex flex-col overflow-y-auto flex-grow h-full">
         <ul className="space-y-3 h-full p-5 overflow-y-scroll bg-regal-blue-normal">
+          {/* map filteredTeams and show the results */}
           {filteredTeams && filteredTeams.map((team: Team) => (
             <div key={team.id} onClick={(event) => handleTeamDetails(event, team.id)} className="flex w-full rounded-md px-2 py-3 justify-between cursor-pointer items-center gap-3 btn btn-primary">
               <div className="ml-10">
