@@ -36,6 +36,33 @@ async function getTokens(filters) {
   }
 }
 
+export async function addTokensToLLM(memberId, teamId, llmId, quantity) {
+
+  const routeUrl = `${baseUrl}`
+
+  try {
+    const res = await fetch(routeUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        memberId,
+        teamId,
+        llmId,
+        quantity
+      }),
+      credentials: 'include'
+    });
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+
+}
+
 export default {
   getTokens
 };
