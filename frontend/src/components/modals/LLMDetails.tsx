@@ -1,8 +1,10 @@
 /* import Modal from "@/src/components/modals/Modal"; */
+import { removeLlmFromTeam } from "@/src/services/team";
 import { /* useRef, */ useState } from "react";
 import { LLM } from "../../types";
 
 interface LLLDetailsProps {
+  groupId: string;
   llm?: LLM;
   close: () => void;
 }
@@ -15,7 +17,7 @@ interface LLLDetailsProps {
  * @returns {JSX.Element} JSX Element for the LLM details.
  */
 
-export default function LLLDetails({ llm, close }: LLLDetailsProps) {
+export default function LLMDetails({ groupId, llm, close }: LLLDetailsProps) {
   const [input, setInput] = useState<number>();
   /* const modalRef = useRef<null | HTMLDialogElement>(null); */
 
@@ -37,8 +39,15 @@ export default function LLLDetails({ llm, close }: LLLDetailsProps) {
     console.log(value);
   }
 
-  const handleRemoveLLM = () => {
-    throw new Error("Not implemented");
+  /**
+   * Function to handle removing a LLM from a team.
+   * @param {React.MouseEvent<HTMLButtonElement, MouseEvent>} event - The event.
+   */
+  function handleRemoveLLM(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
+    // Use service to remove LLM from team
+    removeLlmFromTeam(groupId, llm!.id!).then(() => {
+      close();
+    });
   }
 
   /* const openLLMModal = () => {
@@ -49,7 +58,6 @@ export default function LLLDetails({ llm, close }: LLLDetailsProps) {
     modalRef.current?.close();
   } */
 
-  console.log(input);
   return (
     <>
       <header>

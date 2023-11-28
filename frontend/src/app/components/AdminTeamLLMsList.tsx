@@ -1,10 +1,11 @@
-import LLLDetails from '@/src/components/modals/LLMDetails';
+import LLMDetails from '@/src/components/modals/LLMDetails';
 import { LLM } from '@/src/types';
 import Image from 'next/image';
 import { useRef } from 'react';
 import img from '/public/images/chat-gpt-logo.svg.png';
 
 interface AdminTeamLLMsListProps {
+    groupId: string;
     llm?: LLM;
 }
 
@@ -16,6 +17,7 @@ interface AdminTeamLLMsListProps {
  * @returns {JSX.Element} The rendered AdminTeamLLMsList component.
  */
 const AdminTeamLLMsList: React.FC<AdminTeamLLMsListProps> = ({
+    groupId,
     llm,
 }) => {
     const modalLLMDetails = useRef<null | HTMLDialogElement>(null);
@@ -58,7 +60,7 @@ const AdminTeamLLMsList: React.FC<AdminTeamLLMsListProps> = ({
                 left: '50%',
                 transform: 'translate(-50%, -0%)'
             }} className="py-3 px-14 rounded-2xl space-y-4">
-                <LLLDetails llm={llm} close={handleCloseLLM} />
+                <LLMDetails groupId={groupId} llm={llm} close={handleCloseLLM} />
             </dialog>
         </>
     )

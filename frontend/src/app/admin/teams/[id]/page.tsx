@@ -177,9 +177,13 @@ export default function Home({ params }: { params: { id: string } }) {
             </dialog>
             <div className="flex flex-row h-fit space-x-6 p-2 overflow-x-auto overflow-y-hidden mb-2">
                 {/* map llm with the AdminTeamLLMsList component */}
-                {llm && llm.map((llm) => (
-                    <AdminTeamLLMsList key={llm.id} llm={llm} />
-                ))}
+                {llm && llm.length > 0 ? (
+                    llm.map((llm) => (
+                        <AdminTeamLLMsList groupId={params.id} key={llm.id} llm={llm} />
+                    ))
+                ) : (
+                    <span className="font-bold">Team does not have access to any LLM yet. To add one, click: "Add LLM" button.</span>
+                )}
             </div>
         </div >
     )
