@@ -12,7 +12,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     strategy:
       matrix:
@@ -28,9 +28,14 @@ jobs:
         cache: 'npm'
         cache-dependency-path: '**/package-lock.json'
     
-    - run: cd backend
     - run: npm ci
-    - run: cd ../frontend
+      working-directory: ./backend
+      
     - run: npm ci
+      working-directory: ./frontend
+      
     - run: npm run build --if-present
+      working-directory: ./frontend
+      
     - run: npm build
+      working-directory: ./frontend
