@@ -8,9 +8,19 @@ interface NewGroupProps {
   onSubmit: (event: React.FormEvent) => void;
 }
 
+/**
+ * This component is a modal to delete a team.
+ * @param {NewGroupProps} props - The props of the component.
+ * @param {function} props.close - Function to close the modal.
+ * @param {function} props.openSubModal - Function to open the sub modal.
+ * @param {function} props.onSubmit - Function to handle the submit event.
+ * @returns {JSX.Element} JSX Element for the modal.
+ */
+
 export default function DeleteTeam({ close, openSubModal, onSubmit }: NewGroupProps) {
   const modal = useRef<null | HTMLDialogElement>(null);
 
+  /* Function to handle closing the modal */
   const handleClose = () => {
     close();
   }

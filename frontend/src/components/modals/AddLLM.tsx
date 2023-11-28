@@ -7,11 +7,21 @@ interface AddLLMProps {
   groupId: string;
 }
 
-export default function AddMLLM({ close, groupId }: AddLLMProps) {
+/**
+ * This component is a modal to add a LLM to a specific team.
+ * @param {AddLLMProps} props - The props of the component.
+ * @param {function} props.close - Function to close the modal.
+ * @param {string} props.groupId - ID of the group to add the LLM.
+ * @returns {JSX.Element} JSX Element for the modal.
+ */
+
+export default function AddMLLM({ close, groupId }: AddLLMProps): JSX.Element {
   const [input, setInput] = useState<string>("");
   const [llms, setLLMs, loadingLLMs] = useLLM(groupId);
   const [filteredLLMs, setFilteredLLMs] = useState<LLM[]>(llms);
 
+
+  /* Effect hook to filter LLMs based on the input */
   useEffect(() => {
     const filteredLLMs = llms.filter((llm) => {
       const fullName = `${llm.name} ${llm.model}`;
@@ -20,6 +30,7 @@ export default function AddMLLM({ close, groupId }: AddLLMProps) {
     setFilteredLLMs(filteredLLMs);
   }, [input, llms]);
 
+  /* Function to handle closing the modal */
   const handleClose = () => {
     setInput("");
     close();

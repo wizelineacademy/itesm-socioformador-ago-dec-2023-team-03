@@ -6,16 +6,29 @@ interface NewGroupProps {
   onSubmit: (event: React.FormEvent, teamName: string) => void;
 }
 
+/**
+ * This component is a modal to create a new group.
+ * @param {NewGroupProps} props - The props of the component.
+ * @param {function} props.close - Function to close the modal.
+ * @param {function} props.onSubmit - Function to handle the submit event.
+ * @returns {JSX.Element} JSX Element for the modal.
+ */
+
 export default function NewGroup({
   close,
   onSubmit,
 }: NewGroupProps) {
   const [input, setInput] = useState('');
 
+  /**
+   * Function to handle input change.
+   * @param {React.ChangeEvent<HTMLInputElement>} e - The event.
+   */
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   }
 
+  /* Function to handle closing the modal */
   const handleClose = () => {
     setInput('');
     close();

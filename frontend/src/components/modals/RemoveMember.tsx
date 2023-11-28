@@ -6,12 +6,22 @@ interface RemoveMemberProps {
   onSubmit: (event: React.FormEvent) => void;
 }
 
+/**
+ * This component is a modal to remove a member.
+ * @param {RemoveMemberProps} props - The props of the component.
+ * @param {string} props.pathname - The pathname of the current location.
+ * @param {function} props.close - Function to close the modal.
+ * @param {function} props.onSubmit - Function to handle the submit event.
+ * @returns {JSX.Element} JSX Element for the modal.
+ */
+
 export default function RemoveMember({
   pathname,
   close,
   onSubmit,
 }: RemoveMemberProps) {
 
+  /* Function to handle closing the modal */
   const handleClose = () => {
     close();
   }

@@ -2,25 +2,38 @@ import Modal from "@/src/components/modals/Modal";
 import RemoveMember from "@/src/components/modals/RemoveMember";
 import { Member } from '@/src/types';
 import { usePathname } from "next/navigation";
-import { eventNames } from "process";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
-
+/**
+ * Interface for AdminMemberListProps.
+ * @property {Member} member - The member.
+ * @property {string} groupId - The ID of the group.
+ * @property {(event: React.FormEvent) => void} onDeleteMember - The function to call when a member is deleted.
+ */
 interface AdminMemberListProps {
     member: Member;
     groupId: string;
     onDeleteMember?: (event: React.FormEvent) => void;
 }
 
+/**
+ * AdminMemberList component.
+ * @component
+ * @param {AdminMemberListProps} props - The props.
+ * @returns {JSX.Element} The rendered AdminMemberList component.
+ */
 const AdminMemberList: React.FC<AdminMemberListProps> = ({
     member,
     groupId,
     onDeleteMember
 }) => {
+    // References to the member modal and confirm modal elements.
     const modalMember = useRef<null | HTMLDialogElement>(null);
     const modalConfirm = useRef<null | HTMLDialogElement>(null);
+    // Get the current pathname from the Next.js navigation.
     const pathname = usePathname();
 
+    // Opens the member modal.
     const openModalMember = () => {
 
         if (modalMember.current) {
@@ -28,18 +41,24 @@ const AdminMemberList: React.FC<AdminMemberListProps> = ({
         }
     }
 
+    //  Closes the member modal.
     const closeModalMember = () => {
         if (modalMember.current) {
             modalMember.current.close();
         }
     }
 
+    //  Closes the confirm modal.
     const closeSubModal = () => {
         if (modalConfirm.current) {
             modalConfirm.current.close();
         }
     }
 
+    /**
+     * Handles the click event for the remove button.
+     * @param {React.FormEvent} event - The event.
+     */
     const handleRemoveClick = (event: React.FormEvent) => {
         if (onDeleteMember) {
             onDeleteMember(event);
@@ -58,6 +77,7 @@ const AdminMemberList: React.FC<AdminMemberListProps> = ({
             <div className="flex flex-row flex-none w-full items-center">
                 <div className="flex flex-row w-full pointer-events-none btn btn-primary justify-between" style={{ width: 'calc(100% - 40px)' }}>
                     <div className="flex flex-row items-center space-x-3">
+                        {/* if member has picture use it, otherwise use default image */}
                         <div className="avatar w-8 rounded-full items-center align-middle justify-center ">
                             {member?.picture ? (
                                 <img src={member?.picture} alt="" />
@@ -87,6 +107,7 @@ const AdminMemberList: React.FC<AdminMemberListProps> = ({
                     <RemoveMember pathname={pathname} close={closeModalMember} onSubmit={handleRemoveClick} />
                 </dialog>
                 <dialog ref={modalConfirm} className="py-3 px-14 rounded-2xl space-y-4">
+                    {/* if you are in '/admin/teams/groupId' tha modal display one message, otherwise it display other message  */}
                     {
                         pathname !== `/admin/teams/${groupId}` ?
                             <Modal title="Message" message="The member has been deleted" close={closeSubModal} /> :

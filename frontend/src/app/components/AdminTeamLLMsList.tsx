@@ -8,11 +8,22 @@ interface AdminTeamLLMsListProps {
     llm?: LLM;
 }
 
+/**
+ * AdminTeamLLMsList component.
+ * @component
+ * @param {AdminTeamLLMsListProps} props - The props.
+ * @param {LLM} props.llm - The LLM.
+ * @returns {JSX.Element} The rendered AdminTeamLLMsList component.
+ */
 const AdminTeamLLMsList: React.FC<AdminTeamLLMsListProps> = ({
     llm,
 }) => {
     const modalLLMDetails = useRef<null | HTMLDialogElement>(null);
 
+    /**
+     * Handles the opening of the LLM modal.
+     * @param {React.MouseEvent<HTMLDivElement, MouseEvent>} event - The mouse event.
+     */
     function handleOpenLLM(event: React.MouseEvent<HTMLDivElement, MouseEvent>): void {
         const openModal = () => {
             if (modalLLMDetails.current) {
@@ -22,6 +33,7 @@ const AdminTeamLLMsList: React.FC<AdminTeamLLMsListProps> = ({
         openModal();
     }
 
+    // Handles the closing of the LLM modal.
     const handleCloseLLM = () => {
         if (modalLLMDetails.current) {
             modalLLMDetails.current.close();
@@ -39,6 +51,7 @@ const AdminTeamLLMsList: React.FC<AdminTeamLLMsListProps> = ({
                     </div>
                 </div>
             </div>
+            {/* The modal for the llm detail such as name, or even add tokens */}
             <dialog ref={modalLLMDetails} style={{
                 position: 'fixed',
                 top: '0%',

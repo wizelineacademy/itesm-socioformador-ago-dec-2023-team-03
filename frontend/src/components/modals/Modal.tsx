@@ -6,7 +6,16 @@ interface ModalProps {
   close: () => void;
 }
 
+/**
+ * This component is a general purpose modal.
+ * @param {ModalProps} props - The props of the component.
+ * @param {string} props.title - The title of the modal.
+ * @param {string} props.message - The message of the modal.
+ * @param {function} props.close - Function to close the modal.
+ * @returns {JSX.Element} JSX Element for the modal.
+ */
 export default function Modal({ title, message, close }: ModalProps) {
+  /* Function to handle closing the modal */
   const handleClose = () => {
     close();
   }
