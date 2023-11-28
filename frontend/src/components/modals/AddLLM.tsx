@@ -1,6 +1,9 @@
 import useLLM from "@/src/hooks/useLLM";
+import useAllLLM from "@/src/hooks/useAllLLM";
+import { useState } from "react";
+import { filterLLMsNotInTeam } from "@/src/services/llm";
+import { addLlmToTeam } from "@/src/services/team";
 import { LLM } from "@/src/types";
-import { useEffect, useState } from "react";
 
 interface AddLLMProps {
   close: () => void;
@@ -18,29 +21,23 @@ interface AddLLMProps {
 export default function AddMLLM({ close, groupId }: AddLLMProps): JSX.Element {
   const [input, setInput] = useState<string>("");
   const [llms, setLLMs, loadingLLMs] = useLLM(groupId);
-  const [filteredLLMs, setFilteredLLMs] = useState<LLM[]>(llms);
+  const [allLLMs, setAllLLMs, loadingAllLLMs] = useAllLLM();
+  
+  // Use service to filter LLM that are not added in the current team
+  const filteredLLMs = filterLLMsNotInTeam(allLLMs, llms);
 
-
-  /* Effect hook to filter LLMs based on the input */
-  useEffect(() => {
-    const filteredLLMs = llms.filter((llm) => {
-      const fullName = `${llm.name} ${llm.model}`;
-      return fullName.toLowerCase().includes(input.toLowerCase());
-    });
-    setFilteredLLMs(filteredLLMs);
-  }, [input, llms]);
-
-  /* Function to handle closing the modal */
-  const handleClose = () => {
-    setInput("");
-    close();
-  }
-
-  if (loadingLLMs) return (
+  if (loadingLLMs && loadingAllLLMs) return (
     <div className="flex flex-col w-full h-full items-center justify-center align-middle">
       <span className="loading loading-spinner loading-lg text-accent "></span>
     </div>
   );
+
+  function handleAddLLM(event: React.MouseEvent<HTMLButtonElement, MouseEvent>, llm: LLM): void {
+    addLlmToTeam(groupId, llm.id!).then(() => {
+      close();
+      setLLMs([...llms, llm]);
+    });
+  }
 
   return (
     <>
@@ -58,7 +55,7 @@ export default function AddMLLM({ close, groupId }: AddLLMProps): JSX.Element {
                   <span className="text-lg font-semibold">{llm.name}</span>
                   <span className="text-sm">{llm.model}</span>
                 </div>
-                <button className="btn-sm btn btn-neutral text-white">Add</button>
+                <button onClick={(event) => handleAddLLM(event, llm)} className="btn-sm btn btn-neutral text-white">Add</button>
               </div>
             ))
           ) : (
@@ -66,7 +63,7 @@ export default function AddMLLM({ close, groupId }: AddLLMProps): JSX.Element {
           )
         }
       </div>
-      <button onClick={handleClose} className="btn btn-neutral text-white w-full">Close</button>
+      <button onClick={close} className="btn btn-neutral text-white w-full">Close</button>
     </>
   );
 }
