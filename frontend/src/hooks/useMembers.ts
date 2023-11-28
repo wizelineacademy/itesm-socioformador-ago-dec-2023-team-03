@@ -4,11 +4,17 @@ import { useEffect, useMemo, useState } from "react";
 import { Member } from "../types";
 import { getAllTeamMembers } from "../services/team";
 
+/**
+ * Custom hook to fetch and manage all members for a specific team.
+ * @param {string} teamId - The ID of the team.
+ * @returns {Array} Array containing members, updateMembers function, loading state, and error state.
+ */
 export default function useMembers(teamId: string) {
     const [members, setMembers] = useState<Member[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
 
+    // Fetch members from API and update state.
     useEffect(() => {
         const fetchMembers = async () => {
             try {
@@ -29,12 +35,18 @@ export default function useMembers(teamId: string) {
         fetchMembers();
     }, [teamId, members]);
 
-    // Update Members
+    /**
+     * Update members state.
+     * @param {Member[]} members - New members state.
+     */
     const updateMembers = (members: Member[]) => {
         setMembers(members);
     };
 
-    // Función para eliminar un miembro
+    /**
+     * Delete a member from the members state.
+     * @param {string} memberId - The ID of the member to delete.
+     */
     const deleteMember = (memberId: string) => {
         setMembers(prevMembers => prevMembers.filter(member => member.id !== memberId));
     };

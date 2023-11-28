@@ -1,5 +1,18 @@
-const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/teams`;
+/**
+ * @module team
+ */
 
+/**
+ * Base URL for team API.
+ * @type {string}
+ */
+const baseUrl: string = `${process.env.NEXT_PUBLIC_API_URL}/teams`;
+
+/**
+ * Fetches all LLMs for a team.
+ * @param {string} team - The ID of the team to fetch LLMs for.
+ * @returns {Promise<Array>} The array of LLMs if found, otherwise null.
+ */
 async function getTeamLLMs(team: string) {
   const routeUrl = `${baseUrl}/${team}/llms`;
 
@@ -15,6 +28,11 @@ async function getTeamLLMs(team: string) {
   }
 }
 
+/**
+ * Fetches a team by its ID.
+ * @param {string} teamId - The ID of the team to find.
+ * @returns {Promise<Object>} The team object if found, otherwise null.
+ */
 async function findTeamById(teamId: string) {
   const routeUrl = `${baseUrl}/${teamId}`;
 
@@ -30,6 +48,10 @@ async function findTeamById(teamId: string) {
   }
 }
 
+/**
+ * Fetches all teams.
+ * @returns {Promise<Array>} The array of teams if found, otherwise an error.
+ */
 export async function getAllTeams() {
   const routeUrl = `${baseUrl}`;
 
@@ -45,6 +67,11 @@ export async function getAllTeams() {
   }
 }
 
+/**
+ * Fetches all members of a team.
+ * @param {string} teamId - The ID of the team to fetch members for.
+ * @returns {Promise<Array>} The array of members if found, otherwise an error.
+ */
 export async function getAllTeamMembers(teamId: string) {
   const routeUrl = `${baseUrl}/${teamId}/members`;
 
@@ -60,6 +87,11 @@ export async function getAllTeamMembers(teamId: string) {
   }
 }
 
+/**
+ * Creates a new team.
+ * @param {Object} body - The body of the request.
+ * @returns {Promise<Object>} The created team object.
+ */
 export async function createTeam(name: string) {
   const routeUrl = `${baseUrl}`;
 
@@ -79,6 +111,12 @@ export async function createTeam(name: string) {
   }
 }
 
+/**
+ * Removes a member from a team.
+ * @param {string} teamId - The ID of the team to remove a member from.
+ * @param {string} memberId - The ID of the member to remove.
+ * @returns {Promise<Object>} The response object if successful, otherwise an error.
+ */
 export async function removeTeamMember(teamId: string, memberId: string) {
   const routeUrl = `${baseUrl}-members`;
 
@@ -98,6 +136,12 @@ export async function removeTeamMember(teamId: string, memberId: string) {
   }
 }
 
+/**
+ * Adds a member to a team.
+ * @param {string} teamId - The ID of the team to add a member to.
+ * @param {string} memberId - The ID of the member to add.
+ * @returns {Promise<Object>} The response object if successful, otherwise an error.
+ */
 export async function addTeamMember(teamId: string, memberId: string) {
   const routeUrl = `${baseUrl}-members`;
 
@@ -117,6 +161,11 @@ export async function addTeamMember(teamId: string, memberId: string) {
   }
 }
 
+/**
+ * Removes a team by its ID.
+ * @param {string} teamId - The ID of the team to remove.
+ * @returns {Promise<Object>} The response object if successful, otherwise an error.
+ */
 export async function removeTeam(teamId: string) {
   const routeUrl = `${baseUrl}/${teamId}`;
 

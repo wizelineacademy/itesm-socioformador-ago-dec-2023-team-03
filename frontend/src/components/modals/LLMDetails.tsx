@@ -1,4 +1,5 @@
-import { useState } from "react";
+/* import Modal from "@/src/components/modals/Modal"; */
+import { /* useRef, */ useState } from "react";
 import { LLM } from "../../types";
 
 interface LLLDetailsProps {
@@ -6,11 +7,27 @@ interface LLLDetailsProps {
   close: () => void;
 }
 
+/**
+ * This component displays the details of a LLM.
+ * @param {LLLDetailsProps} props - The props of the component.
+ * @param {LLM} props.llm - The LLM object.
+ * @param {function} props.close - Function to close the modal.
+ * @returns {JSX.Element} JSX Element for the LLM details.
+ */
+
 export default function LLLDetails({ llm, close }: LLLDetailsProps) {
   const [input, setInput] = useState<number>();
+  /* const modalRef = useRef<null | HTMLDialogElement>(null); */
+
+  /* Function to handle closing the modal */
   const handleClose = () => {
     close();
   }
+
+  /**
+   * Function to handle input change and round the value to the nearest 10.
+   * @param {React.ChangeEvent<HTMLInputElement>} e - The event.
+   */
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = parseInt(e.target.value);
     if (value >= 10 && value % 10 !== 0) {
@@ -19,6 +36,18 @@ export default function LLLDetails({ llm, close }: LLLDetailsProps) {
     setInput(value);
     console.log(value);
   }
+
+  const handleRemoveLLM = () => {
+    throw new Error("Not implemented");
+  }
+
+  /* const openLLMModal = () => {
+    modalRef.current?.showModal();
+  }
+
+  const closeLLMModal = () => {
+    modalRef.current?.close();
+  } */
 
   console.log(input);
   return (
@@ -39,7 +68,13 @@ export default function LLLDetails({ llm, close }: LLLDetailsProps) {
           <button className="btn btn-neutral text-white bg-green-500 hover:bg-green-700">Add Tokens</button>
         </div>
       </div>
-      <button onClick={handleClose} className="btn btn-neutral text-white w-full">Close</button>
+      <footer className="flex justify-around">
+        <button onClick={handleRemoveLLM} className="btn btn-neutral text-white bg-red-500 hover:bg-red-700">Remove LLM</button>
+        <button onClick={handleClose} className="btn btn-neutral text-white">Close</button>
+      </footer>
+      {/* <dialog ref={modalRef} className="py-3 px-14 rounded-2xl space-y-4">
+        <Modal title="Warning" message="Are you sure you want to delete this LLM?" close={close} />
+      </dialog> */}
     </>
   );
 }

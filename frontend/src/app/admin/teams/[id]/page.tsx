@@ -8,12 +8,11 @@ import DeleteTeam from "@/src/components/modals/DeleteTeam";
 import Modal from "@/src/components/modals/Modal";
 import useLLM from "@/src/hooks/useLLM";
 import useMembers from "@/src/hooks/useMembers";
-import Link from "next/link";
-import { useRef } from "react";
+import { addTeamMember, removeTeam, removeTeamMember } from "@/src/services/team";
 import { Member } from "@/src/types";
-import { addTeamMember, removeTeam } from "@/src/services/team";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { removeTeamMember } from "@/src/services/team";
+import { useRef } from "react";
 
 export default function Home({ params }: { params: { id: string } }) {
     const [members, setMembers, membersLoading, membersError, deleteMember] = useMembers(params.id);
@@ -121,7 +120,7 @@ export default function Home({ params }: { params: { id: string } }) {
                     </button>
                 </div>
             </div>
-            <dialog ref={modal} className="py-3 px-14 rounded-2xl space-y-4">
+            <dialog ref={modal} className="py-3 px-14 rounded-2xl space-y-4 overflow-hidden">
                 <AddMember teamId={params.id} close={closeModal} onSubmit={handleAddMember} />
             </dialog>
             <dialog ref={modalDeleteTeam} className="py-3 px-14 rounded-2xl space-y-4">

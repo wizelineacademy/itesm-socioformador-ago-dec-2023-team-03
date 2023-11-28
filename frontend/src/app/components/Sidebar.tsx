@@ -1,7 +1,7 @@
-import UserCard from "./UserCard";
 import Link from "next/link";
 import chat_history from "../data/chat_history.json";
 import AdminNavButtons from "./AdminNavButtons";
+import UserCard from "./UserCard";
 
 interface SidebarProps {
     reference?: string;
