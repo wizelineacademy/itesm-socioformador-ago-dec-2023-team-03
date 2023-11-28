@@ -105,8 +105,6 @@ export default function Home({ params }: { params: { id: string } }) {
 
     function handleAddTokensToLLM(event: React.MouseEventHandler, llmId: string, quantity: number): void {
 
-        console.log("Clicked!");
-
         const miembros: Member[] = members;
         const teamId: string = params.id;
 

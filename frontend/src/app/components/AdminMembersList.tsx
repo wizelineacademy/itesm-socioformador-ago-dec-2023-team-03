@@ -2,7 +2,8 @@ import Modal from "@/src/components/modals/Modal";
 import RemoveMember from "@/src/components/modals/RemoveMember";
 import { Member } from '@/src/types';
 import { usePathname } from "next/navigation";
-import { useRef } from "react";
+import { use, useRef } from "react";
+import { useRouter } from "next/navigation";
 
 
 interface AdminMemberListProps {
@@ -19,6 +20,7 @@ const AdminMemberList: React.FC<AdminMemberListProps> = ({
     const modalMember = useRef<null | HTMLDialogElement>(null);
     const modalConfirm = useRef<null | HTMLDialogElement>(null);
     const pathname = usePathname();
+    const router = useRouter();
 
     const openModalMember = () => {
 
@@ -45,17 +47,14 @@ const AdminMemberList: React.FC<AdminMemberListProps> = ({
         }
     }
 
-    // function handleSubmit(event: React.FormEvent<Element>): void {
-    //     removeTeamMember(groupId, member.id!).then(() => {
-    //         closeModalMember();
-    //         deleteMember();
-    //     });
-    // }
+    function handleOpenDetails(event: React.MouseEvent<HTMLDivElement, MouseEvent>): void {
+        router.push(`/admin/teams/${groupId}/${member.id}`);
+    }
 
     return (
         <>
             <div className="flex flex-row flex-none w-full items-center">
-                <div className="flex flex-row w-full pointer-events-none btn btn-primary justify-between" style={{ width: 'calc(100% - 40px)' }}>
+                <div onClick={handleOpenDetails} className="flex flex-row w-full btn btn-primary justify-between" style={{ width: 'calc(100% - 40px)' }}>
                     <div className="flex flex-row items-center space-x-3">
                         <div className="avatar w-8 rounded-full items-center align-middle justify-center ">
                             {member?.picture ? (
