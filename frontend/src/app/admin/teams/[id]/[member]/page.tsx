@@ -8,6 +8,7 @@ import Image from 'next/image';
 import img from '/public/images/chat-gpt-logo.svg.png';
 import { RiCopperCoinFill } from 'react-icons/ri';
 import useLLM from "@/src/hooks/useLLM";
+import { useId } from "react";
 
 interface DisplayLLM {
     id: string;
@@ -44,6 +45,8 @@ export default function Home({ params }: { params: { id: string, member: string 
     const [tokens, tokensLoading, tokensError] = useTokens(params.id, params.member);
     const [llm, setLLm, allLLMLoading, allLLMError] = useLLM(params.id);
 
+    const id = useId();
+
     if (tokensLoading && allLLMLoading) return (
         <div className="flex flex-col w-full h-full items-center justify-center align-middle">
             <span className="loading loading-spinner loading-lg text-accent "></span>
@@ -66,8 +69,8 @@ export default function Home({ params }: { params: { id: string, member: string 
             </div>
             <div className="flex flex-row p-2 space-x-4 bg-regal-blue-normal h-full overflow-y-auto">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-                    {displayLLMs?.map((token) => (
-                        <div className="card w-full h-fit bg-base-100 shadow-xl items-center p-2">
+                    {displayLLMs?.map((token, i) => (
+                        <div key={`${token}-${i}-${id}`} className="card w-full h-fit bg-base-100 shadow-xl items-center p-2">
                             <Image src={img} width={150} alt="" />
                             <div className="card-body">
                                 <h2 className="card-title">{token.name}</h2>
