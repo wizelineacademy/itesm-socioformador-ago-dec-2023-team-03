@@ -1,7 +1,20 @@
+/**
+ * @module tokens
+ */
+
 import createQueryString from '../utils/createQueryString';
 
+/**
+ * Base URL for tokens API.
+ * @type {string}
+ */
 const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/tokens`;
 
+/**
+ * Fetches tokens with optional filters.
+ * @param {Object} filters - The filters to apply.
+ * @returns {Promise<Array>} The array of tokens if found, otherwise null.
+ */
 async function getTokens(filters) {
   const routeUrl = `${baseUrl}`;
 

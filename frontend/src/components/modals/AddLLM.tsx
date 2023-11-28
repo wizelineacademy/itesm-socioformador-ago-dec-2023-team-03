@@ -10,11 +10,20 @@ interface AddLLMProps {
   groupId: string;
 }
 
-export default function AddMLLM({ close, groupId }: AddLLMProps) {
+/**
+ * This component is a modal to add a LLM to a specific team.
+ * @param {AddLLMProps} props - The props of the component.
+ * @param {function} props.close - Function to close the modal.
+ * @param {string} props.groupId - ID of the group to add the LLM.
+ * @returns {JSX.Element} JSX Element for the modal.
+ */
+
+export default function AddMLLM({ close, groupId }: AddLLMProps): JSX.Element {
   const [input, setInput] = useState<string>("");
   const [llms, setLLMs, loadingLLMs] = useLLM(groupId);
   const [allLLMs, setAllLLMs, loadingAllLLMs] = useAllLLM();
-
+  
+  // Use service to filter LLM that are not added in the current team
   const filteredLLMs = filterLLMsNotInTeam(allLLMs, llms);
 
   if (loadingLLMs && loadingAllLLMs) return (

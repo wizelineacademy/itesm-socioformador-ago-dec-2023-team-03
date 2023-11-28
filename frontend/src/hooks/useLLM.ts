@@ -1,14 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { LLM } from "../types";
 import { getAllLLM } from "@/src/services/llm";
+import { useEffect, useState } from "react";
+import { LLM } from "../types";
 
+/**
+ * Custom hook to fetch and manage all LLMs for a specific team.
+ * @param {string} teamId - The ID of the team.
+ * @returns {Array} Array containing LLMs, updateLLMs function, loading state, and error state.
+ */
 export default function useLLM(teamId: string) {
     const [llms, setLLMs] = useState<LLM[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
 
+    // Fetch LLMs from API and update state
     useEffect(() => {
         const fetchLLMs = async () => {
             try {
@@ -29,7 +35,10 @@ export default function useLLM(teamId: string) {
         fetchLLMs();
     }, [llms]);
 
-    // Update LLms
+    /**
+     * Update LLMs state.
+     * @param {LLM[]} llms - New LLMs state.
+     */
     const updateLLMs = (llms: LLM[]) => {
         setLLMs(llms);
     };

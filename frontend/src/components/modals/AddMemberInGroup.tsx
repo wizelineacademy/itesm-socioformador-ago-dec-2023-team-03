@@ -11,6 +11,15 @@ interface AddMemberProps {
   onSubmit: (event: React.FormEvent, member: Member) => void;
 }
 
+/**
+ * This component is a modal to add a member to a specific team.
+ * @param {AddMemberProps} props - The props of the component.
+ * @param {function} props.close - Function to close the modal.
+ * @param {string} props.teamId - ID of the team to add the member.
+ * @param {function} props.onSubmit - Function to handle the submit event.
+ * @returns {JSX.Element} JSX Element for the modal.
+ */
+
 export default function AddMember({
   close,
   teamId,
@@ -21,8 +30,10 @@ export default function AddMember({
   const [filteredMembers, setFilteredMembers] = useState<Member[]>([]);
   const [input, setInput] = useState<string>("");
 
+  /* Filtered and excluded members from the team */
   const filteredAndExcludedMembers = filteredMembers.filter(member => !teamMembers.map(m => m.id).includes(member.id));
 
+  /* Effect hook to filter members based on the input */
   useEffect(() => {
     const filteredMembers = allMembers.filter((member) => {
       const fullName = `${member.firstName} ${member.lastName}`;
@@ -31,6 +42,7 @@ export default function AddMember({
     setFilteredMembers(filteredMembers);
   }, [input, allMembers.length]);
 
+  /* Function to handle closing the modal */
   const handleClose = () => {
     setInput("");
     close();
@@ -48,7 +60,7 @@ export default function AddMember({
         <h1 className="text-center text-lg font-semibold">Add member</h1>
       </header>
       <input type="search" className="w-full px-3 py-2 bg-gray-100 rounded-xl text-black" placeholder="Search..." value={input} onChange={(e) => setInput(e.target.value)} />
-      <div className="flex flex-col flex-grow h-full space-y-2 p-5 overflow-y-auto bg-regal-blue-normal rounded-xl min-w-[20rem]">
+      <div className="flex flex-col flex-grow h-full space-y-2 p-5 bg-regal-blue-normal rounded-xl min-w-[20rem] max-h-[12.5rem] overflow-y-auto">
         {filteredAndExcludedMembers.length > 0 ? (
           filteredAndExcludedMembers.map((member) => (
             <div key={member.id} className="flex flex-row items-center justify-between p-2 bg-regal-blue-dark rounded-xl">

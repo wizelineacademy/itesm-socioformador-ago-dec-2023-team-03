@@ -1,5 +1,18 @@
-const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/members`;
+/**
+ * @module member
+ */
 
+/**
+ * Base URL for member API.
+ * @type {string}
+ */
+const baseUrl: string = `${process.env.NEXT_PUBLIC_API_URL}/members`;
+
+/**
+ * Logs in a member.
+ * @param {Object} body - The body of the request.
+ * @returns {Promise<Object>} The response object if successful, otherwise an error.
+ */
 async function login(body: any) {
   const routeUrl = `${baseUrl}/login`;
   const requestBody = body ? JSON.stringify({ email: body.email }) : JSON.stringify({});
@@ -19,6 +32,10 @@ export default {
   login
 };
 
+/**
+ * Fetches all members.
+ * @returns {Promise<Array>} The array of members if found, otherwise an empty array.
+ */
 export async function getAllMembers() {
   const routeUrl = `${baseUrl}`;
 
@@ -34,8 +51,11 @@ export async function getAllMembers() {
   }
 }
 
-
-// CHECK THIS...
+/**
+ * Removes a member by its ID.
+ * @param {string} memberId - The ID of the member to remove.
+ * @returns {Promise<Object>} The response object if successful, otherwise an error.
+ */
 export async function removeMember(memberId: string) {
   const routeUrl = `${baseUrl}/${memberId}`;
 
@@ -52,6 +72,11 @@ export async function removeMember(memberId: string) {
   }
 }
 
+/**
+ * Creates a new member.
+ * @param {Object} body - The body of the request.
+ * @returns {Promise<Object>} The created member object.
+ */
 export async function createMember(firstName: string, lastName: string, email: string, roleId: string) {
   const routeUrl = `${baseUrl}/register`;
 
@@ -71,4 +96,3 @@ export async function createMember(firstName: string, lastName: string, email: s
   }
 
 }
-

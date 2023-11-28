@@ -6,24 +6,46 @@ interface AddMemberProps {
   onSubmit: (event: React.FormEvent, member: Member) => void;
 }
 
+/**
+ * This component is a modal to add a member to a group.
+ * @param {AddMemberProps} props - The props of the component.
+ * @param {function} props.close - Function to close the modal.
+ * @param {function} props.onSubmit - Function to handle the submit event.
+ * @returns {JSX.Element} JSX Element for the modal.
+ */
+
 export default function AddMemberInGroup({ close, onSubmit }: AddMemberProps) {
   const [name, setName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [member, setMember] = useState<Member | null>(null);
 
+
+  /**
+   * Function to handle name change.
+   * @param {React.ChangeEvent<HTMLInputElement>} e - The event.
+   */
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   }
 
+  /**
+   * Function to handle last name change.
+   * @param {React.ChangeEvent<HTMLInputElement>} e - The event.
+   */
   const handleLastNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLastName(e.target.value);
   }
 
+  /**
+   * Function to handle email change.
+   * @param {React.ChangeEvent<HTMLInputElement>} e - The event.
+   */
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   }
 
+  /* Function to handle closing the modal */
   const handleClose = () => {
     setName("");
     setLastName("");
@@ -31,6 +53,10 @@ export default function AddMemberInGroup({ close, onSubmit }: AddMemberProps) {
     close();
   }
 
+  /**
+   * New member object.
+   * @type {Member}
+   */
   const newMember: Member = {
     firstName: name,
     lastName: lastName,

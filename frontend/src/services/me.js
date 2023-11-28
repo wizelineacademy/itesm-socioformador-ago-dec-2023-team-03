@@ -1,5 +1,17 @@
+/**
+ * @module me
+ */
+
+/**
+ * Base URL for me API.
+ * @type {string}
+ */
 const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/me`;
 
+/**
+ * Fetches the logged in user's data.
+ * @returns {Promise<Object>} The user's data if found, otherwise an error.
+ */
 async function getMe() {
   try {
     const routeUrl = baseUrl;
@@ -14,6 +26,10 @@ async function getMe() {
   }
 }
 
+/**
+ * Fetches the logged in user's teams.
+ * @returns {Promise<Object>} The user's teams if found, otherwise an error.
+ */
 async function getMyTeams() {
   const routeUrl = `${baseUrl}/teams`;
   const res = await fetch(routeUrl, {
@@ -24,7 +40,12 @@ async function getMyTeams() {
   return data;
 }
 
-async function getMyChats(options) { 
+/**
+ * Fetches the logged in user's chats.
+ * @param {Object} options - The options for the request.
+ * @returns {Promise<Object>} The user's chats if found, otherwise an error.
+ */
+async function getMyChats(options) {
   const routeUrl = `${baseUrl}/chats`;
   let queryString = '';
   if (options && options.query) {

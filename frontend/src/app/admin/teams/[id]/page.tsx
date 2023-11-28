@@ -135,7 +135,7 @@ export default function Home({ params }: { params: { id: string } }) {
                     </button>
                 </div>
             </div>
-            <dialog ref={modal} className="py-3 px-14 rounded-2xl space-y-4">
+            <dialog ref={modal} className="py-3 px-14 rounded-2xl space-y-4 overflow-hidden">
                 <AddMember teamId={params.id} close={closeModal} onSubmit={handleAddMember} />
             </dialog>
             <dialog ref={modalDeleteTeam} className="py-3 px-14 rounded-2xl space-y-4">
