@@ -32,7 +32,7 @@ router.route('/')
 
 router.route('/:id')
   .get(findTeam)
-  .patch(update)
+  .put(update)
   .delete(remove);
 
 router.route('/:id/members')

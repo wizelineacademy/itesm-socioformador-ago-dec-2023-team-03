@@ -30,10 +30,10 @@ const UserCard: React.FC<UserCardProps> = ({
             <div className="flex flex-row align-middle items-center space-x-2">
                 <div className="avatar">
                     <div className="w-12 rounded-full">
-                        <img src={user.user.picture} alt="" />
+                        <img src={user.picture} alt="" />
                     </div>
                 </div>
-                <p>{user.user.given_name}</p>
+                <p>{user.given_name}</p>
             </div>
         </div>
     )

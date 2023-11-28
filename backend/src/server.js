@@ -22,7 +22,7 @@ const notFoundRoute = require('./routes/notFound.js');
 const app = express();
 
 // Setting global middlewares
-app.use(cors({ origin: ['http://localhost:3000', 'http://23.23.104.122:3000'] , credentials: true }));
+app.use(cors({ origin: ['http://localhost:3000', 'http://23.23.104.122:3000', 'http://23.23.104.122'] , credentials: true }));
 app.use(cookieParser(process.env.COOKIE_SIGNED_SECRET));
 app.use(express.json());
 

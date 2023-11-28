@@ -1,7 +1,8 @@
+'use client';
 import '@/src/app/globals.css'
 
-import { UserProvider } from '@auth0/nextjs-auth0/client'
-import { getSession } from '@auth0/nextjs-auth0';
+import { UserProvider, useUser } from '@auth0/nextjs-auth0/client'
+// import { getSession } from '@auth0/nextjs-auth0';
 import { redirect } from 'next/navigation';
 import { Toaster } from "react-hot-toast";
 import Sidebar from '../components/Sidebar';
@@ -11,12 +12,12 @@ import Sidebar from '../components/Sidebar';
 //   description: 'Wizeprompt App',
 // }
 
-export default async function RootLayout({
+export default function RootLayout({
     children,
 }: {
     children: React.ReactNode
 }) {
-    const user = await getSession();
+    const user = useUser();
     return (
         <UserProvider>
             {user ? (
