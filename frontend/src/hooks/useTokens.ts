@@ -15,7 +15,7 @@ export default function useTokens(teamId: string, memberId: string) {
             'member-id': memberId
         })
             .then((tokens) => {
-                setTokens(tokens.data.tokens);
+                //setTokens(tokens.data.tokens);
                 setLoading(false);
             })
             .catch((error) => {
