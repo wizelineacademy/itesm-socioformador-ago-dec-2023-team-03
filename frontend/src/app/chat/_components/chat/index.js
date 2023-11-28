@@ -8,6 +8,7 @@ import { MdSend } from 'react-icons/md';
 import { RiCopperCoinFill } from 'react-icons/ri';
 
 import services from '@/src/services';
+import { useUser } from '@auth0/nextjs-auth0/client';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import img from '/public/images/chat-gpt-logo.svg.png';
@@ -28,6 +29,7 @@ function Chat({ tokens, selectedChatId, setTokens, llm, setChats }) {
   const chatState = _chatContext.state;
   const chatActions = _chatContext.actions;
   const [prompts, setPrompts] = useState([]);
+  const user = useUser();
   const [promptIsLoading, setPromptIsLoading] = useState(false);
 
   const promptsRef = useRef();
@@ -128,14 +130,29 @@ function Chat({ tokens, selectedChatId, setTokens, llm, setChats }) {
             prompts.map((prompt, idx) => (
               <div key={prompt.id}>
                 <div className='p-6 bg-regal-blue-light'>
-                  <div className='max-w-2xl mx-auto flex gap-x-3 relative'>
-                    <p className='text-base/7 text-gray-200 font-light'>{prompt.message}</p>
-                    {/* <BiLike size={18} className='flex-shrink-0 absolute -right-5' /> */}
+                  <div className='max-w-2xl mx-auto flex gap-x-5'>
+                    <div className='shrink-0'>
+                      {user?.user && <img className=' rounded-md' src={user.user?.picture || ''} width={36} height={36} alt='avatar' />}
+                    </div >
+                    <div className='max-w-2xl flex gap-x-3 relative'>
+                      <p className='text-base/7 text-gray-200 font-light'>{prompt.message}</p>
+                      {/* <BiLike size={18} className='flex-shrink-0 absolute -right-5' /> */}
+                    </div>
                   </div>
                 </div>
                 <div style={{ borderColor: '#434957' }} className={`${idx !== 0 ? 'border-t' : ''} border-b p-6 bg-regal-blue-normal`}>
-                  <div className='max-w-2xl mx-auto'>
-                    <p className='text-base/7 text-gray-300 font-light'>{prompt.responses[0]?.message}</p>
+                  <div className='max-w-2xl mx-auto flex gap-x-5'>
+                    <div className=' shrink-0'>
+                      <Image
+                        width={36}
+                        height={36}
+                        alt='ChatGPT logo'
+                        src={img}
+                      />
+                    </div>
+                    <div>
+                      <p className='text-base/7 text-gray-300 font-light'>{prompt.responses[0]?.message}</p>
+                    </div>
                   </div>
                 </div>
               </div>

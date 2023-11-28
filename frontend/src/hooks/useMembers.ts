@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { getAllTeamMembers } from "../services/team";
+import { useEffect, useMemo, useState } from "react";
 import { Member } from "../types";
+import { getAllTeamMembers } from "../services/team";
 
 /**
  * Custom hook to fetch and manage all members for a specific team.
@@ -33,7 +33,7 @@ export default function useMembers(teamId: string) {
             }
         };
         fetchMembers();
-    }, [teamId]);
+    }, [teamId, members]);
 
     /**
      * Update members state.

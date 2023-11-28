@@ -95,19 +95,6 @@ function ChatPageLayout() {
     }
   }, [session.me]);
 
-  // Use effect hook to find the selected chat when the selected chat ID changes
-  React.useEffect(() => {
-    if (selectedChatId) {
-      async function findChat() {
-        const chatResponse = await services.chat.findChatById(selectedChatId);
-        if (chatResponse.success && chatResponse.data && chatResponse.data.chat) {
-          setSelectedChat(chatResponse.data.chat);
-        }
-      }
-      findChat();
-    }
-  }, [selectedChatId]);
-
   // If the session is loading, return a loader. Is an error with the session thrown, return null
   if (session.isLoading) return <div className='loader'></div>;
   if (session.error) return null;

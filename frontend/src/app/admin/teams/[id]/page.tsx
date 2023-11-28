@@ -33,8 +33,6 @@ export default function Home({ params }: { params: { id: string } }) {
 
     const router = useRouter();
 
-    console.log(members)
-
     // If members are loading, display a loading spinner.
     if (membersLoading) return (
         <div className="flex flex-col w-full h-full items-center justify-center align-middle">

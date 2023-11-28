@@ -25,19 +25,24 @@ function LlmsList({ llms, teamId }) {
   useEffect(() => {
     if (session.me) {
       (async () => {
-        for (const llm of llms) {
-          const getTokensResponse = await services.tokens.getTokens({
-            'team-id': teamId,
-            'llm-id': llm.id,
-            'member-id': session.me.id
-          });
-          // Add the tokens to the state (including the previous state), if there are no tokens add null
-          setTokens((prev) => [...prev, getTokensResponse.data.tokens[0] || null]);
-          console.log(getTokensResponse);
-        }
+        const getTokensResponse = await services.tokens.getTokens({
+          'team-id': teamId,
+          'member-id': session.me.id
+        });
+        // Add the tokens to the state (including the previous state), if there are no tokens add null
+        setTokens(getTokensResponse.data.tokens);
       })();
     }
   }, [session.me]);
+
+  function getLlmTokensQty(llmId) {
+    if (tokens) {
+      const llmTokens = tokens.find((token) => token.llmId === llmId);
+      return llmTokens?.quantity || 0;
+    } else {
+      return null;
+    }
+  }
 
   if (tokens.length === 0) {
     return null;
@@ -59,7 +64,7 @@ function LlmsList({ llms, teamId }) {
                     </div>
                     <div className='inline-flex items-center gap-x-1'>
                       <RiCopperCoinFill className='inline' size={24} color='#E5B43C' />
-                      <span className=' font-semibold'>{tokens[idx]?.quantity || 0}</span>
+                      <span className=' font-semibold'>{getLlmTokensQty(llm.id)}</span>
                     </div>
                   </Link>
                 </li>

@@ -5,6 +5,9 @@ import { useState } from 'react';
 import { BiMessageAlt } from 'react-icons/bi';
 import { CgMathPlus } from 'react-icons/cg';
 
+import { toast } from 'react-hot-toast';
+
+
 import services from '@/src/services';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
@@ -89,6 +92,8 @@ function Sidebar({
         chat = res.data.chat;
         setChats((chats) => [chat, ...chats]);
         setSelectedChatId(chat.id);
+      } else {
+        toast.error(res.error.message, { position: 'top-center' });
       }
     }
   }
@@ -122,9 +127,9 @@ function Sidebar({
                 {chat.title}
               </div>
               {hoveredChatIdx === idx && (
-                <button onClick={() => deleteChat(chat.id)}>
+                <div onClick={() => deleteChat(chat.id)}>
                   <RiDeleteBin6Line color={'#E93D44'} size={16} />
-                </button>
+                </div>
               )
               }
             </button>
