@@ -10,10 +10,11 @@ import useLLM from "@/src/hooks/useLLM";
 import useMembers from "@/src/hooks/useMembers";
 import Link from "next/link";
 import { useRef } from "react";
-import { Member } from "@/src/types";
+import { LLM, Member } from "@/src/types";
 import { addTeamMember, removeTeam } from "@/src/services/team";
 import { useRouter } from "next/navigation";
 import { removeTeamMember } from "@/src/services/team";
+import { addTokensToLLM } from "@/src/services/tokens";
 
 export default function Home({ params }: { params: { id: string } }) {
     const [members, setMembers, membersLoading, membersError, deleteMember] = useMembers(params.id);
@@ -102,6 +103,21 @@ export default function Home({ params }: { params: { id: string } }) {
         });
     }
 
+    function handleAddTokensToLLM(event: React.MouseEventHandler, llmId: string, quantity: number): void {
+
+        console.log("Clicked!");
+
+        const miembros: Member[] = members;
+        const teamId: string = params.id;
+
+        miembros.forEach((member) => {
+            addTokensToLLM(member.id!, teamId, llmId, Math.round(quantity! / members.length)).then(() => {
+                closeLLMModal();
+                console.log("Tokens added to LLM");
+            });
+        });
+    }
+
     return (
         <div className="flex flex-col h-full w-full overflow-auto">
             <div className="flex flex-row flex-none p-2 align-middle justify-between w-full">
@@ -145,7 +161,7 @@ export default function Home({ params }: { params: { id: string } }) {
             </dialog>
             <div className="flex flex-row h-fit space-x-6 p-2 overflow-x-auto overflow-y-hidden mb-2">
                 {llm && llm.map((llm) => (
-                    <AdminTeamLLMsList key={llm.id} llm={llm} />
+                    <AdminTeamLLMsList key={llm.id} llm={llm} addTokensToLLM={handleAddTokensToLLM} />
                 ))}
             </div>
         </div >
