@@ -29,7 +29,7 @@ const UserCard: React.FC<UserCardProps> = ({
         <div className="flex flex-col flex-none space-y-3 w-full" onMouseLeave={() => setHover(false)} onMouseEnter={() => setHover(true)}>
             {hover ? (
                 <div className="flex flex-col align-center items-center w-full space-y-2">
-                    <Link href="/">
+                    <Link href="/teams">
                         <p className="btn btn-secondary text-lg rounded-3xl p-2 pl-7 pr-7">Home</p>
                     </Link>
                     <a href="/api/auth/logout">
