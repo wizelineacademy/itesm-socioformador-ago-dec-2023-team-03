@@ -191,7 +191,13 @@ async function createPrompt(req, res, next) {
       throw new ClientError(403, 'The prompt exceeds the number of tokens you have assigned');
     }
 
-    const completion = await generateChatCompletion(message, { model: llm.model });
+    let completion;
+    
+    try {
+      completion = await generateChatCompletion(message, { model: llm.model, max_tokens: tokensToSpend });
+    } catch (err) {
+      throw new ClientError(403, 'The prompt exceeds the number of tokens you have assigned');
+    }
 
     const promptTokens = completion.usage.prompt_tokens;
 

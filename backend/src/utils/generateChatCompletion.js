@@ -10,7 +10,7 @@ if (!OPENAI_API_KEY) {
 const openai = new OpenAI();
 
 async function generateChatCompletion(content, options) {
-  const { role = 'user', model } = options || {};
+  const { role = 'user', model, max_tokens } = options || {};
 
   if (!model) {
     throw new Error('The "model" is required');
@@ -18,6 +18,7 @@ async function generateChatCompletion(content, options) {
 
   try {
     const completion = await openai.chat.completions.create({
+      max_tokens: max_tokens,
       messages: [{ role, content }],
       model
     });
