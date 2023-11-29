@@ -52,10 +52,10 @@ function Sidebar() {
           </li>
         ))}
       </ul>
-      <Link href='/api/auth/logout' className='text-brand-primary w-full text-lg font-medium flex items-center gap-x-3'>
+      <a href='/api/auth/logout' className='text-brand-primary w-full text-lg font-medium flex items-center gap-x-3'>
         <BiLogOut color={'#E93D44'} size={28} />
         Logout
-      </Link>
+      </a>
     </aside>
   )
 }
