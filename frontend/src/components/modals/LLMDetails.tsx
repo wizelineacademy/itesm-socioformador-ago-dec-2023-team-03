@@ -1,20 +1,25 @@
-import { useState } from "react";
-import { LLM, Member } from "../../types";
+/* import Modal from "@/src/components/modals/Modal"; */
+import { removeLlmFromTeam } from "@/src/services/team";
+import { /* useRef, */ useState } from "react";
+import { LLM , Member} from "../../types";
 
-interface LLLDetailsProps {
+interface LLMDetailsProps {
+  groupId: string;
   llm?: LLM;
   close: () => void;
   addTokensToLLM: (event: any, llmId: string, quantity: number) => void;
 }
 
-export default function LLLDetails({ llm, close, addTokensToLLM }: LLLDetailsProps) {
+
 /**
  * This component displays the details of a LLM.
- * @param {LLLDetailsProps} props - The props of the component.
+ * @param {LLMDetailsProps} props - The props of the component.
  * @param {LLM} props.llm - The LLM object.
  * @param {function} props.close - Function to close the modal.
  * @returns {JSX.Element} JSX Element for the LLM details.
  */
+
+export default function LLMDetails({ groupId, llm, close, addTokensToLLM }: LLMDetailsProps) {
   const [input, setInput] = useState<number>();
   /* const modalRef = useRef<null | HTMLDialogElement>(null); */
 
@@ -35,8 +40,15 @@ export default function LLLDetails({ llm, close, addTokensToLLM }: LLLDetailsPro
     setInput(value);
   }
 
-  const handleRemoveLLM = () => {
-    throw new Error("Not implemented");
+  /**
+   * Function to handle removing a LLM from a team.
+   * @param {React.MouseEvent<HTMLButtonElement, MouseEvent>} event - The event.
+   */
+  function handleRemoveLLM(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
+    // Use service to remove LLM from team
+    removeLlmFromTeam(groupId, llm!.id!).then(() => {
+      close();
+    });
   }
 
   /* const openLLMModal = () => {
@@ -47,7 +59,6 @@ export default function LLLDetails({ llm, close, addTokensToLLM }: LLLDetailsPro
     modalRef.current?.close();
   } */
 
-  console.log(input);
   return (
     <>
       <header>

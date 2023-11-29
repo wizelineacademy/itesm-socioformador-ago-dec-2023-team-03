@@ -201,6 +201,25 @@ export async function addLlmToTeam(teamId: string, llmId: string) {
   }
 }
 
+export async function removeLlmFromTeam(teamId: string, llmId: string) {
+  const routeUrl = `${baseUrl}-llms`;
+
+  try {
+    const res = await fetch(routeUrl, {
+      method: 'DELETE',
+      body: JSON.stringify({ teamId, llmId }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+}
+
 export default {
   getTeamLLMs,
   findTeamById,

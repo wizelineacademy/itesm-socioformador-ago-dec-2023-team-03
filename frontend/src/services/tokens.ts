@@ -15,7 +15,7 @@ const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/tokens`;
  * @param {Object} filters - The filters to apply.
  * @returns {Promise<Array>} The array of tokens if found, otherwise null.
  */
-async function getTokens(filters) {
+async function getTokens(filters:any) {
   const routeUrl = `${baseUrl}`;
 
   let qs;
@@ -36,7 +36,7 @@ async function getTokens(filters) {
   }
 }
 
-export async function addTokensToLLM(memberId, teamId, llmId, quantity) {
+export async function addTokensToLLM(memberId : string, teamId : string , llmId : string, quantity : number ) {
 
   const routeUrl = `${baseUrl}`
 

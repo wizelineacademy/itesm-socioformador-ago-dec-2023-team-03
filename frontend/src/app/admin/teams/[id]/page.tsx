@@ -16,7 +16,16 @@ import { useRouter } from "next/navigation";
 import { removeTeamMember } from "@/src/services/team";
 import { addTokensToLLM } from "@/src/services/tokens";
 
+/**
+ * Teams members page.
+ * @function
+ * @param {object} props - Component props.
+ * @param {object} props.params - The parameters for the component.
+ * @param {string} props.params.id - The ID parameter.
+ * @returns {JSX.Element} Rendered component.
+ */
 export default function Home({ params }: { params: { id: string } }) {
+    // State variables for members, search term, and filtered members using the useMembers custom hook.
     const [members, setMembers, membersLoading, membersError, deleteMember] = useMembers(params.id);
     const [llm, setLLM, llmLoading] = useLLM(params.id);
     const modal = useRef<null | HTMLDialogElement>(null);
@@ -26,48 +35,56 @@ export default function Home({ params }: { params: { id: string } }) {
 
     const router = useRouter();
 
+    // If members are loading, display a loading spinner.
     if (membersLoading) return (
         <div className="flex flex-col w-full h-full items-center justify-center align-middle">
             <span className="loading loading-spinner loading-lg text-accent "></span>
         </div>
     );
 
+    // Closes the modal
     const closeModal = () => {
         if (modal.current) {
             modal.current.close();
         }
     }
 
+    // Opens the delete team modal
     const openDeleteTeamModal = () => {
         if (modalDeleteTeam.current) {
             modalDeleteTeam.current.showModal();
         }
     }
 
+    // Closes the delete team modal
     const closeDeleteTeamModal = () => {
         if (modalDeleteTeam.current) {
             modalDeleteTeam.current.close();
         }
     }
 
+    // Opens the confirmation modal
     const openSubModal = () => {
         if (modalConfirm.current) {
             modalConfirm.current.showModal();
         }
     }
 
+    // Closes the confirmation modal
     const closeSubModal = () => {
         if (modalConfirm.current) {
             modalConfirm.current.close();
         }
     }
 
+    // Opens the modal
     const openModal = () => {
         if (modal.current) {
             modal.current.showModal();
         }
     }
 
+    // Closes the modal
     const closeLLMModal = () => {
         if (modalLLM.current) {
             modalLLM.current.close();
@@ -83,6 +100,11 @@ export default function Home({ params }: { params: { id: string } }) {
         openLLMModal();
     }
 
+    /**
+     * Handles the add member event.
+     * @param {React.FormEvent}
+     * @param {Member} member - The member.
+     */
     function handleAddMember(event: React.FormEvent, member: Member): void {
         addTeamMember(params.id, member.id!).then(() => {
             setMembers([...members, member]);
@@ -90,6 +112,10 @@ export default function Home({ params }: { params: { id: string } }) {
         });
     }
 
+    /**
+     * Handles the delete team event.
+     * @param {React.FormEvent}
+     */
     function handleDeleteTeam(event: React.FormEvent): void {
         removeTeam(params.id).then((res) => {
             closeDeleteTeamModal();
@@ -97,6 +123,12 @@ export default function Home({ params }: { params: { id: string } }) {
         });
     }
 
+    /**
+     * Handles the delete member event.
+     * @param {React.FormEvent}
+     * @param {string} groupId - The group ID.
+     * @param {string} memberId - The member ID.
+     */
     function handleDeleteMember(event: React.FormEvent<Element>, groupId: string, memberId: string): void {
         removeTeamMember(groupId, memberId).then(() => {
             deleteMember(memberId);
@@ -135,6 +167,7 @@ export default function Home({ params }: { params: { id: string } }) {
                     </button>
                 </div>
             </div>
+            {/* Display the modals with the dialog html tag and pass the props to the component */}
             <dialog ref={modal} className="py-3 px-14 rounded-2xl space-y-4 overflow-hidden">
                 <AddMember teamId={params.id} close={closeModal} onSubmit={handleAddMember} />
             </dialog>
@@ -158,9 +191,14 @@ export default function Home({ params }: { params: { id: string } }) {
                 <AddLLM groupId={params.id} close={closeLLMModal} />
             </dialog>
             <div className="flex flex-row h-fit space-x-6 p-2 overflow-x-auto overflow-y-hidden mb-2">
-                {llm && llm.map((llm) => (
-                    <AdminTeamLLMsList key={llm.id} llm={llm} addTokensToLLM={handleAddTokensToLLM} />
-                ))}
+                {/* map llm with the AdminTeamLLMsList component */}
+                {llm && llm.length > 0 ? (
+                    llm.map((llm) => (
+                        <AdminTeamLLMsList groupId={params.id} key={llm.id} llm={llm} addTokensToLLM={handleAddTokensToLLM} />
+                    ))
+                ) : (
+                    <span className="font-bold">Team does not have access to any LLM yet. To add one, click: `&quot;`Add LLM`&quot;` button.</span>
+                )}
             </div>
         </div >
     )
