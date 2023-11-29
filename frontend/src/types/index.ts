@@ -57,3 +57,13 @@ export interface LLM {
     createdAt: string;
     updatedAt: string;
 }
+
+export interface Token {
+    id?: string;
+    quantity: number;
+    createdAt?: string;
+    updatedAt?: string;
+    memberId?: string;
+    teamId: string;
+    llmId: string;
+}

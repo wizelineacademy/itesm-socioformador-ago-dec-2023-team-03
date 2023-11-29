@@ -32,9 +32,9 @@ const UserCard: React.FC<UserCardProps> = ({
                     <Link href="/">
                         <p className="btn btn-secondary text-lg rounded-3xl p-2 pl-7 pr-7">Home</p>
                     </Link>
-                    <Link href="/api/auth/logout">
+                    <a href="/api/auth/logout">
                         <p className="text-sm rounded-xl p-1 hover:text-regal-blue-light">Sign Out</p>
-                    </Link>
+                    </a>
                 </div>
             ) : null}
 

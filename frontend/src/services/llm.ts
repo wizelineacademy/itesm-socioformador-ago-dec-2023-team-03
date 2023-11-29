@@ -16,7 +16,7 @@ import { LLM } from '../types';
  * @param {string} id - The ID of the LLM to find.
  * @returns {Promise<Object>} The LLM object if found, otherwise an empty object.
  */
-async function find(id) {
+async function find(id: string) {
   const routeURl = `${process.env.NEXT_PUBLIC_API_URL}/llms/${id}`;
 
   try {
@@ -36,7 +36,7 @@ async function find(id) {
  * @param {string} teamId - The ID of the team to fetch LLMs for.
  * @returns {Promise<Array>} The array of LLMs if found, otherwise an empty array.
  */
-export async function getAllLLM(teamId) {
+export async function getAllLLM(teamId: string) {
   const routeURl = `${baseUrl}/${teamId}/llms`;
 
   try {
@@ -73,7 +73,7 @@ export async function getLLM() {
  * @param {LLM[]} teamLLMs - Los LLMs que tiene un equipo en particular.
  * @returns {LLM[]} Un array de LLMs que no están en el equipo.
  */
-export function filterLLMsNotInTeam(allLLMs, teamLLMs) {
+export function filterLLMsNotInTeam(allLLMs: LLM[], teamLLMs: LLM[]) {
   return allLLMs.filter(llm => 
       !teamLLMs.some(teamLLM => teamLLM.id === llm.id)
   );

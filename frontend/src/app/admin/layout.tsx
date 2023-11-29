@@ -24,7 +24,20 @@ export default function RootLayout({
 }: {
     children: React.ReactNode
 }) {
-    const user = useUser();
+    const { user, error, isLoading } = useUser();
+
+    if (isLoading) return (
+        <div className="flex flex-col w-full h-full items-center justify-center align-middle">
+            <span className="loading loading-spinner loading-lg text-accent "></span>
+        </div>
+    );
+
+    if (error) return (
+        <div className="flex flex-col w-full h-full items-center justify-center align-middle">
+            <span className="loading loading-spinner loading-lg text-accent "></span>
+        </div>
+    );
+
     return (
         // Wrap the component in a UserProvider
         <UserProvider>
@@ -39,6 +52,7 @@ export default function RootLayout({
             ) : (
                 redirect('/login')
             )}
+
         </UserProvider>
     );
 }
