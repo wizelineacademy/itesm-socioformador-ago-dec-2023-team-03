@@ -197,7 +197,7 @@ export default function Home({ params }: { params: { id: string } }) {
                         <AdminTeamLLMsList groupId={params.id} key={llm.id} llm={llm} addTokensToLLM={handleAddTokensToLLM} />
                     ))
                 ) : (
-                    <span className="font-bold">Team does not have access to any LLM yet. To add one, click: "Add LLM" button.</span>
+                    <span className="font-bold">Team does not have access to any LLM yet. To add one, click: `&quot;`Add LLM`&quot;` button.</span>
                 )}
             </div>
         </div >

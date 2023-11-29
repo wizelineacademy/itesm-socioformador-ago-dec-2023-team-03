@@ -3,23 +3,23 @@ import { removeLlmFromTeam } from "@/src/services/team";
 import { /* useRef, */ useState } from "react";
 import { LLM , Member} from "../../types";
 
-interface LLLDetailsProps {
+interface LLMDetailsProps {
   groupId: string;
   llm?: LLM;
   close: () => void;
   addTokensToLLM: (event: any, llmId: string, quantity: number) => void;
 }
 
-export default function LLLDetails({ llm, close, addTokensToLLM }: LLLDetailsProps) {
+
 /**
  * This component displays the details of a LLM.
- * @param {LLLDetailsProps} props - The props of the component.
+ * @param {LLMDetailsProps} props - The props of the component.
  * @param {LLM} props.llm - The LLM object.
  * @param {function} props.close - Function to close the modal.
  * @returns {JSX.Element} JSX Element for the LLM details.
  */
 
-export default function LLMDetails({ groupId, llm, close }: LLLDetailsProps) {
+export default function LLMDetails({ groupId, llm, close, addTokensToLLM }: LLMDetailsProps) {
   const [input, setInput] = useState<number>();
   /* const modalRef = useRef<null | HTMLDialogElement>(null); */
 
