@@ -71,7 +71,7 @@ jobs:
           script: | 
             cd /home/bitnami/apps/wizeprompt
             git pull
-            cd ../backend
+            cd ./backend
             pm2 stop backend
             npm ci
             pm2 start backend
