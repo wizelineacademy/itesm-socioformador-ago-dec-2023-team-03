@@ -68,7 +68,7 @@ export default function AddMember({
                 <span className="text-lg font-semibold">{member.firstName} {member.lastName}</span>
                 <span className="text-sm">{member.email}</span>
               </div>
-              <button onClick={(event) => { onSubmit(event, member); console.log(member.lastName); console.log(member.firstName) }} className="btn-sm btn btn-neutral text-white">Add</button>
+              <button onClick={(event) => onSubmit(event, member)} className="btn-sm btn btn-neutral text-white">Add</button>
             </div>
           ))
         ) : (

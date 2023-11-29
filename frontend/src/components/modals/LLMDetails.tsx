@@ -1,14 +1,16 @@
 /* import Modal from "@/src/components/modals/Modal"; */
 import { removeLlmFromTeam } from "@/src/services/team";
 import { /* useRef, */ useState } from "react";
-import { LLM } from "../../types";
+import { LLM , Member} from "../../types";
 
 interface LLLDetailsProps {
   groupId: string;
   llm?: LLM;
   close: () => void;
+  addTokensToLLM: (event: any, llmId: string, quantity: number) => void;
 }
 
+export default function LLLDetails({ llm, close, addTokensToLLM }: LLLDetailsProps) {
 /**
  * This component displays the details of a LLM.
  * @param {LLLDetailsProps} props - The props of the component.
@@ -36,7 +38,6 @@ export default function LLMDetails({ groupId, llm, close }: LLLDetailsProps) {
       value = Math.round(value / 10) * 10;
     }
     setInput(value);
-    console.log(value);
   }
 
   /**
@@ -73,7 +74,7 @@ export default function LLMDetails({ groupId, llm, close }: LLLDetailsProps) {
         <div className="flex flex-row items-center justify-between gap-x-2">
           {/* Add tokens input (only 10 by 10) */}
           <input type="number" className="w-full px-3 py-2 bg-gray-400 rounded-xl placeholder-gray-500" placeholder="Even numbers (10 by 10)" min="10" value={input} onChange={handleInputChange} />
-          <button className="btn btn-neutral text-white bg-green-500 hover:bg-green-700">Add Tokens</button>
+          <button onClick={(event) => addTokensToLLM(event, llm!.id, input!)} className="btn btn-neutral text-white bg-green-500 hover:bg-green-700">Add Tokens</button>
         </div>
       </div>
       <footer className="flex justify-around">
