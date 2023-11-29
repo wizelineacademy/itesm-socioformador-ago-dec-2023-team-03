@@ -18,9 +18,9 @@ function TeamsList({ teams = [], llms = [] }) {
                           <p className="text-xl font-medium text-gray-900 truncate dark:text-white">
                             {team.name}
                           </p>
-                          <p className="text-brand-primary text-sm font-medium truncate">
+                          {/* <p className="text-brand-primary text-sm font-medium truncate">
                             50 members
-                          </p>
+                          </p> */}
                       </div>
                       <div className=" text-brand-primary inline-flex items-center text-base font-semibold">
                         {llms && llms.length > 0
