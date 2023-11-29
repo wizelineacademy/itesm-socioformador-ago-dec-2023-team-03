@@ -74,7 +74,7 @@ export default function LLMDetails({ groupId, llm, close, addTokensToLLM }: LLMD
         <div className="flex flex-row items-center justify-between gap-x-2">
           {/* Add tokens input (only 10 by 10) */}
           <input type="number" className="w-full px-3 py-2 bg-gray-400 rounded-xl placeholder-gray-500" placeholder="Even numbers (10 by 10)" min="10" value={input} onChange={handleInputChange} />
-          <button onClick={(event) => addTokensToLLM(event, llm!.id, input!)} className="btn btn-neutral text-white bg-green-500 hover:bg-green-700">Add Tokens</button>
+          <button onClick={(event) => {addTokensToLLM(event, llm!.id, input!); close()}} className="btn btn-neutral text-white bg-green-500 hover:bg-green-700">Add Tokens</button>
         </div>
       </div>
       <footer className="flex justify-around">
