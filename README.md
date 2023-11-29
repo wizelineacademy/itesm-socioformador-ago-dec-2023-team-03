@@ -23,7 +23,6 @@
 - **[Next.js](https://nextjs.org/)**: Enhanced React framework offering server-side rendering for improved performance.
 - **[React](https://reactjs.org/)**: Robust library for building dynamic, responsive user interfaces.
 - **[Tailwind CSS](https://tailwindcss.com/)**: Modular CSS framework for quick and maintainable design customization.
-- **[TypeScript](https://www.typescriptlang.org/)**: Strongly typed programming language enhancing JavaScript's robustness.
 
 ### Backend Infrastructure
 - **[PostgreSQL](https://www.postgresql.org/)**: Reliable, feature-rich open-source database for secure data management.
@@ -41,9 +40,9 @@
 
 ## Deployment and Operations 🚀
 
-- **Frontend Deployment**: Currently hosted with [AWS Lightsail](https://aws.amazon.com/lightsail/) at 23.23.104.122:3000.
-- **Backend Deployment**: Running in [AWS Lightsail](https://aws.amazon.com/lightsail/) at 23.23.104.122:8080.
-- **Continuous Integration/Continuous Deployment (CI/CD)**: Working on setting pipelines.
+- **Frontend Deployment**: Currently hosted with [AWS Lightsail](https://aws.amazon.com/lightsail/) at 23.23.104.122
+- **Backend Deployment**: Running in [AWS Lightsail](https://aws.amazon.com/lightsail/) at 23.23.104.122:8080
+- **Continuous Integration/Continuous Deployment (CI/CD)**: Commits on main get dedployed via GitHub Actions
 
 ## Getting Started
 
