@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 /**
  * GlobalError component.
@@ -16,5 +16,5 @@ export default function GlobalError({ error, reset }) {
         <button onClick={() => reset()}>Try again</button>
       </body>
     </html>
-  )
+  );
 }

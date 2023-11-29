@@ -17,7 +17,7 @@ import { toast } from 'react-hot-toast';
  */
 function HomePage() {
   // Use the useUser hook to get the current user
-  const { user, isLoading, error } = useUser();
+  const { user, isLoading } = useUser();
   // State variable for server error
   const [serverError, setServerError] = useState('');
   // Use the useRouter hook to get the router instance
@@ -29,11 +29,19 @@ function HomePage() {
    */
   async function login() {
     const body = { email: user.email };
-    const res = await services.member.login(body);
-    if (!res.success && res.error) {
+
+    let res;
+
+    try {
+      res = await services.member.login(body);
+    } catch (err) {
+      console.error(err);
+    }
+
+    if (!res?.success && res.error) {
       toast.error(res.error.message);
       router.push('/login');
-    } else if (res.success) {
+    } else if (res?.success) {
       router.push('/teams');
     }
   }
@@ -43,18 +51,17 @@ function HomePage() {
     if (user) {
       (async () => {
         let getMeResponse;
+
         try {
           getMeResponse = await services.me.getMe();
         } catch (err) {
-          setServerError(err);
           console.error(err);
+          return router.push('/login');
         }
-        console.log(getMeResponse);
+
         if (getMeResponse.success) {
-          console.log('User is already logged in');
           return router.push('/teams');
         } else {
-          console.log('User has to login');
           login();
         }
       })();
