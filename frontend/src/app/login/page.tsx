@@ -20,7 +20,6 @@ export default function Home() {
           <div className='w-full h-full flex justify-center items-center flex-col'>
             <h1 className='text-brand-primary text-5xl font-semibold mb-3'>Wizeprompt</h1>
             <p className=' text-neutral-300 text-lg'>Welcome to Wizeprompt, please log in</p>
-            <p className=' text-neutral-300 text-lg'>TESTING CICD</p>
           </div>
           <a href={'/api/auth/login'}>
             <button className="flex items-center bg-white border border-gray-300 rounded-lg shadow-md px-6 py-2 text-sm font-medium text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
