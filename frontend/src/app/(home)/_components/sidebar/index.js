@@ -9,6 +9,8 @@ import { usePathname } from 'next/navigation';
 import { AiOutlineUser } from 'react-icons/ai';
 import { BiLogOut } from "react-icons/bi";
 import { HiOutlineUserGroup } from 'react-icons/hi';
+import { RiAdminLine } from "react-icons/ri";
+
 
 /**
  * Categories for the sidebar.
@@ -19,11 +21,6 @@ const categories = [
     name: 'Teams',
     slug: 'teams',
     Icon: HiOutlineUserGroup
-  },
-  {
-    name: 'Profile',
-    slug: 'profile',
-    Icon: AiOutlineUser
   }
 ]
 
@@ -57,11 +54,19 @@ function Sidebar() {
             </Link>
           </li>
         ))}
-        <li>
-          <Link href='/admin' className='bg-brand-primary py-2 px-3 font-medium block rounded-md'>
-            Go to admin
-          </Link>
-        </li>
+        {me && me.roleName === 'admin'
+          ? (
+            <li>
+              <Link
+                href={`/admin`}
+                className={('flex w-full rounded-md px-2 py-3 items-center gap-x-2 hover:bg-regal-blue-light')}
+              >
+                <RiAdminLine size={24} color='#FFFFFF' />
+                Admin
+              </Link>
+            </li>
+          ) : null
+        }
       </ul>
       {user && <UserCard user={user} />}
     </aside>

@@ -3,9 +3,10 @@ import '@/src/app/globals.css';
 
 import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
 // import { getSession } from '@auth0/nextjs-auth0';
-import { redirect } from 'next/navigation';
-import { Toaster } from "react-hot-toast";
+import { redirect, useRouter } from 'next/navigation';
+import toast, { Toaster } from "react-hot-toast";
 import Sidebar from '../components/Sidebar';
+import useSession from '@/src/hooks/useSession';
 
 // export const metadata = {
 //   title: 'Wizeprompt',
@@ -21,10 +22,10 @@ import Sidebar from '../components/Sidebar';
  */
 export default function RootLayout({
     children,
-}: {
-    children: React.ReactNode
 }) {
     const { user, error, isLoading } = useUser();
+    const _user = useSession();
+    const router = useRouter();
 
     if (isLoading) return (
         <div className="flex flex-col w-full h-full items-center justify-center align-middle">
@@ -37,6 +38,16 @@ export default function RootLayout({
             <span className="loading loading-spinner loading-lg text-accent "></span>
         </div>
     );
+
+    if (!_user.isLoading && !_user) {
+      toast.error('You have to log in');
+      return router.push('/login');
+    }
+
+    if (!_user.isLoading && _user?.me?.roleName !== 'admin') {
+      toast.error('You cannot access');
+      return <div>Error 403</div>
+    }
 
     return (
         // Wrap the component in a UserProvider
