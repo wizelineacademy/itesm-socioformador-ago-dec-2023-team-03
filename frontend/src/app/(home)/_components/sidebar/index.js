@@ -1,5 +1,8 @@
 'use client';
 
+import UserCard from '@/src/app/components/UserCard';
+import useSession from '@/src/hooks/useSession';
+import { useUser } from '@auth0/nextjs-auth0/client';
 import Link from 'next/link';
 
 import { usePathname } from 'next/navigation';
@@ -35,6 +38,9 @@ function Sidebar() {
   // Get the selected category from the pathname
   const selectedCategory = pathname.split('/')[1];
 
+  const { me } = useSession();
+  const { user } = useUser();
+
   return (
     <aside className='bg-regal-blue-dark flex flex-col w-64 h-full shrink-0 border-r border-gray-600 p-4'>
       <ul className='overflow-y-scroll h-full'>
@@ -51,11 +57,17 @@ function Sidebar() {
             </Link>
           </li>
         ))}
+        <li>
+          <Link href='/admin' className='bg-brand-primary py-2 px-3 font-medium block rounded-md'>
+            Go to admin
+          </Link>
+        </li>
       </ul>
-      <Link href='/api/auth/logout' className='text-brand-primary w-full text-lg font-medium flex items-center gap-x-3'>
+      {user && <UserCard user={user} />}
+      {/* <Link href='/api/auth/logout' className='text-brand-primary w-full text-lg font-medium flex items-center gap-x-3'>
         <BiLogOut color={'#E93D44'} size={28} />
         Logout
-      </Link>
+      </Link> */}
     </aside>
   )
 }

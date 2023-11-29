@@ -59,8 +59,15 @@ function HomePage() {
           return router.push('/login');
         }
 
+        console.log(getMeResponse);
+
         if (getMeResponse.success) {
-          return router.push('/teams');
+          const role = getMeResponse.data.me.roleName;
+          if (role === 'admin') {
+            return router.push('/admin');
+          } else {
+            return router.push('/teams');
+          }
         } else {
           login();
         }

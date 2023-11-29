@@ -52,11 +52,8 @@ function TeamsPage() {
         setLlms(llms);
       })();
     }
+    console.log(teams);
   }, [teams]);
-
-  useEffect(() => {
-    console.log(llms);
-  }, [llms]);
 
   if (!user.isLoading && !user.me) {
     toast.error('You have to log in');
