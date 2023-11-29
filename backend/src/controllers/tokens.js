@@ -43,8 +43,7 @@ async function create(req, res, next) {
       });
       statusCode = 201;
     } else {
-      tokens.quantity = quantity;
-      await tokens.save({ fields: ['quantity'] });
+      await tokens.increment('quantity', { by: quantity });
       statusCode = 200;
     }
 
