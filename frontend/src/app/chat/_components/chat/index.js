@@ -12,6 +12,7 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import img from '/public/images/chat-gpt-logo.svg.png';
+import toast from 'react-hot-toast';
 
 /**
  * The Chat component itself.
@@ -48,10 +49,17 @@ function Chat({ tokens, selectedChatId, setTokens, llm, setChats }) {
     const llmId = searchParams.get('llm-id');
 
     setPromptIsLoading(true);
-
+    
     const res = await services.chat.createPrompt(selectedChatId, {
       llmId, teamId, message: chatState.prompt
     });
+    
+    setPromptIsLoading(false);
+
+    if (!res.success) {
+      chatActions.setPrompt('');
+      return toast.error(res.message, { position: 'top-center' });
+    }
 
     const totalTokens = res.data?.totalTokens;
     if (totalTokens) {
@@ -76,8 +84,6 @@ function Chat({ tokens, selectedChatId, setTokens, llm, setChats }) {
     const chats = myChats.data.chats;
     setChats(chats);
 
-    // Set the loading state to false and clear the prompt
-    setPromptIsLoading(false);
     chatActions.setPrompt('');
   }
 
@@ -182,7 +188,7 @@ function Chat({ tokens, selectedChatId, setTokens, llm, setChats }) {
             placeholder='Send a message'
           />
           <button
-            disabled={selectedChatId === null || promptIsLoading}
+            disabled={selectedChatId === null || promptIsLoading || chatState.prompt.length <= 0}
             className='flex justify-center items-center aspect-square h-12 rounded-tr-md rounded-br-md'
             style={{ backgroundColor: '#E93D44' }}
             type='submit'

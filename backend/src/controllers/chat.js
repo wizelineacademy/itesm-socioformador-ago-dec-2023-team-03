@@ -18,6 +18,7 @@ const { ApiError, ClientError } = require('../errors');
 const validateIdInModel = require('../utils/validateIdInModel.js');
 const generateChatCompletion = require('../utils/generateChatCompletion.js');
 const { SuccessResponse } = require('../responses');
+const calculateTokensCount = require('../utils/calculateTokensCount.js');
 
 // ---------------------------------------------------------------------------------------------------------------------
 async function createChat(req, res, next) {
@@ -181,6 +182,15 @@ async function createPrompt(req, res, next) {
 
     // Get the chat LLM
     const llm = await LLM.findByPk(chat.llmId);
+
+    const tokensCount = calculateTokensCount(message, llm.model);
+
+    const tokensToSpend = memberTokens.quantity - tokensCount;
+
+    if (tokensToSpend <= 0) {
+      throw new ClientError(403, 'The prompt exceeds the number of tokens you have assigned');
+    }
+    throw new ClientError(403, 'The prompt exceeds the number of tokens you have assigned');
 
     const completion = await generateChatCompletion(message, { model: llm.model });
 
